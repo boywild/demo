@@ -4,10 +4,10 @@ import S from './Preview.scss';
 
 export default function PreviewList(props){
     let {previews}=props
-    previews=[];
     previews=previews.map((ele,i)=>{
         let {
-            id: article_id, article_title, createdAt,
+            id: article_id, article_title,
+            createdAt,
             preview: previewContent,
             collection_name,
             user_id,
@@ -33,7 +33,7 @@ export default function PreviewList(props){
     });
     return(
         <div>
-            <previews />
+            {previews}
         </div>
     );
 }

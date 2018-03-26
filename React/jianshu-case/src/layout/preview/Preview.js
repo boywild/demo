@@ -27,10 +27,10 @@ export default function Preview(props){
                         <span className="time">{createdAt}</span>
                     </div>
                 </div>
-                <p className={`${S.abstract}`}>
-                     {previewContent}
-                </p>
                 <Link to="/" className={S.title}>{article_title}</Link>
+                <p className={`${S.abstract}`}>
+                    {previewContent}
+                </p>
                 <div className={`${S.meta}`}>
                     {props.children}
                 </div>

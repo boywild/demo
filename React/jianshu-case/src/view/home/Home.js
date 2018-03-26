@@ -15,15 +15,19 @@ export default class Home extends React.Component{
                type: 'get',
                url: '/get',
                dataType: 'json'
-           }).done(function(resp){
+           }).done((resp)=>{
                console.log(resp);
+               this.setState({
+                   previews:resp.data
+               });
            });
     }
     render(){
+        let {previews,authors}=this.state;
         return(
             <div className="ui container grid">
                 <div className="column twelve wide">
-                    <PreviewList/>
+                    <PreviewList {...{previews}}/>
                 </div>
                 <div className="column four wide">
                     <Recommend/>
