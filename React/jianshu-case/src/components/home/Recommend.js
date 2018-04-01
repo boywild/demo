@@ -3,7 +3,8 @@ import Author from './Author';
 import S from './Recommend.scss';
 
 export default function Recommend({authors}){
-    authors=[];
+    // authors=[];
+    console.log(authors);
     return(
         <div className={S.recommend}>
             <div className={S.title}>

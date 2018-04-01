@@ -1,7 +1,7 @@
 import PreviewList from 'preview/PreviewList';
 import Recommend from 'components/home/Recommend';
 import cfg from 'config/config.json';
-import 'data/mockdata';
+// import 'data/mockdata';
 export default class Home extends React.Component{
     constructor(props){
         super(props);
@@ -11,15 +11,22 @@ export default class Home extends React.Component{
         }
     }
     componentDidMount(){
-        $.ajax({
-               type: 'get',
-               url: '/get',
-               dataType: 'json'
-           }).done((resp)=>{
-               console.log(resp);
+        $.post(`${cfg.url}/getPreview`)
+           .done((res)=>{
+               console.log(res);
+               if(res.code===0){}
                this.setState({
-                   previews:resp.data
+                   previews:res.data
                });
+           });
+           $.post(`${cfg.url}/getAuthor`)
+           .done((res)=>{
+               console.log(res);
+               if(res.code===0){
+                   this.setState({
+                       authors:res.data
+                   });
+               }
            });
     }
     render(){
@@ -30,7 +37,7 @@ export default class Home extends React.Component{
                     <PreviewList {...{previews}}/>
                 </div>
                 <div className="column four wide">
-                    <Recommend/>
+                    <Recommend {...{authors}}/>
                 </div>
             </div>
         );

@@ -1,6 +1,7 @@
 import {Link} from 'react-router-dom';
 import Preview from './Preview';
 import S from './Preview.scss';
+import cfg from 'config/config.json';
 
 export default function PreviewList(props){
     let {previews}=props
@@ -16,6 +17,7 @@ export default function PreviewList(props){
         }=ele;
 
         let {avatar, user_name, user_intro} = user;
+        avatar=cfg.url+avatar;
         return (
             <Preview {...{
                 article_id,

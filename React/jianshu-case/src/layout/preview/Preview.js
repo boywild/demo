@@ -1,6 +1,7 @@
 import {Link} from 'react-router-dom';
 import S from './Preview.scss';
 
+
 export default function Preview(props){
     let {
         article_id,
