@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style media="screen">
+*{padding: 0;margin: 0;}
+body{text-align: center;}
+    #canvas{margin: auto;}
+
+</style>
+<body>
+    <canvas id="canvas" width="600" height="400"></canvas>
+</body>
+<script type="text/javascript">
+    let canvas=document.getElementById('canvas');
+    let ctx=canvas.getContext('2d');
+    let centerX=canvas.width/2;
+    let centerY=canvas.height/2;
+    let speed = 0.1;
+    let _R=150;
+    //绘制内部整圆
+    function fullProgress() {
+        ctx.save();
+        ctx.beginPath();
+        ctx.lineWidth=3;
+        ctx.strokeStyle = "red"; //设置描边样式
+        ctx.arc(centerX,centerY,_R,0,2*Math.PI);
+        ctx.stroke();
+        ctx.closePath();
+        ctx.restore();
+    }
+    //绘制外部动画圆
+    function circleAnimate(n) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.lineWidth=7;
+        ctx.lineCap='round';
+        ctx.strokeStyle='#000';
+        ctx.arc(centerX,centerY,_R,-Math.PI/2,-Math.PI/2+n/100*2*Math.PI);//n/100代表转动了整个圆的百分比，然后在乘以整个圆周的弧度，代表旋转了多少弧度
+        ctx.stroke();
+        ctx.closePath();
+        ctx.restore();
+    }
+    //绘制文字
+    function strokeText(n) {
+        ctx.font='30px Arial';
+        ctx.strokeStyle="#000";
+        ctx.textAlign='center';
+        ctx.textBaseline="middle";
+        ctx.strokeText(n.toFixed(0)+"%",centerX,centerY);
+    }
+    //动画函数
+    function drawFrame(){
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        fullProgress();
+        strokeText(speed);
+        circleAnimate(speed);
+        window.requestAnimationFrame(drawFrame);
+        if(speed > 100) speed = 0;
+        speed += 0.2;
+
+    }
+    window.requestAnimationFrame(drawFrame);
+</script>
+</html>

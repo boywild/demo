@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    body{text-align: center;}
+        #screen{margin: 0 auto;display: block;}
+        .c2{transform: rotate(-90deg);transform-origin: 50% 50%;transition: stroke-dasharray .3s ease-in;}
+    </style>
+</head>
+<body>
+    <svg xmlns="http://www.w3.org/200/svg" height="250" width="400" id="screen">
+        <circle class="c1"  cx="200" cy="125" r="90" stroke-width="15" stroke="grey" stroke-linecap="round" fill="none"></circle>
+        <circle class="c2" cx="200" cy="125" r="90" stroke-width="15" stroke="#f00" stroke-linecap="round" fill="none" stroke-dasharray="1,1000"></circle>
+    </svg>
+    <input type="number" class="inp" value="10"><button class="btn" type="button" name="button">set</button>
+</body>
+<script type="text/javascript">
+    let c2=document.querySelector('.c2');
+    let inp=document.querySelector('.inp');
+    let btn=document.querySelector('.btn');
+    let circleLength=Math.floor(2*Math.PI*c2.getAttribute('r'));
+    btn.onclick=circle;
+    window.onload=circle;
+    function circle(){
+        let val=parseFloat(inp.value).toFixed(2);
+        val=Math.max(0,val);
+        val=Math.min(100,val);
+        c2.setAttribute('stroke-dasharray',''+circleLength*val/100+',1000')
+    }
+</script>
+</html>
