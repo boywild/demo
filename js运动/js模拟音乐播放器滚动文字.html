@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js滚动文字</title>
+    <style>
+        .box1,.box2{font-weight: bold;position: absolute;left: 0;top: 0;line-height: 35px;font-size: 20px;}
+        .box1{width: 600px;color: #000;}
+        .box2{width: 20px;color: #f00;overflow: hidden;height: 35px;}
+        .box2 span{width: 1000px;display: block;position: absolute;left: 0;top: 0;}
+    </style>
+
+</head>
+
+<body>
+    <div class="box1"><span>运动基础主要内容运动的基础原理不同对象和透明度的运动处理</span></div>
+    <div class="box2"><span>运动基础主要内容运动的基础原理不同对象和透明度的运动处理</span></div>
+</body>
+<script>
+    //技巧点：主要应用两条一样的文字进行重叠，需要滚动强调的放在上面，放在上面的盒子只设置显示一个文字大小的宽度，其余的宽度一处隐藏，通过移动外盒子来移动显示盒子中的文字，内盒子需要向相反的方向运动相同的距离
+    window.onload=function(){
+        var box1=document.querySelector('.box1');
+        var box2=document.querySelector('.box2');
+        var sp=box2.getElementsByTagName('span')[0];
+        var timer=null;
+        console.log(box2.offsetLeft+1);
+        timer=setInterval(function(){
+            box2.style.left=box2.offsetLeft+1+'px';
+            sp.style.left=-box2.offsetLeft+'px';
+        },30);
+        
+
+    }
+</script>
+    
+</html>

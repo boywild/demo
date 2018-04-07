@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .oDiv {
+            width: 200px;
+            height: 200px;
+            background: #f00;
+            position: absolute;
+            left: -200px;
+        }
+
+        .oDiv span {
+            position: absolute;
+            right: -20px;
+            top: 65px;
+            color: #fff;
+            background: #000;
+            width: 20px;
+            height: 70px;
+        }
+
+        .img {
+            opacity: 0.3;
+            filter: alpha(opacity=30);
+        }
+
+        .box {
+            width: 200px;
+            height: 200px;
+            background: #f00;
+            position: absolute;
+            left: 800px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <input type="button" value="运动" class="btn">
+    <!-- <div class="oDiv">
+        <span>分享到</span>
+    </div>
+    <img src="img.png" alt="图片" class="img"> -->
+    <div class="box"></div>
+</body>
+<script>
+    //基础运动，让div动起来
+    //分享动画
+    //封装左右运动动画
+    //透明度动画，属性取值问题，浏览器对取值识别的精度问题
+    //运动回掉
+    //匀速运动speed保持一个定值
+    //加速运动speed+=xxx,每次递增
+
+    /**问题记录
+    *1 多次快速点击按钮触发运动函数会让物体运动速度越来越快，解决办法是，在每次点击的时候清除定时器
+    *2 匀速运动speed为一个不能被目标距离整除的时候，会出现，最后停止运动的距离大于设置的目标距离 例如：speed=7  target=500
+    *3 浏览器取值精度问题/小数精度问题，0.1+0.2=0.30000000000000004 0.2+0.7=0.8999999999999999 所以浏览器获取的近似值 可能比正确要小，也可以要比正确要大
+    *4 currentStyle在ie中保存着当前对象的所有css属性，例如 ie中不支持 opcity属性，但是通过currentStyle['opacity']也可以读取到对应的值
+    *5 在老版本的谷歌浏览器中获取opcity=0.3的值会是一个无限接近0.3的小数(0.300000000045),所以需要对获取到的数值乘以100以后进行Math.round();
+    *6 当把分享动画和透明度动画封装到一起的时候会出现，分享动画还在执行的过程中鼠标移入图片触发图片透明度动画，会让正处于动画过程中的分享动画直接停止，解决办法是将timer设置为当前触发对象下的的一个属性,即obj.timer
+    *7 对问题6而言是多物体运动，但是同一个物体，同时加上不同属性的动画会出问题，例如 with height opacity同时加在分享上面
+    *8 对问题7进行改进封装后，会出现 with:200 height:300 实际宽度运动到200以后动画就会停止，此时的高也在200不会再继续增加处理办法为增加一个标识去判断每一个属性的值是否到达目标值，如果没有到搭就继续执行动画
+    *9 缓冲运动 (目标值-当前值)*小于0的系数例如：0.8 或者(目标值-当前值)/大于0的系数
+    *10 css中能识别小数 比如width:100.45px 会在浏览其中渲染100.45px的宽度，如果用js去获取该元素的宽度 dom.offsetWidth 会发现获取到的是100px 如果用dom.style.width能获取到准确的宽度，浏览器会默认对 dom.offsetWidth取到的值做四舍五入，所以在做正向缓冲运动中需要对缓冲运动公式向上取整，负向缓冲运动中向下取整
+    */
+    var oDiv = document.querySelector('.oDiv');
+    var btn = document.querySelector('.btn');
+    var img = document.querySelector('img');
+    var box = document.querySelector('.box');
+
+    var timer = null;
+    // oDiv.onmouseover=function(){
+    //     animation(this,'left',0,10);
+    // }
+    // oDiv.onmouseout=function(){
+    //     animation(this,'left',-200,-10);
+    // }
+    // img.onmouseover=function(){
+    //     animation(this,'opacity',100,10);
+    // }
+    // img.onmouseout=function(){
+    //     animation(this,'opacity',30,-10);
+    // }
+    btn.onclick = function () {
+        animation(box,{
+            width:300,
+            height:700
+        });
+    }
+
+    function animation(obj, attr,callback) {
+        clearInterval(obj.timer);
+        var iCur = 0;
+        var flag = false;
+
+        obj.timer = setInterval(function () {
+            flag = true;
+            for (key in attr) {
+                if (key === 'opacity') {
+                    iCur = Math.round(getStyle(obj, 'opacity') * 100);
+                } else {
+                    iCur = parseInt(getStyle(obj, key));
+                }
+                speed = (attr[key] - iCur) / 8;
+                speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+                if (iCur !== attr[key]) {
+                    flag = false;
+                    if (key === 'opacity') {
+                        obj.style.opacity = (iCur + speed) / 100;
+                        obj.style.filter = 'alpha(opacity=' + (iCur + speed) + ')';
+                    } else {
+                        obj.style[key] = iCur + speed + 'px';
+                    }
+
+                }
+            }
+            if (flag) {
+                clearInterval(obj.tim);
+                callback&&callback.call(obj)
+            }
+
+        }, 30);
+    }
+    function getStyle(obj, attr) {
+        if (window.getComputedStyle) {
+            return document.defaultView.getComputedStyle(obj, null).getPropertyValue(attr);
+        } else {
+            console.log(obj.currentStyle[attr]);
+            return obj.currentStyle[attr];
+        }
+    }
+    function test(obj, target, speed) {
+
+
+    }
+    alert(box.offsetWidth);
+
+</script>
+
+</html>
