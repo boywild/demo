@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js碰撞运动</title>
+    <style>
+        .box1 {
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100px;
+            height: 100px;
+            background: #f00;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="box1"></div>
+</body>
+<script>
+    var box = document.querySelector('.box1')
+    var timer = null, speedX = 10, speedY = 10;
+    startMove();
+    function startMove() {
+        clearInterval(timer);
+        timer = setInterval(function () {
+            var L = box.offsetLeft + speedX
+            var T = box.offsetTop + speedY;
+            if (T > document.documentElement.clientHeight - box.offsetHeight) {
+                T = document.documentElement.clientHeight - box.offsetHeight;
+                speedY *= -1;
+            } else if (T < 0) {
+                T = 0;
+                speedY *= -1;
+            }
+            if (L > document.documentElement.clientWidth - box.offsetWidth) {
+                L = document.documentElement.clientWidth - box.offsetWidth;
+                speedX *= -1;
+            } else if (L < 0) {
+                L = 0;
+                speedX *= -1;
+            }
+            box.style.top = T + 'px';
+            box.style.left = L + 'px';
+        }, 20);
+    }
+</script>
+
+</html>
