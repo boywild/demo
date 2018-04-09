@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    .progress{position: fixed;top: 0;left: 0;right: 0;background-color: transparent;height: 10px;}
+    .progress-inner{position: absolute;left: 0;top: 0;height: 10px;background: #f00;}
+    </style>
+</head>
+
+<body>
+    <div class="progress">
+        <div class="progress-inner" id="progress"></div>
+    </div>
+    <iframe src="http://baidu.com/" frameborder="0"></iframe>
+    <iframe src="http://163.com/" frameborder="0"></iframe>
+    <iframe src="http://qq.com/" frameborder="0"></iframe>
+</body>
+<script>
+    (function() {
+        var bar=document.querySelector('.progress-inner');
+        var timer=null,progress=1;
+        var ranDom=function(min,max){
+            return Math.round(Math.random()*(max-min+1)+min);
+        }
+
+        var progressBar=function(){
+            var timeout=ranDom(10,30);
+            timer=setTimeout(function(){
+                if(window.loaded){
+                    bar.style.width="100%";
+                    return;
+                }
+                progress+=ranDom(1,1);
+                if(progress>=98){
+                    progress=98;
+                }
+                bar.style.width=progress+'%';
+                progressBar();
+            },timeout)
+        }
+        progressBar();
+        window.onload=function() {
+            window.loaded=true;
+        }
+    })()
+</script>
+</html>
