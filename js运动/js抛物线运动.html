@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js抛物线运动</title>
+    <style>
+        .btn {
+            position: absolute;
+        }
+
+        .box1 {
+            font-weight: bold;
+            position: absolute;
+            left: 100px;
+            top: 900px;
+            width: 100px;
+            height: 100px;
+            background: #f00;
+        }
+    </style>
+
+</head>
+
+<body>
+    <input type="button" value="set" class="btn">
+    <div class="box1"></div>
+</body>
+<script>
+    var box = document.querySelector('.box1');
+    var btn = document.querySelector('.btn');
+
+    btn.onclick = function () {
+        startMove();
+    }
+    //抛物线运动和和自由落体运动的区别在于，多了在x轴方向上的运动，让x轴方向上的运动和y轴上一样，并在碰撞到底部后对x轴上的速度进行损耗即可
+    function startMove() {
+        var timer = null, speedY = -60, speedX = 10;
+
+        clearInterval(timer);
+        timer = setInterval(function () {
+            speedY += 3;
+            var T = box.offsetTop + speedY;
+            var L = box.offsetLeft + speedX;
+            if (T > document.documentElement.clientHeight - box.offsetHeight) {
+                T = document.documentElement.clientHeight - box.offsetHeight;
+                speedY *= -1;
+                speedY *= 0.6;//每次碰到底边之后乘以下个小于1的系数，让速度每次都有损失，最终为0停止
+                speedX *= 0.6;//每次碰到底边之后乘以下个小于1的系数，让速度每次都有损失，最终为0停止
+            }
+            box.style.top = T + 'px';
+            box.style.left = L + 'px';
+
+        }, 30);
+    }
+</script>
+
+</html>
