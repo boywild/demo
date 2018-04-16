@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    *{margin: 0;padding: 0;}
+    .box{width: 300px;height: 300px;position: absolute;background: #f00;left: -300px;}
+    .box span{position: absolute;right: -20px;width: 20px;background: #000;}
+    .box2{width: 200px;height: 200px;background: #f00;position: absolute;left: 500px;opacity: 0.3;filter:alpha(opacity=50);}
+</style>
+<body>
+    <div class="box">
+        <span>分享</span>
+    </div>
+    <div class="box2"></div>
+</body>
+<script>
+    var box=document.querySelector('.box');
+    var box2=document.querySelector('.box2');
+    var timer=null;
+    box.onmouseover=function(){
+        startMove(this,0,10);
+    }
+    box.onmouseout=function(){
+        startMove(this,-300,-10);
+    }
+    box2.onmouseover=function(){
+        startMove2(this,100,5);
+    }
+    box2.onmouseout=function(){
+        startMove2(this,30,-5);
+    }
+    function startMove(obj,target,speed){
+        clearInterval(timer);
+        timer=setInterval(function(){
+            console.log(box.offsetLeft,target);
+            if(box.offsetLeft===target){
+                clearInterval(timer);
+            }else{
+                box.style.left=box.offsetLeft+speed+'px';
+            }
+            
+        },30);
+    }
+    function startMove2(obj,target,speed){
+        clearInterval(timer);
+        timer=setInterval(function(){
+            var opacity=getStyle(obj,'opacity')*100;
+            if(opacity===target){
+                clearInterval(timer);
+            }else{
+                box2.style.opacity=(opacity+speed)/100;
+                box2.style.filter='alpha(opacity='+(opacity+speed)+')';
+            }
+            
+        },30);
+    }
+
+    function getStyle(obj,attr){
+        if(window.getComputedStyle){
+            return window.getComputedStyle(obj,null)[attr];
+            // document.defaultView.getComputedStyle(obj,null).getPropertyValue('float')
+        }else{
+            return obj.currentStyle[attr];
+        }
+    }
+</script>
+</html>
