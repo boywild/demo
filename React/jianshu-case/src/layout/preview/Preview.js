@@ -1,8 +1,8 @@
-import {Link} from 'react-router-dom';
+import {Link,withRouter} from 'react-router-dom';
 import S from './Preview.scss';
 
 
-export default function Preview(props){
+function Preview(props){
     let {
         article_id,
         article_title,
@@ -11,7 +11,9 @@ export default function Preview(props){
         user_name,
         createdAt,
         avatar,
-        user_intro
+        user_intro,
+        initMyPage,
+        history
     }=props;
 
     createdAt = new Date(createdAt).toLocaleString();
@@ -20,7 +22,21 @@ export default function Preview(props){
             <div className="ui divider hidden"></div>
             <div className={`${S.content}`}>
                 <div className={`${S.author}`}>
-                    <Link to="/" className="avatar">
+                    <Link to="/my_page" className="avatar"
+                    onClick={ev=>{
+                        ev.stopPropagation();
+                        ev.preventDefault();
+                        history.push('/my_page',{
+                            userInfo:{
+                                user_id,
+                                user_name,
+                                avatar,
+                                user_intro
+                            }
+                        });
+                        initMyPage(user_id,{user_id},'所有文章');
+                    }}
+                    >
                         <img src={avatar} alt="" className="ui avatar image"/>
                     </Link>
                     <div className={`${S.name}`}>
@@ -38,6 +54,5 @@ export default function Preview(props){
             </div>
         </div>
     );
-
-
 }
+export default withRouter(Preview);

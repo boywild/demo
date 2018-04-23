@@ -4,7 +4,9 @@ import Validator from 'util/validation.js';
 import S from './style.scss';
 
 let propTypes={
-    signInAjax:PT.func
+    signInAjax:PT.func,
+    singInMsg:PT.object,
+    clearLoginMsg:PT.func
 }
 export default class SignInPanel extends Component{
     constructor(props){
@@ -62,14 +64,23 @@ export default class SignInPanel extends Component{
                 passw:passwDom.value
             });
         }
-
-
-
+    }
+    componentWillUnmount(){
+        this.props.clearLoginMsg();
     }
 
     render(){
         let {nameChange,passwChange,onSubmit}=this;
         let {username,passw,nameError,passwError}=this.state;
+        let {singInMsg}=this.props;
+        let infoMsg=null;
+        if(singInMsg&&singInMsg.code!==0){
+            infoMsg=(
+                <div className="ui message error">
+                    <p>{singInMsg.msg}</p>
+                </div>
+            );
+        }
         let nameErrorMsg=nameError?(
             <p className={S.err}>{nameError}</p>
         ):'';
@@ -78,6 +89,7 @@ export default class SignInPanel extends Component{
         ):'';
         return(
             <div className={S.sign_panel}>
+                {infoMsg}
                 <form className="ui form" onSubmit={onSubmit}>
                     <div className={`field ${nameError?'error':''}`}>
                         <input type="text" placeholder="用户名" value={username} onChange={nameChange} ref="nameDom" />

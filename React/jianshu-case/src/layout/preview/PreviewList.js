@@ -4,7 +4,7 @@ import S from './Preview.scss';
 import cfg from 'config/config.json';
 
 export default function PreviewList(props){
-    let {previews}=props
+    let {previews,initMyPage}=props
     previews=previews.map((ele,i)=>{
         let {
             id: article_id, article_title,
@@ -27,7 +27,8 @@ export default function PreviewList(props){
                 user_name,
                 createdAt,
                 avatar,
-                user_intro
+                user_intro,
+                initMyPage
             }} key={i}>
                 <Link to="" className={`${S.tag}`}>{collection_name}</Link>
             </Preview>

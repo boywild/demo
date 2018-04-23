@@ -1,8 +1,12 @@
 import Panel from './Panel';
 import validator from 'util/validation.js';
 import S from './style.scss';
-
-export default class SignInPanel extends React.Component{
+let propTypes={
+    signUpAjax:PT.func,
+    signUpMsg:PT.object,
+    clearLoginMsg:PT.func
+}
+export default class SignUpPanel extends React.Component{
     constructor(props){
         super(props);
         this.state={
@@ -27,6 +31,7 @@ export default class SignInPanel extends React.Component{
         this.nameChange=this.nameChange.bind(this);
         this.passwChange=this.passwChange.bind(this);
         this.cfpasswChange=this.cfpasswChange.bind(this);
+        this.onSubmit=this.onSubmit.bind(this);
     }
     nameChange(ev){
         let {target}=ev;
@@ -56,9 +61,49 @@ export default class SignInPanel extends React.Component{
             cfPassError:msg
         });
     }
+    onSubmit(ev){
+        ev.preventDefault();
+        ev.stopPropagation();
+        let {validator}=this;
+        let {username ,passw,cfpassw}=this.state;
+        let nameError=this.validator.valiOneByValue('username',username);
+        let passwError=this.validator.valiOneByValue('passw',passw);
+        let cfPassError= cfpassw===passw ? '':'两次密码不一致';
+        this.setState({
+            nameError,passwError,cfPassError
+        });
+        if(!nameError&&!passwError&&!cfPassError){
+            this.props.signUpAjax({
+                username ,passw,cfpassw
+            });
+        }
+    }
+    componentWillUnmount(){
+        this.props.clearLoginMsg();
+    }
     render(){
-        let {nameChange,passwChange,cfpasswChange}=this;
+        let {nameChange,passwChange,cfpasswChange,onSubmit}=this;
         let {username,passw,cfpassw,nameError,passwError,cfPassError}=this.state;
+        let {signUpMsg}=this.props;
+        // console.warn(signUpMsg);
+
+        let resInfo = null;
+        if(signUpMsg){
+            if(signUpMsg.code===0){
+                resInfo = (
+                    <div className="ui message positive">
+                        <p>{signUpMsg.msg}</p>
+                        <p>马上帮你登录</p>
+                    </div>
+                );
+            }else{
+                resInfo = (
+                    <div className="ui message error">
+                        <p>{signUpMsg.msg}</p>
+                    </div>
+                );
+            }
+        }
         let nameErrorMsg=nameError?(
             <p className={S.err}>{nameError}</p>
         ):'';
@@ -70,7 +115,8 @@ export default class SignInPanel extends React.Component{
         ):'';
         return(
             <div className={S.sign_panel}>
-                <form className="ui form">
+                {resInfo}
+                <form className="ui form" onSubmit={onSubmit}>
                     <div className={`field ${nameError?'error':''}`}>
                         <input type="text" placeholder="用户名" value={username} onChange={nameChange} ref="nameDom" />
                     </div>
@@ -91,3 +137,4 @@ export default class SignInPanel extends React.Component{
         );
     }
 }
+SignUpPanel.propTypes=propTypes;
