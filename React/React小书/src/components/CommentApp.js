@@ -1,12 +1,13 @@
 import React from 'react';
 import CommentInput from './CommentInput';
 import CommentList from './CommentList';
+import wrapWithLoadData from './wrapWithLoadData';
 import './style.css';
 class CommentApp extends React.Component{
-    constructor(){
+    constructor(props){
         super();
         this.state={
-            comments:[]
+            comments:props.data||[]
         }
         this.handleSubmitComment=this.handleSubmitComment.bind(this);
         this.handleDeleteComment=this.handleDeleteComment.bind(this);
@@ -20,17 +21,16 @@ class CommentApp extends React.Component{
         this.setState({
             comments:comments
         });
-        this._saveComments(comments);
+        console.log(this.state.comments);
+        this.props.saveData(comments);
     }
     handleDeleteComment(index){
         const comments = this.state.comments
         comments.splice(index, 1)
         this.setState({ comments })
-        this._saveComments(comments)
+        this.props.saveData(comments);
     }
-    _saveComments(comment){
-        localStorage.setItem('comment', JSON.stringify(comment));
-    }
+
     _loadComments () {
       let comments = localStorage.getItem('comment');
       if (comments) {
@@ -38,7 +38,6 @@ class CommentApp extends React.Component{
         this.setState({ comments })
       }
     }
-
     componentWillMount(){
         this._loadComments();
     }
@@ -53,4 +52,5 @@ class CommentApp extends React.Component{
         );
     }
 }
+CommentApp=wrapWithLoadData(CommentApp,'comment');
 export default CommentApp;

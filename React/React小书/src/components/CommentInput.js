@@ -1,10 +1,11 @@
 import React from 'react';
+import wrapWithLoadData from './wrapWithLoadData';
 import './style.css';
 class CommentInput extends React.Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state={
-            username:'',
+            username:props.data,
             content:'',
             publishDate:''
         }
@@ -12,7 +13,6 @@ class CommentInput extends React.Component{
         this.handleContentChange=this.handleContentChange.bind(this);
         this.handleSubmit=this.handleSubmit.bind(this);
         this.handleUsernameBlur=this.handleUsernameBlur.bind(this);
-        this._saveUsername=this._saveUsername.bind(this);
     }
     handleUsernameChange(ev){
         this.setState({
@@ -36,20 +36,12 @@ class CommentInput extends React.Component{
             content:''
         });
     }
-    _saveUsername(username){
-        localStorage.setItem('username',username);
-    }
     handleUsernameBlur(ev){
         if(ev.target.value){
-            this._saveUsername(ev.target.value);
+            this.props.saveData(ev.target.value)
         }
     }
-    componentWillMount(){
-        const username = localStorage.getItem('username')
-        if (username) {
-          this.setState({ username })
-        }
-    }
+
     componentDidMount(){
         this.textarea.focus()
     }
@@ -89,4 +81,5 @@ class CommentInput extends React.Component{
         );
     }
 }
+CommentInput=wrapWithLoadData(CommentInput,'username');
 export default CommentInput;
