@@ -9,11 +9,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.15.2",
-    "cookies": "^0.6.1",
+    "body-parser": "^1.15.2",//解析post请求数据
+    "cookies": "^0.6.1",//读写cookie
     "express": "^4.14.0",
-    "markdown": "^0.5.0",
+    "markdown": "^0.5.0",//markdown语法解析生成模块
     "mongoose": "^4.5.7",
-    "swig": "^1.4.2"
+    "swig": "^1.4.2"//模板解析引擎php模板引擎的nodejs版
   }
 }
