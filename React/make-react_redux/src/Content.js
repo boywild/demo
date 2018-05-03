@@ -1,0 +1,33 @@
+import React from 'react';
+import PT from 'prop-types';
+
+import ThemeSwitch from './ThemeSwitch';
+
+
+class Content extends React.Component{
+    static contextTypes={
+        store:PT.object
+    }
+
+    componentWillMount(){
+        let {store}=this.context;
+        this._updateThemeColor();
+        store.subscribe(()=>this._updateThemeColor());
+    }
+    _updateThemeColor(){
+        let {store}=this.context;
+        let state=store.getState();
+        this.setState({
+            themeColor:state.themeColor
+        });
+    }
+    render(){
+        return(
+            <div>
+              <p style={{color:this.state.themeColor}}>React.js 小书内容</p>
+              <ThemeSwitch />
+            </div>
+        );
+    }
+}
+export default Content;
