@@ -4,30 +4,27 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
+import PT from 'prop-types';
 import Header from './Header';
 import Content from './Content';
-import {createStore} from 'redux';
-import {Provider} from 'react-redux';
-import PT from 'prop-types';
 
-// function createStore(reducer){
-//     let state=null;
-//     let listeners=[];
-//
-//     let getState=()=>state;
-//     let subscribe=(listener)=> listeners.push(listener);
-//     let dispatch=(action)=>{
-//         state=reducer(state,action);
-//         listeners.forEach((listener)=>listener());
-//     }
-//     dispatch({});
-//     return {getState,dispatch,subscribe}
-// }
+function createStore(reducer){
+    let state=null;
+    let listeners=[];
+    let getState=()=>state;
+    let subscribe=(listener) => listeners.push(listener);
+    let dispatch=(action)=>{
+        state=reducer(state,action);
+        listeners.forEach((listener)=>listener());
+    }
+    dispatch({});
+    return {getState,subscribe,dispatch}
+}
 
-function themeReducer(state,action){
+const themeReducer=(state,action)=>{
     if(!state){
         return {
-            themeColor: 'red'
+            themeColor:'red'
         }
     }
     switch (action.type) {
@@ -38,14 +35,18 @@ function themeReducer(state,action){
             }
             break;
         default:
-            return state;
+        return state;
 
     }
 }
-
-const store = createStore(themeReducer)
-
+let store = createStore(themeReducer);
 class Index extends Component{
+    static childContextTypes={
+        store:PT.object
+    }
+    getChildContext(){
+        return {store};
+    }
     render(){
         return(
             <div>
@@ -56,9 +57,6 @@ class Index extends Component{
     }
 }
 
-ReactDOM.render(
-    <Provider store={store}>
-        <Index />
-    </Provider>,
+ReactDOM.render(<Index />,
   document.getElementById('root'));
 registerServiceWorker();
