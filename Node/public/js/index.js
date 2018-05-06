@@ -61,14 +61,20 @@ $(function() {
             success: function(result) {
 
                 $loginBox.find('.colWarning').html(result.message);
-
                 if (!result.code) {
-                    //登录成功
+                    // setTimeout(function () {
+                    //     $loginBox.hide();
+                    //     $userInfo.show();
+                    //     $userInfo.find('.username').html(result.userInfo.username);
+                    //     $userInfo.find('.info').html('你好，欢迎光临我的博客');
+                    // },1500);
+
+                    // 登录成功
                     window.location.reload();
                 }
             }
         })
-    })
+    });
 
     //退出
     $('#logout').on('click', function() {
@@ -82,4 +88,4 @@ $(function() {
         });
     })
 
-})
+});

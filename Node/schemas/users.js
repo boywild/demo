@@ -5,7 +5,11 @@ var Schema = mongoose.Schema;
 
 var blogSchema= new Schema({
     username:String,
-    password:String
+    password:String,
+    isAdmin:{
+        type:Boolean,
+        default:false
+    }
 });
 
 module.exports=blogSchema;

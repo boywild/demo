@@ -21,7 +21,7 @@ router.use(function (req,res,next){
     };
     next();
 });
-
+//注册
 router.post('/user/register',function (req,res,next) {
     // res.send('api user');
     var username=req.body.username;
@@ -69,6 +69,48 @@ router.post('/user/register',function (req,res,next) {
     }).then(function (newUserInfo) {
         console.log(newUserInfo);
     });
+});
+
+//登陆
+router.post('/user/login',function (req,res,next) {
+    var username=req.body.username;
+    var password=req.body.password;
+    if(username===''||password==''){
+        responseData.code=1;
+        responseData.message='用户名或密码不能为空';
+        res.json(responseData);
+        return;
+    }
+    //从数据库查询
+    User.findOne({
+        username:username,
+        password:password
+    }).then(function (userInfo) {
+        if(!userInfo){
+            responseData.code=2;
+            responseData.message='用户名或密码错误';
+            res.json(responseData);
+            return;
+        }
+        responseData.message='登陆成功';
+        responseData.userInfo={
+            _id:userInfo._id,
+            username:userInfo.username
+        };
+        req.cookies.set('userInfo',JSON.stringify({
+            _id:userInfo._id,
+            username:userInfo.username
+        }));
+        res.json(responseData);
+        return;
+
+    });
+});
+
+router.get('/user/logout',function (req,res) {
+    req.cookies.set('userInfo',null);
+    responseData.message='推出成功';
+    res.json(responseData);
 });
 
 module.exports=router;
