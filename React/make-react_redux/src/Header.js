@@ -1,12 +1,12 @@
-import React from 'react';
+import React , {Component} from 'react';
 import PT from 'prop-types';
-// import {connect} from './React-redux';
-import { connect } from 'react-redux'
+
+import {connect} from './React-redux';
 
 
-class Header extends React.Component{
-    static contextTypes={
-        store:PT.object
+class Header extends Component {
+    static propTypes={
+        themeColor: PT.string
     }
     render(){
         return(
@@ -14,8 +14,7 @@ class Header extends React.Component{
         );
     }
 }
-
-const mapStateToProps=(state,props)=>{
+const mapStateToProps=(state)=>{
     return {
         themeColor:state.themeColor
     }
