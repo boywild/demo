@@ -1,15 +1,58 @@
 import React,{Component} from 'react';
 import CommentInput from './CommentInput';
-import Comment from './Comment';
+import CommentList from './CommentList';
 export default class CommentApp extends Component{
-    test(){
+
+    constructor(props){
+        super(props);
+        this.state={
+            comments:[]
+        }
+    }
+    componentWillMount(){
+        this._loadComments();
+    }
+    handleSubmitComment(comment){
+        if(!comment) return;
+        if(!comment.username) return alert('请输入用户名');
+        if(!comment.content) return alert('请输入评论内容');
+        const comments=this.state.comments;
+        comments.push(comment);
+        this.setState({
+            comments:comments
+        });
+        this._saveComments(comments);
+    }
+    handleDeleteComment(index){
+        console.log(index);
+        let comments=this.state.comments;
+        comments.splice(index,1);
+        this.setState({
+            comments:comments
+        });
+        this._saveComments(comments);
+
         console.log('===============');
     }
+    _saveComments(comments){
+        localStorage.setItem('comments',JSON.stringify(comments));
+    }
+    _loadComments(){
+        let comments=localStorage.getItem('comments');
+        console.log(comments);
+        if(comments){
+            comments = JSON.parse(comments)
+            this.setState({
+                comments:comments
+            });
+        }
+    }
     render(){
+        let {comments}=this.state;
         return(
             <div className="wrapper">
-                <CommentInput test={this.test}/>
-                <Comment />
+                <CommentInput onSubmit={this.handleSubmitComment.bind(this)}/>
+                <CommentList comments={comments} onDeleteComment={this.handleDeleteComment.bind(this)}/>
             </div>
         );
     }

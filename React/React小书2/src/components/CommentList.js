@@ -1,23 +1,26 @@
 import React,{Component} from 'react';
-import './style.css';
+import Comment from './Comment';
 
 export default class CommentList extends Component{
-
+    static defaultProps={
+        comments:[]
+    }
+    constructor(){
+        super();
+    }
+    handleDeleteComment(index){
+        if(this.props.onDeleteComment){
+            this.props.onDeleteComment(index);
+        }
+    }
     render(){
         return(
             <div>
-                <div className='comment'>
-                    <div className='comment-user'>
-                        <span>chentian</span>：
-                    </div>
-                    <p>asdfsdfasdfas</p>
-                    <span className='comment-createdtime'>
-                        2028-2-2
-                    </span>
-                    <span className='comment-delete'>
-                        删除
-                    </span>
-                </div>
+                {
+                    this.props.comments.map((ele,index)=>{
+                        return (<Comment key={index} comment={ele} index={index} onDeleteComment={this.handleDeleteComment.bind(this)} />);
+                    })
+                }
             </div>
         );
     }
