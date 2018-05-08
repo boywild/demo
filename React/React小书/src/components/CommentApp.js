@@ -1,16 +1,16 @@
-import React from 'react';
+import React,{Component} from 'react';
 import CommentInput from './CommentInput';
 import CommentList from './CommentList';
-import wrapWithLoadData from './wrapWithLoadData';
-import './style.css';
-class CommentApp extends React.Component{
+export default class CommentApp extends Component{
+
     constructor(props){
-        super();
+        super(props);
         this.state={
-            comments:props.data||[]
+            comments:[]
         }
-        this.handleSubmitComment=this.handleSubmitComment.bind(this);
-        this.handleDeleteComment=this.handleDeleteComment.bind(this);
+    }
+    componentWillMount(){
+        this._loadComments();
     }
     handleSubmitComment(comment){
         if(!comment) return;
@@ -21,36 +21,35 @@ class CommentApp extends React.Component{
         this.setState({
             comments:comments
         });
-        console.log(this.state.comments);
-        this.props.saveData(comments);
+        this._saveComments(comments);
     }
     handleDeleteComment(index){
-        const comments = this.state.comments
-        comments.splice(index, 1)
-        this.setState({ comments })
-        this.props.saveData(comments);
+        let comments=this.state.comments;
+        comments.splice(index,1);
+        this.setState({
+            comments:comments
+        });
+        this._saveComments(comments);
     }
-
-    _loadComments () {
-      let comments = localStorage.getItem('comment');
-      if (comments) {
-        comments = JSON.parse(comments)
-        this.setState({ comments })
-      }
+    _saveComments(comments){
+        localStorage.setItem('comments',JSON.stringify(comments));
     }
-    componentWillMount(){
-        this._loadComments();
+    _loadComments(){
+        let comments=localStorage.getItem('comments');
+        if(comments){
+            comments = JSON.parse(comments)
+            this.setState({
+                comments:comments
+            });
+        }
     }
     render(){
-        let {handleSubmitComment,handleDeleteComment}=this;
         let {comments}=this.state;
         return(
             <div className="wrapper">
-                <CommentInput onSubmit={handleSubmitComment}/>
-                <CommentList comment={comments} onDeleteComment={handleDeleteComment}/>
+                <CommentInput onSubmit={this.handleSubmitComment.bind(this)}/>
+                <CommentList comments={comments} onDeleteComment={this.handleDeleteComment.bind(this)}/>
             </div>
         );
     }
 }
-CommentApp=wrapWithLoadData(CommentApp,'comment');
-export default CommentApp;

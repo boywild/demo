@@ -1,12 +1,12 @@
-import React from 'react';
+import React,{Component} from 'react';
 import Comment from './Comment';
-class CommentList extends React.Component{
+
+export default class CommentList extends Component{
+    static defaultProps={
+        comments:[]
+    }
     constructor(){
         super();
-        this.handleDeleteComment=this.handleDeleteComment.bind(this);
-    }
-    static defaultProps={
-        comment:[]
     }
     handleDeleteComment(index){
         if(this.props.onDeleteComment){
@@ -14,17 +14,14 @@ class CommentList extends React.Component{
         }
     }
     render(){
-        let {handleDeleteComment}=this
         return(
-            <div>{
-                this.props.comment.map((ele,index)=>{
-                    return (
-                        <Comment key={index} comment={ele} index={index} onDeleteComment={handleDeleteComment}/>
-                    );
-                })
+            <div>
+                {
+                    this.props.comments.map((ele,index)=>{
+                        return (<Comment key={index} comment={ele} index={index} onDeleteComment={this.handleDeleteComment.bind(this)} />);
+                    })
                 }
             </div>
         );
     }
 }
-export default CommentList;
