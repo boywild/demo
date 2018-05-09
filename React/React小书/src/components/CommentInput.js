@@ -1,65 +1,62 @@
 import React,{Component} from 'react';
+import PT from 'prop-types';
 import './style.css';
 
 export default class CommentInput extends Component{
     constructor(props){
         super(props);
         this.state={
-            username:props.username,
+            username:'',
             content:''
         }
     }
+    componentWillMount(){
+        this._loadUsername();
+    }
     handleUsernameChange(ev){
+        if(!ev.target.value) return;
         this.setState({
             username:ev.target.value
         });
     }
     handleContentChange(ev){
+        if(!ev.target.value) return;
         this.setState({
             content:ev.target.value
         });
     }
-    handleUsernameBlur(ev){
-        if(!ev.target.value) return;
-        if(this.props.onUserNameInputBlur){
-            this.props.onUserNameInputBlur();
-        }
-        // this._saveUername(ev.target.value);
-    }
     handleSubmit(){
         if(this.props.onSubmit){
             let {username,content}=this.state;
-            this.props.onSubmit({username,content,createdTime:+new Date()});
+            this.props.onSubmit({username,content,createdtime:+new Date()});
         }
         this.setState({
             content:''
         });
     }
-    // _saveUername(username){
-    //     localStorage.setItem('username',username);
-    // }
-    // _loadUsername(){
-    //     let username=localStorage.getItem('username');
-    //     if(username){
-    //         this.setState({
-    //             username
-    //         });
-    //     }
-    // }
+    _loadUsername(){
+        let username=localStorage.getItem('username');
+        this.setState({
+            username:username
+        });
+    }
+    _onBlurSaveUsername(ev){
+        if(!ev.target.value) return;
+        localStorage.setItem('username',ev.target.value);
+    }
     componentDidMount(){
         this.textarea.focus();
     }
     render(){
-        let {handleUsernameChange,handleContentChange}=this;
         return(
             <div>
                 <div className='comment-input'>
                     <div className='comment-field'>
                         <span className='comment-field-name'>用户名：</span>
                         <div className='comment-field-input'>
-                            <input
+                            <input type="text"
                                 value={this.state.username}
-                                onBlur={this.handleUsernameBlur.bind(this)}
+                                onBlur={this._onBlurSaveUsername.bind(this)}
                                 onChange={this.handleUsernameChange.bind(this)}
                             />
                         </div>
@@ -67,7 +64,7 @@ export default class CommentInput extends Component{
                     <div className='comment-field'>
                         <span className='comment-field-name'>评论内容：</span>
                         <div className='comment-field-input'>
-                            <textarea ref={(textarea)=> this.textarea=textarea} value={this.state.content} onChange={this.handleContentChange.bind(this)} />
+                            <textarea value={this.state.content} ref={(textarea)=> this.textarea=textarea} onChange={this.handleContentChange.bind(this)} />
                         </div>
                     </div>
                     <div className='comment-field-button'>

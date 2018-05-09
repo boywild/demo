@@ -1,12 +1,13 @@
 import React,{Component} from 'react';
+import PT from 'prop-types';
 import Comment from './Comment';
 
 export default class CommentList extends Component{
     static defaultProps={
         comments:[]
     }
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
     }
     handleDeleteComment(index){
         if(this.props.onDeleteComment){
@@ -15,12 +16,12 @@ export default class CommentList extends Component{
     }
     render(){
         return(
-            <div>
-                {
-                    this.props.comments.map((ele,index)=>{
-                        return (<Comment key={index} comment={ele} index={index} onDeleteComment={this.handleDeleteComment.bind(this)} />);
-                    })
-                }
+            <div>{
+                this.props.comments.map((comments,index)=>{
+                    return <Comment comments={comments} key={index} index={index} onDeleteComment={this.handleDeleteComment.bind(this)}/>
+                })
+            }
+
             </div>
         );
     }
