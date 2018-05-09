@@ -5,12 +5,9 @@ export default class CommentInput extends Component{
     constructor(props){
         super(props);
         this.state={
-            username:'',
+            username:props.username,
             content:''
         }
-    }
-    componentWillMount(){
-        this._loadUsername();
     }
     handleUsernameChange(ev){
         this.setState({
@@ -24,7 +21,10 @@ export default class CommentInput extends Component{
     }
     handleUsernameBlur(ev){
         if(!ev.target.value) return;
-        this._saveUername(ev.target.value);
+        if(this.props.onUserNameInputBlur){
+            this.props.onUserNameInputBlur();
+        }
+        // this._saveUername(ev.target.value);
     }
     handleSubmit(){
         if(this.props.onSubmit){
@@ -35,17 +35,17 @@ export default class CommentInput extends Component{
             content:''
         });
     }
-    _saveUername(username){
-        localStorage.setItem('username',username);
-    }
-    _loadUsername(){
-        let username=localStorage.getItem('username');
-        if(username){
-            this.setState({
-                username
-            });
-        }
-    }
+    // _saveUername(username){
+    //     localStorage.setItem('username',username);
+    // }
+    // _loadUsername(){
+    //     let username=localStorage.getItem('username');
+    //     if(username){
+    //         this.setState({
+    //             username
+    //         });
+    //     }
+    // }
     componentDidMount(){
         this.textarea.focus();
     }

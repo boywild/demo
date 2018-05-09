@@ -2,24 +2,36 @@ const INIT_COMMENTS='INIT_COMMENTS';
 const ADD_COMMENTS='ADD_COMMENTS';
 const DELETE_COMMENTS='DELETE_COMMENTS';
 
-function (state,action){
+export default function(state,action){
     if(!state){
-        state = comments:[]
+        state = {comments:[]}
     }
     switch (action.type) {
         case 'INIT_COMMENTS':
-            comments:action.comments
-            break;
+            return {comments:action.comments}
         case 'ADD_COMMENTS':
-            comments:[...state,action.comments]
-            break;
+            return {
+                comments:[...state,action.comments]
+            }
         case 'DELETE_COMMENTS':
-            comments:[
+            return {
+                comments:[
                 ...state.slice(0,action.commentIndex),
                 ...state.slice(action.commentIndex+1)
-            ]
-            break;
+                ]
+            }
         default:
+        return state;
 
     }
+}
+
+export const initComments=(comments)=>{
+    return{type:'INIT_COMMENTS',comments};
+}
+export const addComments=(comments)=>{
+    return{type:'ADD_COMMENTS',comments};
+}
+export const deleteComments=(commentsIndex)=>{
+    return{type:'DELETE_COMMENTS',commentsIndex};
 }

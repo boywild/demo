@@ -4,7 +4,12 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-import CommentApp from './components/CommentApp';
+import {createStore} from 'redux';
+import { Provider } from 'react-redux';
+import commentsReducer from './reducers/comments-reducer';
+import CommentAppContainers from '../containers/CommentAppContainers';
 
-ReactDOM.render(<CommentApp />, document.getElementById('root'));
+
+var store=createStore(commentsReducer);
+ReactDOM.render(<Provider store={store}><CommentAppContainers /></Provider>, document.getElementById('root'));
 registerServiceWorker();

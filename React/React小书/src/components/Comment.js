@@ -21,7 +21,7 @@ export default class Comment extends Component{
         let duration=(+new Date()-comment.createdTime)/1000;
         this.setState({
             timeString:duration>60
-            ?`${Math.round(duration/60)} 分钟前`
+            ?(duration/60)>60 ? `${Math.round(duration/3600)} 小时前`: `${Math.round(duration/60)} 分钟前`
             :`${Math.round(Math.max(duration,1))} 秒前`
         });
     }
