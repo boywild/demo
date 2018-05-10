@@ -40,7 +40,7 @@ export default class CommentInput extends Component{
             username:username
         });
     }
-    _onBlurSaveUsername(ev){
+    handleUsernameBlur(ev){
         if(!ev.target.value) return;
         localStorage.setItem('username',ev.target.value);
     }
@@ -56,7 +56,7 @@ export default class CommentInput extends Component{
                         <div className='comment-field-input'>
                             <input type="text"
                                 value={this.state.username}
-                                onBlur={this._onBlurSaveUsername.bind(this)}
+                                onBlur={this.handleUsernameBlur.bind(this)}
                                 onChange={this.handleUsernameChange.bind(this)}
                             />
                         </div>

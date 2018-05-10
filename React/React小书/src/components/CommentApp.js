@@ -14,7 +14,7 @@ class CommentApp extends Component{
     componentWillMount(){
         this._loadComment();
     }
-    handleSubmit(comment){
+    handleSubmitComment(comment){
         let commentList=this.state.comments;
         commentList.push(comment);
         this.setState({
@@ -47,7 +47,7 @@ class CommentApp extends Component{
     render(){
         return(
             <div className="wrapper">
-                <CommentInput onSubmit={this.handleSubmit.bind(this)}/>
+                <CommentInput onSubmit={this.handleSubmitComment.bind(this)}/>
                 <CommentList comments={this.state.comments} onDeleteComment={this.handleDeleteComment.bind(this)}/>
             </div>
         );
