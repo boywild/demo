@@ -1,10 +1,12 @@
 import React,{Component} from 'react';
 import PT from 'prop-types';
 import './style.css';
-
-export default class CommentInput extends Component{
-    constructor(props){
-        super(props);
+const propTypes={
+    onSubmit:PT.func
+}
+class CommentInput extends Component{
+    constructor(){
+        super();
         this.state={
             username:'',
             content:''
@@ -12,6 +14,9 @@ export default class CommentInput extends Component{
     }
     componentWillMount(){
         this._loadUsername();
+    }
+    componentDidMount(){
+        this.textarea.focus();
     }
     handleUsernameChange(ev){
         if(!ev.target.value) return;
@@ -36,17 +41,18 @@ export default class CommentInput extends Component{
     }
     _loadUsername(){
         let username=localStorage.getItem('username');
-        this.setState({
-            username:username
-        });
+        if(username){
+            this.setState({
+                username:username
+            });
+        }
+
     }
     handleUsernameBlur(ev){
         if(!ev.target.value) return;
         localStorage.setItem('username',ev.target.value);
     }
-    componentDidMount(){
-        this.textarea.focus();
-    }
+
     render(){
         return(
             <div>
@@ -77,3 +83,5 @@ export default class CommentInput extends Component{
         );
     }
 }
+CommentInput.propTypes=propTypes;
+export default CommentInput;

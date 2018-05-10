@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
-import PT from 'prop-types';
+import {createStore} from 'redux';
+import {connect} from 'react-redux';
 
 import CommentInput from './CommentInput';
 import CommentList from './CommentList';
@@ -15,6 +16,9 @@ class CommentApp extends Component{
         this._loadComment();
     }
     handleSubmitComment(comment){
+        if (!comment) return
+        if (!comment.username) return alert('请输入用户名')
+        if (!comment.content) return alert('请输入评论内容')
         let commentList=this.state.comments;
         commentList.push(comment);
         this.setState({
@@ -31,14 +35,14 @@ class CommentApp extends Component{
         this._saveComment(comments);
     }
     _saveComment(comments){
-        comments=JSON.stringify(comments);
-        localStorage.setItem('comments',comments);
+        localStorage.setItem('comments',JSON.stringify(comments));
     }
     _loadComment(){
         let comments=localStorage.getItem('comments');
         if(comments){
+            comments=JSON.parse(comments);
             this.setState({
-                comments:JSON.parse(comments)
+                comments
             });
         }
 

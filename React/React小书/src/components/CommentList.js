@@ -2,13 +2,12 @@ import React,{Component} from 'react';
 import PT from 'prop-types';
 import Comment from './Comment';
 
-export default class CommentList extends Component{
-    static defaultProps={
-        comments:[]
-    }
-    constructor(props){
-        super(props);
-    }
+const propTypes={
+    comments:PT.array,
+    onDeleteComment:PT.func
+}
+
+class CommentList extends Component{
     handleDeleteComment(index){
         if(this.props.onDeleteComment){
             this.props.onDeleteComment(index);
@@ -26,3 +25,5 @@ export default class CommentList extends Component{
         );
     }
 }
+CommentList.propTypes=propTypes;
+export default CommentList;

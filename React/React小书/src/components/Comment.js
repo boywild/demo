@@ -2,7 +2,13 @@ import React,{Component} from 'react';
 import PT from 'prop-types';
 import './style.css';
 
-export default class Comment extends Component{
+const propTypes={
+    comments:PT.array,
+    index:PT.number,
+    onDeleteComment:PT.func
+}
+
+class Comment extends Component{
     constructor(){
         super();
         this.state={
@@ -33,6 +39,15 @@ export default class Comment extends Component{
             :`${Math.round(Math.max(duration,1))} 秒前`
         });
     }
+    _getProcessedContent(comment){
+        return comment
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;")
+        .replace(/`([\S\s]+?)`/ig,'<code>$1</code>');
+    }
     render(){
         return(
             <div>
@@ -40,7 +55,9 @@ export default class Comment extends Component{
                     <div className='comment-user'>
                         <span className="comment-username">{this.props.comments.username}</span>：
                     </div>
-                    <p>{this.props.comments.content}</p>
+                    <p dangerouslySetInnerHTML={{
+                        __html:this._getProcessedContent(this.props.comments.content)
+                    }}></p>
                     <span className='comment-createdtime'>
                         {this.state.timeString}
                     </span>
@@ -52,3 +69,5 @@ export default class Comment extends Component{
         );
     }
 }
+Comment.propTypes=propTypes;
+export default Comment;
