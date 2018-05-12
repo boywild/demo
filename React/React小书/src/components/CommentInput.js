@@ -5,27 +5,25 @@ const propTypes={
     onSubmit:PT.func
 }
 class CommentInput extends Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state={
-            username:'',
+            username:this.props.username,
             content:''
         }
     }
     componentWillMount(){
-        this._loadUsername();
+        // this._loadUsername();
     }
     componentDidMount(){
         this.textarea.focus();
     }
     handleUsernameChange(ev){
-        if(!ev.target.value) return;
         this.setState({
             username:ev.target.value
         });
     }
     handleContentChange(ev){
-        if(!ev.target.value) return;
         this.setState({
             content:ev.target.value
         });
@@ -39,18 +37,20 @@ class CommentInput extends Component{
             content:''
         });
     }
-    _loadUsername(){
-        let username=localStorage.getItem('username');
-        if(username){
-            this.setState({
-                username:username
-            });
-        }
-
-    }
+    // _loadUsername(){
+    //     let username=localStorage.getItem('username');
+    //     if(username){
+    //         this.setState({
+    //             username:username
+    //         });
+    //     }
+    //
+    // }
     handleUsernameBlur(ev){
         if(!ev.target.value) return;
-        localStorage.setItem('username',ev.target.value);
+        if(this.props.onUserNameInputBlur){
+            this.props.onUserNameInputBlur(ev.target.value);
+        }
     }
 
     render(){

@@ -4,7 +4,7 @@ import './index.css';
 // import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-import CommentApp from './components/CommentApp';
+import CommentApp from './containers/CommentApp';
 
 
 ReactDOM.render(<CommentApp />, document.getElementById('root'));

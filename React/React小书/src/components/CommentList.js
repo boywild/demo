@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import Comment from './Comment';
 
 const propTypes={
-    comments:PT.array,
+    comments:PT.any,
     onDeleteComment:PT.func
 }
 

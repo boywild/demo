@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import './style.css';
 
 const propTypes={
-    comments:PT.array,
+    comments:PT.any,
     index:PT.number,
     onDeleteComment:PT.func
 }

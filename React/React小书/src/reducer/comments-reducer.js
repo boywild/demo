@@ -30,12 +30,12 @@ export default function (state,action) {
     }
 }
 
-const initComments=(comment)=>{
+export const initComments=(comment)=>{
     return {type:'INIT_COMMENTS',comment}
 }
-const addComment=(comment)=>{
+export const addComment=(comment)=>{
     return {type:'ADD_COMMENT',comment}
 }
-const deleteComment=(comment)=>{
-    return {type:'DELETE_COMMENT',comment}
+export const deleteComment=(commentIndex)=>{
+    return {type:'DELETE_COMMENT',commentIndex}
 }
