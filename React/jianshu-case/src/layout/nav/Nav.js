@@ -5,11 +5,20 @@ let propTypes={
     loginOut:PT.func
 };
 export default function Nav(props) {
-    let {myInfo,loginOut}=props;
+    let {myInfo,loginOut,history,initMyPage}=props;
+
     let navGroup=null;
     if(myInfo){
         navGroup=(
-            <NavLink to="/my_page" className={`${S.avatar} item`} activeClassName="active">
+            <NavLink to="/my_page"
+                onClick={ev=>{
+                    ev.stopPropagation();
+                    ev.preventDefault();
+                    history.push('/my_page',{userInfo:myInfo});
+                    initMyPage(user_id,{user_id},'所有文章')
+                }}
+                className={`${S.avatar} item`}
+            activeClassName="active">
                 <img src={myInfo.avatar} className="ui image avatar" alt=""/>
                 <div className={S.dropDown} onClick={(ev)=>{
                     ev.stopPropagation();

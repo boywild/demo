@@ -29,11 +29,17 @@ export default class Layout extends React.Component{
         this.changePreviewsName=this.changePreviewsName.bind(this);
     }
     initMyInfo(myInfo){
+        let {avatar,username,id,user_intro}=myInfo;
         if(myInfo){
-            myInfo.avatar=cfg.url+myInfo.avatar;
+            avatar=cfg.url+avatar;
         }
         this.setState({
-            myInfo
+            myInfo:{
+                user_name:username,
+                user_id:id,
+                user_intro:user_intro,
+                avatar:avatar
+            }
         });
     }
     clearLoginMsg(){
@@ -67,7 +73,6 @@ export default class Layout extends React.Component{
     loginOut(){
         $.post(`${cfg.url}/logout`)
         .done(({code})=>{
-            console.log();
             if(code===0){
                 this.initMyInfo(null)
             }
@@ -89,6 +94,7 @@ export default class Layout extends React.Component{
             user_id
         })
         .done(({code,data})=>{
+
             if(code===0){
                 this.setState({
                     notebooks:data,
@@ -106,7 +112,6 @@ export default class Layout extends React.Component{
         $.post(`${cfg.url}/autologin`)
         .done((res)=>{
             let {code ,data}=res;
-            console.warn(res);
             if(code===0){
                 this.initMyInfo(data);
             }
@@ -114,20 +119,29 @@ export default class Layout extends React.Component{
                 hasloginReq:true
             });
         });
+        let {state,pathname}=this.props.location;
+        if(state){
+            let {user_id}=state.userInfo;
+            if(pathname==='/my_page'){
+                this.initMyPage(user_id,{user_id},'所有文章');
+            }
+
+        }
     }
     render(){
         let {signInAjax,signUpAjax,clearLoginMsg,loginOut,initMyPage}=this;
         let {singInMsg,signUpMsg,myInfo,hasloginReq,previewsName,myPagePreview,notebooks}=this.state;
+        let {history}=this.props;
         if(!hasloginReq){
             return (<div></div>);
         }
         return (
             <div className={S.layout}>
-                <Nav {...{myInfo,loginOut}} />
+                <Nav {...{myInfo,loginOut,initMyPage,history}} />
                 <Route exact path="/" render={
                     (props)=>(
                         <Home
-                            {...{initMyPage}}
+                            {...{initMyPage,history}}
                             {...props}
                         />
                     )
@@ -150,10 +164,15 @@ export default class Layout extends React.Component{
                 }/>
                 <Route exact path="/my_page" render={
                     (props)=>(
-                        <MyPage
-                            {...{previewsName,myPagePreview,notebooks}}
-                            {...props}
-                        />
+                        props.location.state
+                            ?(<MyPage
+                                {...{previewsName,myPagePreview,notebooks}}
+                                {...props}
+                              />
+                            ):(
+                                <Redirect to="/" />
+                            )
+
                     )
                 }/>
             </div>

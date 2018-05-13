@@ -9,6 +9,13 @@ export default class Home extends React.Component{
             previews:[],
             authors:[]
         }
+        this.collectionClick=this.collectionClick.bind(this);
+    }
+    collectionClick(collection_id,collection_name,userInfo){
+        let {history,initMyPage}=this.props;
+        history.push('/my_page',{userInfo});
+        initMyPage(userInfo.user_id,{collection_id},collection_name);
+        console.log(collection_id,collection_name,userInfo);
     }
     componentDidMount(){
         $.post(`${cfg.url}/getPreview`)
@@ -30,15 +37,16 @@ export default class Home extends React.Component{
            });
     }
     render(){
+        let {collectionClick}=this;
         let {previews,authors}=this.state;
-        let {initMyPage}=this.props;
+        let {initMyPage,history}=this.props;
         return(
             <div className="ui container grid">
                 <div className="column twelve wide">
-                    <PreviewList {...{previews,initMyPage}}/>
+                    <PreviewList {...{previews,initMyPage,collectionClick}}/>
                 </div>
                 <div className="column four wide">
-                    <Recommend {...{authors}}/>
+                    <Recommend {...{authors,initMyPage,history}}/>
                 </div>
             </div>
         );

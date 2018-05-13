@@ -4,7 +4,7 @@ import S from './Preview.scss';
 import cfg from 'config/config.json';
 
 export default function PreviewList(props){
-    let {previews,initMyPage}=props
+    let {previews,initMyPage,collectionClick}=props
     previews=previews.map((ele,i)=>{
         let {
             id: article_id, article_title,
@@ -30,7 +30,26 @@ export default function PreviewList(props){
                 user_intro,
                 initMyPage
             }} key={i}>
-                <Link to="" className={`${S.tag}`}>{collection_name}</Link>
+                {
+                    collection_id
+                        ?(
+                            <Link to=""
+                                onClick={
+                                    ev=>{
+                                        ev.stopPropagation();
+                                        ev.preventDefault();
+                                        collectionClick&&collectionClick(collection_id,collection_name,{
+                                            user_id,user_name,avatar
+                                        });
+                                    }
+                                }
+                                className={`${S.tag}`}>
+                                {collection_name}
+                            </Link>
+                        )
+                        :null
+                }
+
             </Preview>
         );
     });

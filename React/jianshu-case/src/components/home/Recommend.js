@@ -13,7 +13,7 @@ export default function Recommend({authors}){
                 {
                     authors.map((ele,i)=>{
                         return(
-                            <Author {...{user:ele}} key={i}/>
+                            <Author {...{user:ele,history}} key={i}/>
                         );
                     })
                 }
