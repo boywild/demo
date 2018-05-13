@@ -29,7 +29,7 @@ class CommentInputContainers extends Component{
         if (!comment) return
         if (!comment.username) return alert('请输入用户名')
         if (!comment.content) return alert('请输入评论内容')
-
+        console.log(this.props.comments);
         let commentList=this.props.comments;
         let newComments=[
             ...commentList,

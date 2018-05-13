@@ -6,12 +6,12 @@ import CommentInputContainers from './CommentInputContainers';
 import CommentListContainers from './CommentListContainers';
 
 class CommentApp extends Component{
-    constructor(){
-        super();
+    // constructor(){
+        // super();
         // this.state={
         //     comments:[]
         // }
-    }
+    // }
     // componentWillMount(){
     //     this._loadComment();
     // }

@@ -109,7 +109,7 @@ mongoose.connect('mongodb://localhost:27017/blog',function (err) {
     }else{
         console.log('数据库链接成功');
         //监听端口
-        app.listen('3000');
+        app.listen('3008');
     }
 });
 

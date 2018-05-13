@@ -10,12 +10,13 @@ export default function (state,action) {
     }
     switch (action.type) {
         case INIT_COMMENTS:
+
             return {comments:action.comments}
         case ADD_COMMENT:
             return {
                 comments:[
-                    ...state,
-                    action.comments
+                    ...state.comments,
+                    action.comment
                 ]
             }
         case DELETE_COMMENT:
@@ -30,8 +31,8 @@ export default function (state,action) {
     }
 }
 
-export const initComments=(comment)=>{
-    return {type:'INIT_COMMENTS',comment}
+export const initComments=(comments)=>{
+    return {type:'INIT_COMMENTS',comments}
 }
 export const addComment=(comment)=>{
     return {type:'ADD_COMMENT',comment}
