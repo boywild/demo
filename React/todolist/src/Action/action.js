@@ -3,9 +3,9 @@ const TOGGLE_TODO='TOGGLE_TODO';
 const SET_VISIBILITY_FILTER='SET_VISIBILITY_FILTER';
 
 
-const visibilityFilters={
+const VisibilityFilters={
     SHOW_ALL:'SHOW_ALL',
-    SHOW_COMPLETE:'SHOW_COMPLETE',
+    SHOW_COMPLETED:'SHOW_COMPLETE',
     SHOW_ACTIVE:'SHOW_ACTIVE'
 }
 
@@ -22,4 +22,4 @@ const setVisibilityFilter=(filter)=>{
 }
 
 
-export {ADD_TODO,TOGGLE_TODO,SET_VISIBILITY_FILTER,visibilityFilters,addTodo,toggleTodo,setVisibilityFilter}
+export {ADD_TODO,TOGGLE_TODO,SET_VISIBILITY_FILTER,VisibilityFilters,addTodo,toggleTodo,setVisibilityFilter}
