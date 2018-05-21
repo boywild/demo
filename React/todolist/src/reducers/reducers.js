@@ -1,18 +1,21 @@
 import {combineReducers} from 'redux';
 import {ADD_TODO,TOGGLE_TODO,SET_VISIBILITY_FILTER,VisibilityFilter} from '../actions/actions';
 
+let todoId=0;
+
 const todos=(state=[],action)=>{
     switch (action.type) {
         case ADD_TODO:
             return [
                 ...state,
                 {
+                    id:todoId++,
                     text:action.text,
                     completed:false
                 }
             ]
         case TOGGLE_TODO:
-            return state.todos.map((todo,index)=>{
+            return state.map((todo,index)=>{
                 if(index===action.index){
                     return {
                         ...todo,

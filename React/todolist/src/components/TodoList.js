@@ -1,9 +1,9 @@
 import React from 'react';
 import Todo from './Todo';
 
-const TodoList=({todos,togogleTodo})=>(
+const TodoList=({todos,toggleTodo})=>(
     todos.map((todo,index)=>(
-        <Todo key={index} {...todo} onClick={()=> togogleTodo(index)}/>
+        <Todo key={todo.id} {...todo} onClick={()=> toggleTodo(todo.id)}/>
     ))
 );
 
