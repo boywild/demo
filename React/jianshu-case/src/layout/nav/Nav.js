@@ -9,6 +9,7 @@ export default function Nav(props) {
 
     let navGroup=null;
     if(myInfo){
+        let {user_id}=myInfo;
         navGroup=(
             <NavLink to="/my_page"
                 onClick={ev=>{

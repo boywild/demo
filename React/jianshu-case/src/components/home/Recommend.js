@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom';
 import Author from './Author';
 import S from './Recommend.scss';
 
-export default function Recommend({authors}){
+export default function Recommend({authors,history,initMyPage}){
     // authors=[];
     return(
         <div className={S.recommend}>
@@ -13,7 +13,7 @@ export default function Recommend({authors}){
                 {
                     authors.map((ele,i)=>{
                         return(
-                            <Author {...{user:ele,history}} key={i}/>
+                            <Author {...{user:ele,history,initMyPage}} key={i}/>
                         );
                     })
                 }

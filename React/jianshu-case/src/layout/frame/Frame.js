@@ -4,6 +4,8 @@ import Home from 'view/home/Home.js';
 import SignUp from 'view/user/SignUp';
 import SignIn from 'view/user/SignIn';
 import MyPage from 'view/user/MyPage';
+import AddNewArticle from 'view/write/AddNewArticle';
+import WriteHint from 'view/write/WriteHint';
 import cfg from 'config/config.json';
 import S from './frame.scss';
 
@@ -27,20 +29,21 @@ export default class Layout extends React.Component{
         this.getPreview=this.getPreview.bind(this);
         this.initMyPage=this.initMyPage.bind(this);
         this.changePreviewsName=this.changePreviewsName.bind(this);
+        this.updateUserIntro=this.updateUserIntro.bind(this);
     }
     initMyInfo(myInfo){
-        let {avatar,username,id,user_intro}=myInfo;
+
         if(myInfo){
+            let {avatar,username,id,user_intro}=myInfo;
             avatar=cfg.url+avatar;
-        }
-        this.setState({
-            myInfo:{
+            myInfo={
                 user_name:username,
                 user_id:id,
                 user_intro:user_intro,
                 avatar:avatar
             }
-        });
+        }
+        this.setState({myInfo});
     }
     clearLoginMsg(){
         this.setState({
@@ -78,18 +81,19 @@ export default class Layout extends React.Component{
             }
         })
     }
-    getPreview(data){
+    getPreview(data,previewsName){
         $.post(`${cfg.url}/getPreview`,data)
         .done(({code,data})=>{
             if(code===0){
                 this.setState({
-                    myPagePreview:data
+                    myPagePreview:data,
+                    previewsName
                 });
             }
         })
     }
     initMyPage(user_id,previewsData,previewsName){
-        this.getPreview(previewsData);
+        this.getPreview(previewsData,previewsName);
         $.post(`${cfg.url}/getCollection`,{
             user_id
         })
@@ -98,7 +102,6 @@ export default class Layout extends React.Component{
             if(code===0){
                 this.setState({
                     notebooks:data,
-                    previewsName
                 });
             }
         })
@@ -128,8 +131,15 @@ export default class Layout extends React.Component{
 
         }
     }
+    updateUserIntro(userIntro){
+        let {myInfo}=this.state;
+        myInfo.user_intro=userIntro;
+        this.setState({
+            myInfo
+        });
+    }
     render(){
-        let {signInAjax,signUpAjax,clearLoginMsg,loginOut,initMyPage}=this;
+        let {signInAjax,signUpAjax,clearLoginMsg,loginOut,initMyPage,getPreview,updateUserIntro}=this;
         let {singInMsg,signUpMsg,myInfo,hasloginReq,previewsName,myPagePreview,notebooks}=this.state;
         let {history}=this.props;
         if(!hasloginReq){
@@ -166,7 +176,7 @@ export default class Layout extends React.Component{
                     (props)=>(
                         props.location.state
                             ?(<MyPage
-                                {...{previewsName,myPagePreview,notebooks}}
+                                {...{previewsName,myPagePreview,notebooks,getPreview,initMyPage,history,myInfo,updateUserIntro}}
                                 {...props}
                               />
                             ):(
@@ -175,6 +185,21 @@ export default class Layout extends React.Component{
 
                     )
                 }/>
+                <Route path="/write" render={
+                    (props)=>(
+                        myInfo?(
+                            <AddNewArticle {...{myInfo}} />
+                        ):(
+                            <Redirect to="/write_hint" />
+                        )
+
+                    )
+                } />
+                <Route path="/write_hint" render={
+                    (props)=>(
+                        <WriteHint {...{history}}/>
+                    )
+                } />
             </div>
         );
     }

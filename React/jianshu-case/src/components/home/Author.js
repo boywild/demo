@@ -1,9 +1,8 @@
 import {Link} from 'react-router-dom';
 import cfg from 'config/config';
 
-export default function Author({user},history){
+export default function Author({user,history,initMyPage}){
     let {user_name,user_intro,avatar,id:user_id}=user;
-    console.log(user)
     avatar=cfg.url+avatar;
     return(
         <div className="item">
@@ -11,7 +10,7 @@ export default function Author({user},history){
                 onClick={
                     ev=>{
                         ev.stopPropagation();
-                        ev.stopPropagation();
+                        ev.preventDefault();
                         history.push('/my_page',{userInfo:{
                             user_name,
                             user_intro,
