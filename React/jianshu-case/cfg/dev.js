@@ -16,7 +16,7 @@ let config = Object.assign(dfConfig, {
             jQuery: 'jquery',
             React: 'react',
             ReactDOM: 'react-dom',
-            PT: 'prop-types'
+            propTypes: 'prop-types'
         })
     ],
 
