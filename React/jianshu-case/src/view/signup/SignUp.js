@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Panle from 'components/public/user/panle';
-import SignUp from 'components/public/user/SignUp';
+import SignUpPanle from 'components/public/user/SignUpPanle';
 
-export default class SignUpPanle extends Component {
+export default class SignUp extends Component {
     // static propTypes = {
 
     // }
@@ -12,7 +12,7 @@ export default class SignUpPanle extends Component {
         return (
             <div>
                 <Panle>
-                    <SignUp />
+                    <SignUpPanle />
                 </Panle>
             </div>
         )
