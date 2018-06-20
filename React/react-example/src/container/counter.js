@@ -2,23 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import Counter from '../component/Counter'
-import {increment,decrement} from '../action/counter';
+import {increment,decrement} from '../action/counter'
 
-
-// @connect(mapStateToProps,mapDispatchToProps)
-class CounterContainer extends Component {
-    // static propTypes = {
-
-    // }
-
-    render() {
-        return (
-            <div>
-                <Counter />counter
-            </div>
-        )
-    }
-}
 const mapStateToProps=(state=0)=>({
     value:state
 })
@@ -30,4 +15,4 @@ const mapDispatchToProps=(dispatch)=>({
         dispatch(decrement(count))
     )
 });
-export default connect(mapStateToProps,mapDispatchToProps)(Counter);;
+export default connect(mapStateToProps,mapDispatchToProps)(Counter);

@@ -8,8 +8,6 @@
 
 const INCREMENT='INCREMENT';
 const DECREMENT='DECREMENT';
-// const INCREMENTIFODD='INCREMENTIFODD';
-// const INCREMENTASYNC='INCREMENTASYNC';
 
 /**
  * action creator
@@ -17,6 +15,5 @@ const DECREMENT='DECREMENT';
 
 const increment=(count)=>({type:INCREMENT,count})
 const decrement=(count)=>({type:DECREMENT,count})
-// const incrementIfOdd=(count)=>({type:INCREMENTIFODD,count})
-// const incrementAsync=(count)=>({type:INCREMENTIFODD,count})
+
 export {increment,decrement,INCREMENT,DECREMENT};
