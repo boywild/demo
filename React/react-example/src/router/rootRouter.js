@@ -7,6 +7,7 @@ import {
 
 import Home from '../view/home';
 import Demo1 from '../view/demo1';
+import Demo2 from '../view/demo2';
 
 export default class RootRouter extends Component {
 
@@ -14,7 +15,9 @@ export default class RootRouter extends Component {
         return (
             <div>
                 <Route exact path="/" component={Home}></Route>
+                <Route exact path="/home" component={Home}></Route>
                 <Route exact path="/demo1" component={Demo1}></Route>
+                <Route exact path="/demo2" component={Demo2}></Route>
             </div>
         )
     }

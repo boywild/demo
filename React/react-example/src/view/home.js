@@ -6,6 +6,7 @@ import {
     Link
 } from 'react-router-dom'
 
+import S from './style.css';
 
 export default class Home extends Component {
     // static propTypes = {
@@ -16,6 +17,7 @@ export default class Home extends Component {
         return (
             <div>
                 <Link to='/demo1'>counter</Link>
+                <Link to='/demo2'>shopping-cart</Link>
             </div>
         )
     }

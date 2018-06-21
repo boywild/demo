@@ -12,13 +12,14 @@ import RootRouter from './router/rootRouter'
 import {createStore} from 'redux'
 import {Provider} from 'react-redux'
 // import rootReducer from './reducer/rootReducer'
-import counterReducer from './reducer/counter'
+// import counterReducer from './reducer/counter'
+import rootReducer from './reducer/rootReducer'
 import {composeWithDevTools} from 'redux-devtools-extension'
 
 
 
 let store=createStore(
-    counterReducer,
+    rootReducer,
     composeWithDevTools()
 )
 

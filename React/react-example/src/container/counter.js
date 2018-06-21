@@ -4,8 +4,8 @@ import {connect} from 'react-redux'
 import Counter from '../component/Counter'
 import {increment,decrement} from '../action/counter'
 
-const mapStateToProps=(state=0)=>({
-    value:state
+const mapStateToProps=(state)=>({
+    value:state.counter
 })
 const mapDispatchToProps=(dispatch)=>({
     onIncrement:(count)=>(
