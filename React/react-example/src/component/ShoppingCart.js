@@ -9,9 +9,10 @@ export default class ShoppingCart extends Component {
     render() {
         return (
             <div>
-                <per>
+                <pre>
                 {
-                    `{
+                    `
+                    {
                         product: 'bread 700g',
                         quantity: 2,
                         unitCost: 90,
@@ -49,7 +50,7 @@ export default class ShoppingCart extends Component {
                     }
                     `
                 }
-                </per><br/>
+                </pre><br/>
                 <label>product:</label><input type="text" /><br/>
                 <label>quantity:</label><input type="number" /><br/>
                 <label>unitCost:</label><input type="number" /><br/>

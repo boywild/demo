@@ -1,6 +1,6 @@
 h1,h2,h3,h4,p{padding: 0;margin: 0;}
 a{margin-right: 10px;}
-per{background: #000;color: #fff;}
+pre{background: #000;color: #fff;font-size: 14px;font-family: sans-serif;}
 ::selection{
     background: pink;
 }
