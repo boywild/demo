@@ -1,3 +1,10 @@
+/*
+ * @Author: chentian 
+ * @Date: 2018-06-24 14:39:34 
+ * @Last Modified by:   chentian 
+ * @Last Modified time: 2018-06-24 14:39:34 
+ */
+
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 

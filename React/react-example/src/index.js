@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+// import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 import {
-    BrowserRouter as Router,
-    Route
+    BrowserRouter as Router
 } from 'react-router-dom'
 import RootRouter from './router/rootRouter'
 import {createStore} from 'redux'
@@ -22,6 +21,9 @@ let store=createStore(
     rootReducer,
     composeWithDevTools()
 )
+store.subscribe(()=>{
+    console.log(store.getState());
+})
 
 ReactDOM.render(
     <Provider store={store}>

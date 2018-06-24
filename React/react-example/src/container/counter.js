@@ -1,5 +1,10 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+/*
+ * @Author: chentian 
+ * @Date: 2018-06-24 14:39:38 
+ * @Last Modified by: chentian
+ * @Last Modified time: 2018-06-24 14:42:06
+ */
+
 import {connect} from 'react-redux'
 import Counter from '../component/Counter'
 import {increment,decrement} from '../action/counter'

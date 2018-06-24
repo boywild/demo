@@ -2,7 +2,7 @@
  * @Author: chentian 
  * @Date: 2018-06-21 22:38:23 
  * @Last Modified by: chentian
- * @Last Modified time: 2018-06-21 23:11:20
+ * @Last Modified time: 2018-06-24 14:39:06
  */
 
 export const ADD_CART = 'ADD_CART';
@@ -25,5 +25,10 @@ export const updateCart = (product, quantity, unitCost) => ({
         product, quantity, unitCost
     }
 })
-export const deleteCart = (product) => ({ type: DELETE_CART, product })
+export const deleteCart = (product) => ({
+    type: DELETE_CART,
+    payload: {
+        product
+    }
+})
 

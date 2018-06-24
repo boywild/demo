@@ -1,62 +1,79 @@
+/*
+ * @Author: chentian 
+ * @Date: 2018-06-24 11:16:34 
+ * @Last Modified by: chentian
+ * @Last Modified time: 2018-06-24 14:33:23
+ */
+
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 export default class ShoppingCart extends Component {
-    // static propTypes = {
-
-    // }
-
+    static propTypes = {
+        addList:PropTypes.array,
+        updateList:PropTypes.array,
+        deleteList:PropTypes.array
+    }
+    constructor(){
+        super();
+        this.addChange=this.addChange.bind(this);
+        this.updateChange=this.updateChange.bind(this);
+        this.deleteChange=this.deleteChange.bind(this);
+    }
+    addChange(event){
+        const addObj=this.props.addList.filter((item,index)=>{
+            return item.product===event.target.value;
+        });
+        const {product, quantity, unitCost}={...addObj[0]};
+        this.props.addToCart(product, quantity, unitCost)
+    }
+    updateChange(event){
+        const updateObj=this.props.updateList.filter((item,index)=>{
+            return item.product===event.target.value;
+        });
+        const {product, quantity, unitCost}={...updateObj[0]};
+        this.props.updateToCart(product, quantity, unitCost)
+    }
+    deleteChange(event){
+        const deleteObj=this.props.deleteList.filter((item,index)=>{
+            return item.product===event.target.value;
+        });
+        const {product}={...deleteObj[0]};
+        this.props.deleteFromCart(product)
+    }
     render() {
         return (
             <div>
-                <pre>
-                {
-                    `
-                    {
-                        product: 'bread 700g',
-                        quantity: 2,
-                        unitCost: 90,
-                        type:ADD
-                    },{
-                        product: 'milk 500ml',
-                        quantity: 1,
-                        unitCost: 47,
-                        type:ADD
-                    },{
-                        product: 'Coffee 500gm',
-                        quantity: 1,
-                        unitCost: 250,
-                        type:ADD
-                    },{
-                        product: 'Flour 1kg',
-                        quantity: 2,
-                        unitCost: 110,
-                        type:ADD
-                    },{
-                        product: 'Juice 2L',
-                        quantity: 1,
-                        unitCost: 250,
-                        type:ADD
-                    },{
-                        product: 'milk 500ml',
-                        quantity: 5,
-                        unitCost: 110
-                        type:UPDATE
-                    },{
-                        product: 'Coffee 500gm',
-                        quantity: 11,
-                        unitCost: 150,
-                        type:UPDATE
-                    }
-                    `
-                }
-                </pre><br/>
-                <label>product:</label><input type="text" /><br/>
-                <label>quantity:</label><input type="number" /><br/>
-                <label>unitCost:</label><input type="number" /><br/>
-                <button>add</button>
-                <button>update</button>
-                <button>delete</button>                
+                <label>
+                    <button>add</button>
+                    <select onChange={this.addChange}>
+                        {
+                            this.props.addList.map((item,index)=>{
+                                return (<option key={index}>{item.product}</option>)
+                            })
+                        }
+                    </select>
+                </label><br/>
+                <label>
+                    <button>update</button>
+                    <select onChange={this.updateChange}>
+                        {
+                            this.props.updateList.map((item,index)=>{
+                                return (<option key={index}>{item.product}</option>)
+                            })
+                        }
+                    </select>
+                </label><br/>
+                <label>
+                    <button>delete</button>
+                    <select onChange={this.deleteChange}>
+                        {
+                            this.props.deleteList.map((item,index)=>{
+                                return (<option key={index}>{item.product}</option>)
+                            })
+                        }
+                    </select>
+                </label>              
             </div>
         )
     }
