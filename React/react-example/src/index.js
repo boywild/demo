@@ -8,23 +8,29 @@ import {
     BrowserRouter as Router
 } from 'react-router-dom'
 import RootRouter from './router/rootRouter'
-import {createStore} from 'redux'
-import {Provider} from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux'
+import thunkMiddleware from 'redux-thunk'
 // import rootReducer from './reducer/rootReducer'
 // import counterReducer from './reducer/counter'
 import rootReducer from './reducer/rootReducer'
-import {composeWithDevTools} from 'redux-devtools-extension'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import { selectSubreddit, fetchPosts } from './action/subreddit'
 
 
 
-let store=createStore(
+let store = createStore(
     rootReducer,
-    composeWithDevTools()
+    composeWithDevTools(
+        applyMiddleware(
+            thunkMiddleware
+        ))
 )
-store.subscribe(()=>{
+store.subscribe(() => {
     console.log(store.getState());
 })
-
+store.dispatch(fetchPosts('reactjs'))
+    .then(() => console.log(store.getState()))
 ReactDOM.render(
     <Provider store={store}>
         <Router>
