@@ -2,7 +2,7 @@
  * @Author: chentian 
  * @Date: 2018-06-24 22:04:51 
  * @Last Modified by: chentian
- * @Last Modified time: 2018-06-24 23:12:25
+ * @Last Modified time: 2018-07-04 20:43:58
  */
 
 /**
@@ -33,7 +33,12 @@ export function requestPost(subreddit) {
     return { type: REQUEST_POSTS, subreddit }
 }
 export function receivePost(subreddit, json) {
-    return { type: RECEIVE_POSTS, subreddit, posts: json.data.children.map(child => child.data), receiveAt: Date.now() }
+    return {
+        type: RECEIVE_POSTS,
+        subreddit,
+        posts: json.data.children.map(child => child.data),
+        receiveAt: Date.now()
+    }
 }
 
 export function fetchPosts(subreddit) {

@@ -2,7 +2,7 @@
  * @Author: chentian 
  * @Date: 2018-06-24 14:40:16 
  * @Last Modified by: chentian
- * @Last Modified time: 2018-06-24 15:52:44
+ * @Last Modified time: 2018-07-04 20:17:03
  */
 
 h1,h2,h3,h4,p{padding: 0;margin: 0;}
@@ -12,3 +12,6 @@ pre{background: #000;color: #fff;font-size: 14px;font-family: sans-serif;text-al
     background: pink;
 }
 button{margin: 0 5px;}
+.navlink a{
+    margin-right:10px;
+}
