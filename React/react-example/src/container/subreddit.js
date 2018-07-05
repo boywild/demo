@@ -3,38 +3,38 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Picker from '../component/subreddit/Picker'
 import Posts from '../component/subreddit/Posts'
-import {fetchPosts} from '../action/subreddit'
+import { fetchPosts, selectSubreddit } from '../action/subreddit'
 
 
 class Subreddit extends Component {
     static propTypes = {
         isFetching: PropTypes.bool,
         didInvalidate: PropTypes.bool,
-        items: PropTypes.array,
+        items: PropTypes.array
     };
 
     componentWillMount() {
-        const { dispatch, selectedSubreddit } = this.props
-        dispatch(fetchPosts(selectedSubreddit))
+        this.props.fetchPosts(this.props.selectedSubreddit);
     }
 
     handleSelectChange(value) {
         console.log(value);
+        this.props.selectSubreddit(value);
     }
     render() {
-        const { isFetching, posts, lastUpdate, selectedSubreddit } = this.props;
+        const { isFetching, posts, lastUpdated, selectedSubreddit } = this.props;
         return (
             <div>
                 <Picker
-                    selectChange={this.handleSelectChange}
+                    selectChange={e => this.handleSelectChange(e)}
                     options={['reactjs', 'frontend']}
                     title={selectedSubreddit}
                 />
                 <div className='reddit-info' style={{ marginTop: '15px' }}>
                     <span>Last updated at
-                        <i>
-                            {new Date(lastUpdate).toLocaleTimeString()}
-                        </i>
+                        <b>
+                            {new Date(lastUpdated).toLocaleTimeString()}
+                        </b>
                     </span>
                     <button>Refresh</button>
                 </div>
@@ -54,4 +54,8 @@ const mapStateToProps = state => {
         posts
     }
 }
-export default connect(mapStateToProps)(Subreddit);
+const mapDispatchToProps = dispatch => ({
+    fetchPosts: (value) => dispatch(fetchPosts(value)),
+    selectSubreddit: (value) => dispatch(selectSubreddit(value))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(Subreddit);

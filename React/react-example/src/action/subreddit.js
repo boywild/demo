@@ -2,7 +2,7 @@
  * @Author: chentian 
  * @Date: 2018-06-24 22:04:51 
  * @Last Modified by: chentian
- * @Last Modified time: 2018-07-05 20:07:01
+ * @Last Modified time: 2018-07-05 23:38:27
  */
 
 /**
@@ -23,18 +23,16 @@ export const RECEIVE_POSTS = 'RECEIVE_POSTS'
  * action creater
  */
 
-export const selectSubreddit = (subreddit) => { type: SELECT_SUBREDDIT, subreddit };
-export const invalidateSubreddit = (subreddit) => { type: INVALIDATE_SUBREDDIT, subreddit };
+export const selectSubreddit = (subreddit) => ({ type: SELECT_SUBREDDIT, subreddit });
+export const invalidateSubreddit = (subreddit) => ({ type: INVALIDATE_SUBREDDIT, subreddit });
 export const requestPosts = (subreddit) => ({
     type: REQUEST_POSTS,
-    isFetching: true,
-    didInvalidate: true
+    subreddit
 });
 export const receivePosts = (subreddit, json) => ({
     type: RECEIVE_POSTS,
-    isFetching: false,
-    didInvalidate: false,
-    lastUpdated: Date.now(),
+    subreddit,
+    receivedAt: Date.now(),
     posts: json.data.children.map((child) => child.data)
 });
 
