@@ -28,13 +28,6 @@ let store = createStore(
             loggerMiddleware
         ))
 )
-store.dispatch(selectSubreddit('reactjs'))
-store.dispatch(fetchPosts('reactjs'))
-    .then(() => console.log(store.getState()))
-store.subscribe(() => {
-    console.log(store.getState());
-})
-
 ReactDOM.render(
     <Provider store={store}>
         <Router>

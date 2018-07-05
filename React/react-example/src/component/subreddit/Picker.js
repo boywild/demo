@@ -1,30 +1,27 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
-export default class Picker extends Component {
-    render() {
-        const { value, onChange, options } = this.props
+const propTypes = {
+    title: PropTypes.string,
+    selectChange: PropTypes.func,
+    options: PropTypes.array
+};
 
-        return (
-            <span>
-                <h1>{value}</h1>
-                <select onChange={e => onChange(e.target.value)}
-                    value={value}>
-                    {options.map(option =>
-                        <option value={option} key={option}>
-                            {option}
-                        </option>)
-                    }
-                </select>
-            </span>
-        )
-    }
+function Picker({title,selectChange,options}) {
+    return (
+        <div className='reddit' style={{ paddingLeft: '10px' }}>
+            <h1 style={{ marginBottom: '15px' }}>{title}</h1>
+            <select value={title} onChange={e => selectChange(e.target.value)}>
+            {
+                options.map((option)=>(
+                    <option value={option} key={option}>{option}</option>
+                ))
+            }
+            </select>
+        </div>
+    )
 }
 
-Picker.propTypes = {
-    options: PropTypes.arrayOf(
-        PropTypes.string.isRequired
-    ).isRequired,
-    value: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired
-}
+Picker.propTypes = propTypes;
+
+export default Picker;

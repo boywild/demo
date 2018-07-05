@@ -2,14 +2,14 @@
  * @Author: chentian 
  * @Date: 2018-06-24 14:39:47 
  * @Last Modified by: chentian
- * @Last Modified time: 2018-07-04 20:13:35
+ * @Last Modified time: 2018-07-05 20:08:48
  */
 
 import { combineReducers } from 'redux'
 import counterReducer from './counter'
 import shoppingCartReducer from './shoppingCart'
 import { todoListReducer, filterReducer } from './todoList'
-import { postsBySubreddit, selecteSubreddit } from './subreddit'
+import { postsBySubreddit, selectedSubreddit } from './subreddit'
 
 
 const allReducers = {
@@ -18,7 +18,7 @@ const allReducers = {
     todoList: todoListReducer,
     filter: filterReducer,
     postsBySubreddit,
-    selecteSubreddit
+    selectedSubreddit
 }
 
 const rootReducer = combineReducers(allReducers)
