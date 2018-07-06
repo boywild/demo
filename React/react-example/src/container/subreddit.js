@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Picker from '../component/subreddit/Picker'
 import Posts from '../component/subreddit/Posts'
-import { fetchPosts, selectSubreddit } from '../action/subreddit'
+import { fetchPosts, selectSubreddit, invalidateSubreddit } from '../action/subreddit'
 
 
 class Subreddit extends Component {
@@ -16,10 +16,19 @@ class Subreddit extends Component {
     componentWillMount() {
         this.props.fetchPosts(this.props.selectedSubreddit);
     }
-
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.selectedSubreddit !== this.props.selectedSubreddit) {
+            this.props.fetchPosts(nextProps.selectedSubreddit);
+        }
+    }
     handleSelectChange(value) {
         console.log(value);
         this.props.selectSubreddit(value);
+    }
+    handleRefresh(e) {
+        e.preventDefault();
+        this.props.invalidateSubreddit(this.props.selectedSubreddit);
+        this.props.fetchPosts(this.props.selectedSubreddit);
     }
     render() {
         const { isFetching, posts, lastUpdated, selectedSubreddit } = this.props;
@@ -33,13 +42,22 @@ class Subreddit extends Component {
                 <div className='reddit-info' style={{ marginTop: '15px' }}>
                     <span>Last updated at
                         <b>
-                            {new Date(lastUpdated).toLocaleTimeString()}
+                            {
+                                lastUpdated
+                                    ? new Date(lastUpdated).toLocaleTimeString()
+                                    : ''
+                            }
                         </b>
                     </span>
-                    <button>Refresh</button>
+                    <button onClick={e => this.handleRefresh(e)}>Refresh</button>
                 </div>
 
                 <Posts posts={posts} />
+                {
+                    isFetching
+                        ? <h2>isLoading</h2>
+                        : ''
+                }
             </div>
         )
     }
@@ -56,6 +74,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => ({
     fetchPosts: (value) => dispatch(fetchPosts(value)),
-    selectSubreddit: (value) => dispatch(selectSubreddit(value))
+    selectSubreddit: (value) => dispatch(selectSubreddit(value)),
+    invalidateSubreddit: (value) => dispatch(invalidateSubreddit(value))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Subreddit);
