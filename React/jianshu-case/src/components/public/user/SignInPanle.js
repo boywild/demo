@@ -12,7 +12,7 @@ import S from './style.scss'
 
 
 
-export default class SignIn extends Component {
+export default class SignInPanle extends Component {
     // static propTypes = {
 
     // }
@@ -24,15 +24,14 @@ export default class SignIn extends Component {
         };
         this.userNameChange=this.userNameChange.bind(this);
     }
-
+    userNameChange(){}
     render() {
         let {username,password}=this.state;
-        let {userNameChange}=this.props;
         return (
             <div className={S.sign_panel}>
                 <form className="ui form">
                     <div className={`field`}>
-                        <input type="text" placeholder="用户名" value={username} onChange={userNameChange()}/>
+                        <input type="text" placeholder="用户名" value={username} onChange={this.userNameChange()}/>
                     </div>
                     <div className={`field`}>
                         <input type="password" placeholder="密码"/>

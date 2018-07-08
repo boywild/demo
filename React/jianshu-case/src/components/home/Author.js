@@ -9,7 +9,6 @@ const propTypes = {
 
 function Author(props) {
     let {user_name,avatar,user_intro,id}=props;
-    console.warn(user_name);
     avatar=cfg.url+avatar;
     return (
         <div className="item">
