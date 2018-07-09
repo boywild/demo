@@ -1,5 +1,5 @@
-<ul>
-  <li *ngFor='let hero of heros'>
-    <span>{{hero.id}}</span>-<span>{{hero.name}}</span>
+<ul class="heroes">
+  <li *ngFor='let hero of heros' (click)='selectedHero(hero)'>
+    <span class="badge">{{hero.id}}</span>-<span>{{hero.name}}</span>
   </li>
 </ul>

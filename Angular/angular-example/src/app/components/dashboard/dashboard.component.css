@@ -43,6 +43,7 @@
   }
   .grid-pad {
     padding: 10px 0;
+    overflow: hidden;
   }
   .grid-pad > [class*='col-']:last-of-type {
     padding-right: 20px;
