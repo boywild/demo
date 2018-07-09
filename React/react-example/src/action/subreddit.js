@@ -2,7 +2,7 @@
  * @Author: chentian 
  * @Date: 2018-06-24 22:04:51 
  * @Last Modified by: chentian
- * @Last Modified time: 2018-07-05 23:38:27
+ * @Last Modified time: 2018-07-09 16:35:02
  */
 
 /**
@@ -36,9 +36,26 @@ export const receivePosts = (subreddit, json) => ({
     posts: json.data.children.map((child) => child.data)
 });
 
-export const fetchPosts = (subreddit) => (dispatch) => {
+const fetchPosts = (subreddit) => (dispatch) => {
     dispatch(requestPosts(subreddit));
     return fetch(`https://www.reddit.com/r/${subreddit}.json`)
         .then((reponse) => reponse.json())
         .then(json => dispatch(receivePosts(subreddit, json)))
+}
+
+const shouldFetchPosts = (state, subreddit) => {
+    const posts = state.postsBySubreddit[subreddit];
+    if (!posts) {
+        return true;
+    }
+    if (posts.isFetching) {
+        return false;
+    }
+    return posts.didInvalidate;
+}
+
+export const fetchPostsIfNeeded = (subreddit) => (dispatch, getState) => {
+    if (shouldFetchPosts(getState(), subreddit)) {
+        return dispatch(fetchPosts(subreddit));
+    }
 }

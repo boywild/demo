@@ -12,11 +12,8 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
-// import rootReducer from './reducer/rootReducer'
-// import counterReducer from './reducer/counter'
 import rootReducer from './reducer/rootReducer'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { selectSubreddit, fetchPosts } from './action/subreddit'
 
 const loggerMiddleware = createLogger();
 

@@ -9,7 +9,7 @@ const propTypes = {
 
 function Picker({title,selectChange,options}) {
     return (
-        <div className='reddit' style={{ paddingLeft: '10px' }}>
+        <div className='reddit'>
             <h1 style={{ marginBottom: '15px' }}>{title}</h1>
             <select value={title} onChange={e => selectChange(e.target.value)}>
             {

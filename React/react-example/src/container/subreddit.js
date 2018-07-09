@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Picker from '../component/subreddit/Picker'
 import Posts from '../component/subreddit/Posts'
-import { fetchPosts, selectSubreddit, invalidateSubreddit } from '../action/subreddit'
+import { fetchPostsIfNeeded, selectSubreddit, invalidateSubreddit } from '../action/subreddit'
 
 
 class Subreddit extends Component {
@@ -14,11 +14,11 @@ class Subreddit extends Component {
     };
 
     componentWillMount() {
-        this.props.fetchPosts(this.props.selectedSubreddit);
+        this.props.fetchPostsIfNeeded(this.props.selectedSubreddit);
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.selectedSubreddit !== this.props.selectedSubreddit) {
-            this.props.fetchPosts(nextProps.selectedSubreddit);
+            this.props.fetchPostsIfNeeded(nextProps.selectedSubreddit);
         }
     }
     handleSelectChange(value) {
@@ -28,35 +28,43 @@ class Subreddit extends Component {
     handleRefresh(e) {
         e.preventDefault();
         this.props.invalidateSubreddit(this.props.selectedSubreddit);
-        this.props.fetchPosts(this.props.selectedSubreddit);
+        this.props.fetchPostsIfNeeded(this.props.selectedSubreddit);
     }
     render() {
         const { isFetching, posts, lastUpdated, selectedSubreddit } = this.props;
+        const isEmpty = posts.length === 0;
         return (
-            <div>
+            <div className='subreddit'>
                 <Picker
                     selectChange={e => this.handleSelectChange(e)}
                     options={['reactjs', 'frontend']}
                     title={selectedSubreddit}
                 />
-                <div className='reddit-info' style={{ marginTop: '15px' }}>
-                    <span>Last updated at
-                        <b>
+                <p>
+                    {
+                        lastUpdated &&
+                        <span>Last updated at
                             {
-                                lastUpdated
-                                    ? new Date(lastUpdated).toLocaleTimeString()
-                                    : ''
+                                new Date(lastUpdated).toLocaleTimeString()
                             }
-                        </b>
-                    </span>
-                    <button onClick={e => this.handleRefresh(e)}>Refresh</button>
-                </div>
-
-                <Posts posts={posts} />
+                        </span>
+                    }
+                    {
+                        !isFetching && <button onClick={e => this.handleRefresh(e)}>Refresh</button>
+                    }
+                </p>
                 {
-                    isFetching
-                        ? <h2>isLoading</h2>
-                        : ''
+                    isEmpty
+                        ? (
+                            isFetching
+                                ? <h2>isLoading</h2>
+                                : <h2>Empty.</h2>
+                        )
+                        : (
+                            <div className='subreddit-list' style={{ opacity: isFetching ? 0.5 : 1 }}>
+                                <Posts posts={posts} />
+                            </div>
+                        )
                 }
             </div>
         )
@@ -73,7 +81,7 @@ const mapStateToProps = state => {
     }
 }
 const mapDispatchToProps = dispatch => ({
-    fetchPosts: (value) => dispatch(fetchPosts(value)),
+    fetchPostsIfNeeded: (value) => dispatch(fetchPostsIfNeeded(value)),
     selectSubreddit: (value) => dispatch(selectSubreddit(value)),
     invalidateSubreddit: (value) => dispatch(invalidateSubreddit(value))
 })

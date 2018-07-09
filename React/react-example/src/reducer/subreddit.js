@@ -2,7 +2,7 @@
  * @Author: chentian 
  * @Date: 2018-06-24 22:16:22 
  * @Last Modified by: chentian
- * @Last Modified time: 2018-07-05 23:43:41
+ * @Last Modified time: 2018-07-09 16:35:24
  */
 import { SELECT_SUBREDDIT, INVALIDATE_SUBREDDIT, REQUEST_POSTS, RECEIVE_POSTS } from '../action/subreddit'
 
@@ -44,7 +44,6 @@ const posts = (state = {
     }
 }
 export const postsBySubreddit = (state = {}, action) => {
-    console.log(action.subreddit, action);
     switch (action.type) {
         case INVALIDATE_SUBREDDIT:
         case REQUEST_POSTS:
