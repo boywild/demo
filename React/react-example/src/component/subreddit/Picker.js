@@ -2,26 +2,25 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const propTypes = {
-    title: PropTypes.string,
-    selectChange: PropTypes.func,
-    options: PropTypes.array
-};
+    options: PropTypes.array,
+    onchange: PropTypes.func
+}
 
-function Picker({title,selectChange,options}) {
+function componentName({ options, title, onchange }) {
     return (
-        <div className='reddit'>
-            <h1 style={{ marginBottom: '15px' }}>{title}</h1>
-            <select value={title} onChange={e => selectChange(e.target.value)}>
-            {
-                options.map((option)=>(
-                    <option value={option} key={option}>{option}</option>
-                ))
-            }
+        <span>
+            <h1>{title}</h1>
+            <select onChange={onchange}>
+                {
+                    options.map((item, index) => (
+                        <option key={index}>{item}</option>
+                    ))
+                }
             </select>
-        </div>
+        </span>
     )
 }
 
-Picker.propTypes = propTypes;
+componentName.propTypes = propTypes
 
-export default Picker;
+export default componentName

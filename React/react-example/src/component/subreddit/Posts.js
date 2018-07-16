@@ -3,22 +3,22 @@ import PropTypes from 'prop-types'
 
 const propTypes = {
     posts: PropTypes.array
-};
+}
 
 function Posts({ posts }) {
     return (
-        <ul>
-            {
-                posts.map(item => (
-                    <li key={item.title}>{item.title}</li>
-                ))
-
-            }
-
-        </ul>
+        <div className='list'>
+            <ul>
+                {
+                    posts.map((item, index) => (
+                        <li key={index}>>{item.title}</li>
+                    ))
+                }
+            </ul>
+        </div>
     )
 }
 
-Posts.propTypes = propTypes;
+Posts.propTypes = propTypes
 
-export default Posts;
+export default Posts
