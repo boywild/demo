@@ -25,6 +25,7 @@ let store = createStore(
             loggerMiddleware
         ))
 )
+
 ReactDOM.render(
     <Provider store={store}>
         <Router>
