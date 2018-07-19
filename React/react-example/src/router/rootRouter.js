@@ -2,12 +2,12 @@
  * @Author: chentian 
  * @Date: 2018-06-24 14:39:54 
  * @Last Modified by: chentian
- * @Last Modified time: 2018-07-09 16:42:54
+ * @Last Modified time: 2018-07-18 20:35:32
  */
 
 import React, { Component } from 'react'
 import {
-    Route
+    Route, Link
 } from 'react-router-dom'
 
 import Home from '../view/home';
@@ -21,12 +21,16 @@ export default class RootRouter extends Component {
     render() {
         return (
             <div className='wrapper'>
-                <Route exact path="/" component={Home}></Route>
-                <Route exact path="/home" component={Home}></Route>
-                <Route exact path="/demo1" component={Demo1}></Route>
-                <Route exact path="/demo2" component={Demo2}></Route>
-                <Route exact path="/demo3" component={Demo3}></Route>
-                <Route exact path="/demo4" component={Demo4}></Route>
+                <Link to='/demo1'>counter</Link>
+                <Link to='/demo2'>shopping-cart</Link>
+                <Link to='/demo3'>todoList</Link>
+                <Link to='/demo4'>reddit</Link>
+                {/* <Route exact path="/" component={Home} />
+                <Route exact path="/home" component={Home} /> */}
+                <Route exact path="/demo1" component={Demo1} />
+                <Route exact path="/demo2" component={Demo2} />
+                <Route exact path="/demo3" component={Demo3} />
+                <Route exact path="/demo4" component={Demo4} />
             </div>
         )
     }

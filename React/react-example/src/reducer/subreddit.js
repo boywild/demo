@@ -1,10 +1,4 @@
-/*
- * @Author: chentian 
- * @Date: 2018-06-24 22:16:22 
- * @Last Modified by: chentian
- * @Last Modified time: 2018-07-09 16:35:24
- */
-import { SELECT_SUBREDDIT, INVALIDATE_SUBREDDIT, REQUEST_POSTS, RECEIVE_POSTS } from '../action/subreddit'
+import { SELECT_SUBREDDIT, INVALIDATE_SUBREDDIT, REQUEST_POSTS, RECEIVE_POSTS } from '../action/subreddit';
 
 export const selectedSubreddit = (state = 'reactjs', action) => {
     switch (action.type) {
@@ -17,27 +11,28 @@ export const selectedSubreddit = (state = 'reactjs', action) => {
 const posts = (state = {
     isFetching: false,
     didInvalidate: false,
-    items: []
+    item: []
 }, action) => {
+    console.log(action);
     switch (action.type) {
         case INVALIDATE_SUBREDDIT:
             return {
                 ...state,
                 didInvalidate: true
-            };
+            }
         case REQUEST_POSTS:
             return {
                 ...state,
                 isFetching: true,
-                didInvalidate: false
+                didInvalidate: false,
             };
         case RECEIVE_POSTS:
             return {
                 ...state,
                 isFetching: false,
                 didInvalidate: false,
-                items: action.posts,
-                lastUpdated: action.receivedAt
+                lastUpdated: action.receivedAt,
+                item: action.postsData
             };
         default:
             return state;
@@ -56,3 +51,4 @@ export const postsBySubreddit = (state = {}, action) => {
             return state;
     }
 }
+
