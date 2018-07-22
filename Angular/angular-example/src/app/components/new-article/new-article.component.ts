@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Article } from '../article/article.model';
+import { Article } from '../../model/article.model';
 
 @Component({
   selector: 'app-new-article',
@@ -8,12 +8,14 @@ import { Article } from '../article/article.model';
 })
 export class NewArticleComponent implements OnInit {
   articles: Article[];
+  title: string;
   constructor() {
     this.articles = [
       new Article('angular2', 'https://www.baidu.com', 2),
       new Article('fullstack', 'https://www.hao123.com', 3),
       new Article('Angular Homepage', 'https://www.taobao.com', 4),
     ]
+    this.title = ' Angular 2 Simple Reddit';
   }
 
   ngOnInit() {
