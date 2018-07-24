@@ -1,4 +1,7 @@
 <div class="inventory-app">
-    <h1>{{product.name}}</h1>
-    <span>{{product.sku}}</span>
+    <div *ngFor='let item of productsList' (click)='selected(item)'>
+        <h1>{{item.name}}</h1>
+        <span>{{item.sku}}</span>
+    </div>
+
 </div>

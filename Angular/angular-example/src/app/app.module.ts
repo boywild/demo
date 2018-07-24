@@ -12,6 +12,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { ArticleComponent } from './components/article/article.component';
 import { NewArticleComponent } from './components/new-article/new-article.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
+import { PriceDisplayComponent } from './components/price-display/price-display.component';
 
 
 
@@ -27,7 +28,8 @@ import { ProductListComponent } from './components/product-list/product-list.com
     HeaderComponent,
     ArticleComponent,
     NewArticleComponent,
-    ProductListComponent
+    ProductListComponent,
+    PriceDisplayComponent
   ],
   imports: [
     BrowserModule,
