@@ -16,9 +16,16 @@ export class ProductListComponent implements OnInit {
         this.onProductSelected = new EventEmitter();
     }
     ngOnInit() { }
-    selected(item) {
-        this.currentProduct=item;
-        console.warn(this.currentProduct);
-        this.onProductSelected.emit(item);
+
+    selectedMyProduct(product: Product): void {
+        this.currentProduct = product;
+        this.onProductSelected.emit(product);
+    }
+
+    isSelected(product: Product): boolean {
+        if (!product || !this.currentProduct) {
+            return false;
+        }
+        return product.sku === this.currentProduct.sku;
     }
 }

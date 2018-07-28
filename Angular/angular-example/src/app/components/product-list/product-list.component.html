@@ -1,7 +1,7 @@
-<div class="inventory-app">
-    <div *ngFor='let item of productsList' (click)='selected(item)'>
-        <h1>{{item.name}}</h1>
-        <span>{{item.sku}}</span>
-    </div>
-
+<div class="ui items" [ngClass]="['aa','bb']">
+    <!-- <div *ngFor='let item of productsList' (click)='selected(item)'>
+            <h1>{{item.name}}</h1>
+            <span>{{item.sku}}</span>
+        </div> -->
+    <app-product-row [product]='myProduct' *ngFor='let myProduct of productsList' (click)='selectedMyProduct(myProduct)' [class.selected]='isSelected(myProduct)'></app-product-row>
 </div>
