@@ -1,12 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 
 import { RoutersModules } from './routers/routers.module';
 
 import { AppComponent } from './app.component';
 import { IndexComponent } from './view/index/index.component';
 import { InventoryComponent } from './view/inventory/inventory.component';
+import { FormComponent } from './view/form/form.component';
 
 import { HeaderComponent } from './components/header/header.component';
 import { ArticleComponent } from './components/article/article.component';
@@ -16,18 +17,14 @@ import { PriceDisplayComponent } from './components/price-display/price-display.
 import { ProductDepartmentComponent } from './components/product-department/product-department.component';
 import { ProductImageComponent } from './components/product-image/product-image.component';
 import { ProductRowComponent } from './components/product-row/product-row.component';
-
-
-
-
-
-
+import { FormSkuComponent } from './components/form-sku/form-sku.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     IndexComponent,
     InventoryComponent,
+    FormComponent,
 
     HeaderComponent,
     ArticleComponent,
@@ -36,12 +33,15 @@ import { ProductRowComponent } from './components/product-row/product-row.compon
     PriceDisplayComponent,
     ProductDepartmentComponent,
     ProductImageComponent,
-    ProductRowComponent
+    ProductRowComponent,
+    FormSkuComponent,
+    
   ],
   imports: [
     BrowserModule,
+    RoutersModules,
     FormsModule,
-    RoutersModules
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
     selector: 'app-product-image',
-    templateUrl: 'product-image.component.html',
-    styleUrls: ['product-image.component.css'],
+    templateUrl: './product-image.component.html',
+    styleUrls: ['./product-image.component.css'],
     inputs:['imageUrl'],
     host:{'class':'ui small image'}
 })

@@ -3,8 +3,8 @@ import { Product } from '../../model/product.model';
 
 @Component({
     selector: 'app-product-row',
-    templateUrl: 'product-row.component.html',
-    styleUrls: ['product-row.component.css'],
+    templateUrl: './product-row.component.html',
+    styleUrls: ['./product-row.component.css'],
     inputs: ['product'],
     host: { 'class': 'item' }
 })
