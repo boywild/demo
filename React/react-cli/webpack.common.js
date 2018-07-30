@@ -1,7 +1,4 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const webpack = require('webpack');
 
 const config = {
     entry: './index.js',
@@ -9,14 +6,15 @@ const config = {
         filename: 'bundle.js',
         path: path.resolve(__dirname, './dist')
     },
-    mode: 'development',
-    devtool: "source-map",
-    devServer: {
-        // contentBase: './dist',
-        port: 8888,
-        hot: true,
-        open: true,
-        inline: true
+    extensions: [".js", ".jsx", ".css", "scss"],
+    resolve: {
+        alias:{
+            
+        },
+        modules: [
+            "node_modules",
+            path.resolve(__dirname, "app")
+        ]
     },
     module: {
         rules: [
@@ -68,22 +66,8 @@ const config = {
 
 
         ]
-    },
-    plugins: [
-        // new webpack.NamedModulesPlugin(),
-        // new webpack.DefinePlugin({ "process.env.NODE_ENV": JSON.stringify("development") }),
-        // new webpack.DefinePlugin({ "process.env.NODE_ENV": JSON.stringify("production") }),
-        // new webpack.optimize.ModuleConcatenationPlugin(),
-        // new webpack.NoEmitOnErrorsPlugin()
-        // new UglifyJsPlugin(),
-        // new CleanWebpackPlugin(['dist']),
-        new HtmlWebpackPlugin({
-            title: 'Output Management',
-            template: './index.html'
-        }),
-        new webpack.NamedModulesPlugin(),
-        new webpack.HotModuleReplacementPlugin()
-    ]
+    }
+
 }
 
 module.exports = config;
