@@ -7,7 +7,7 @@
  */
 
 const HTTP = {};
-HTTP.get = function(url, params, fetchOptions) {
+HTTP.get = function (url, params, fetchOptions) {
     if (params && typeof params === 'object') {
         let paramsArray = [];
         Object.keys(params).forEach(key => paramsArray.push(key + '=' + params[key]));
@@ -43,7 +43,7 @@ HTTP.get = function(url, params, fetchOptions) {
     });
 };
 
-HTTP.post = function(url, params, fetchOptions) {
+HTTP.post = function (url, params, fetchOptions) {
     if (typeof params === 'object') {
         throw new Error('params must be object');
     }
@@ -72,6 +72,40 @@ HTTP.post = function(url, params, fetchOptions) {
 //支持多种请求头header
 //支持多类型body form file json
 //提供全局调用api
+
+export class httpFetch {
+    static fetchRequest(url, type, params, options) {
+        let init = {
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json;charset=utf-8'
+            }
+        };
+        if (type === 'GET') {
+            let paramsArray = [];
+            if (params && typeof params === 'object') {
+                Object.keys(params).forEach(key => paramsArray.push(key + '=' + params[key]));
+                url += '&' + paramsArray.join('&');
+            }
+            Object.assign(init, { method: 'GET' }, options);
+        } else if (type === 'POST') {
+            Object.assign(init, {
+                method: 'POST',
+                body: JSON.stringify(params)
+            });
+            Object.assign(init, { method: 'GET' }, options);
+        }
+        return new Promise((resolve, reject) => {
+            console.log({ ...init })
+            fetch(url, { ...init })
+                .then(response => {
+                    if (response.ok) {
+                        resolve(response.json());
+                    }
+                })
+        });
+    }
+}
 
 
 export default HTTP; 
