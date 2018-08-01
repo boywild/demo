@@ -1,23 +1,28 @@
 const path = require('path');
 
 const config = {
-    entry: './index.js',
+    entry: './src/index.js',
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, './dist')
     },
-    extensions: [".js", ".jsx", ".css", "scss"],
+    
     resolve: {
-        alias:{
-            
-        },
         modules: [
             "node_modules",
-            path.resolve(__dirname, "app")
-        ]
+            path.resolve(__dirname, "src"),
+            path.resolve(__dirname, "util"),
+            path.resolve(__dirname, "assets"),
+            path.resolve(__dirname, "component")
+        ],
+        extensions: [".js", ".jsx", ".css", ".scss"]
     },
     module: {
         rules: [
+            {
+                test: /\.(js|jsx)$/,
+                use: ['babel-loader']
+            },
             {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader']

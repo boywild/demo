@@ -6,7 +6,7 @@ const common = require('./webpack.common.js')
 
 module.exports = merge(common, {
     devServer: {
-        // contentBase: './dist',
+        contentBase: './dist',
         port: 8888,
         hot: true,
         open: true,
@@ -18,7 +18,7 @@ module.exports = merge(common, {
         new webpack.DefinePlugin({ "process.env.NODE_ENV": JSON.stringify("development") }),
         new HtmlWebpackPlugin({
             title: 'Output Management',
-            template: './index.html'
+            template: './public/index.html'
         }),
         new webpack.ProvidePlugin({
             React: 'react',

@@ -19,7 +19,7 @@ module.exports = merge(common, {
         new UglifyJSPlugin(),
         new HtmlWebpackPlugin({
             title: 'Output Management',
-            template: './index.html'
+            template: './public/index.html'
         })
     ]
 })

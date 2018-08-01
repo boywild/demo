@@ -4,8 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "webpack-dev-server --config webpack.dev.js ",
-    "build": "webpack --config webpack.pro.js "
+    "dev": "NODE_ENV=development webpack-dev-server --config webpack.dev.js ",
+    "build": "NODE_ENV=production webpack --config webpack.pro.js "
   },
   "dependencies": {
     "react": "^16.4.1",
@@ -15,6 +15,10 @@
     "redux": "^4.0.0"
   },
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
     "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^1.0.0",
     "file-loader": "^1.1.11",
