@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import HTTP, { httpFetch } from 'util/httpFetch'
+import { httpFetch } from 'util/httpFetch'
 
 
 export default class App extends Component {
@@ -13,13 +13,10 @@ export default class App extends Component {
         //     .then((response) => response.json())
         //     .then((json) => console.log(json))
 
-        // HTTP.post('http://api.noods.me/getAuthor')
-        //     .then((json) => console.log(json))
-        httpFetch.fetchRequest('http://api.noods.me/getAuthor', 'GET')
+        httpFetch.fetchRequest('http://api.noods.me/getAuthor', 'POST')
             .then((json) => console.log(json))
     }
     render() {
-        console.log(HTTP);
         return (
             <div>
                 App

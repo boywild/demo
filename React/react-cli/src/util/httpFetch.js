@@ -6,106 +6,105 @@
  * @Last Modified: 2018-08-01 17:51:09 
  */
 
-const HTTP = {};
-HTTP.get = function (url, params, fetchOptions) {
-    if (params && typeof params === 'object') {
-        let paramsArray = [];
-        Object.keys(params).forEach(key => paramsArray.push(key + '=' + params[key]));
-        if (url.search(/\?/) === -1) {
-            url += '?' + paramsArray.join('&');
-        } else {
-            url += '&' + paramsArray.join('&');
-        }
-    }
-    // 请求头设置
-    let initConfig = {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json;charset=utf-8'
-        }
-    };
-    if (fetchOptions && typeof fetchOptions === 'object') {
-        initConfig = Object.assign(initConfig, fetchOptions);
-    }
-    return new Promise((resolve, reject) => {
-        fetch(url, initConfig).then(response => {
-            if (response.ok) {
-                resolve(response.json());
-            } else {
-                reject({ status: response.status });
-                throw new Error('网络请求故障');
-            }
-        }).catch((error) => {
-            reject({ status: -1 });
-            throw new Error(error.message);
-        });
-    });
-};
-
-HTTP.post = function (url, params, fetchOptions) {
-    if (typeof params === 'object') {
-        throw new Error('params must be object');
-    }
-    // 请求头设置
-    let initConfig = {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify(params)
-    };
-    if (fetchOptions && typeof fetchOptions === 'object') {
-        initConfig = Object.assign(initConfig, fetchOptions);
-    }
-    return Promise.race([
-        fetch(url, initConfig),
-        new Promise((resolve, reject) => {
-            setTimeout(() => reject(new Error('request timeout')), 3 * 1000);
-        })
-    ]).then(response => response.json());
-};
-
 //抽离一个公共的底层方法
 //支持多配置
 //支持多种请求头header
 //支持多类型body form file json
 //提供全局调用api
+//https://api.github.com/users
 
 export class httpFetch {
     static fetchRequest(url, type, params, options) {
-        let init = {
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json;charset=utf-8'
+        if (params && typeof params !== 'object') {
+            throw new Error('params must be object');
+            return;
+        }
+        /**
+         * 合并配置项
+         * @param {object} initconfig 
+         * @param {string} method 
+         * @param {any} body 
+         * @param {object} opt 
+         */
+        const mergeOption = (initconfig, method, body, opt) => {
+            if (!body) {
+                Object.assign(initconfig, {
+                    method: method
+                }, opt);
+            } else {
+                Object.assign(initconfig, {
+                    method: method,
+                    body: body
+                }, opt);
             }
-        };
+        }
+        //fetch原生init配置项
+        let init = {};
         if (type === 'GET') {
             let paramsArray = [];
             if (params && typeof params === 'object') {
                 Object.keys(params).forEach(key => paramsArray.push(key + '=' + params[key]));
-                url += '&' + paramsArray.join('&');
+                url += '?' + paramsArray.join('&');
             }
             Object.assign(init, { method: 'GET' }, options);
         } else if (type === 'POST') {
-            Object.assign(init, {
-                method: 'POST',
-                body: JSON.stringify(params)
-            });
-            Object.assign(init, { method: 'GET' }, options);
+            /**
+             * body类型<form|file|json>
+             * 不同请求body类型对应response解析不一样 
+             * response.json()/response.text()/response.blob()/response.formData()
+             */
+            if (options && options.bodyType) {
+                switch (options.bodyType) {
+                    case 'json':
+                        mergeOption(init, 'POST', JSON.stringify(params), options);
+                        break;
+                    case 'file':
+                        let fileData = new FormData();
+                        Object.keys(params).map((index) => {
+                            fileData.append(index, params[index]);
+                        });
+                        mergeOption(init, 'PUT', fileData, options);
+                        break;
+                    case 'form':
+                        let formData = '';
+                        Object.keys(params).map((index) => {
+                            let param = encodeURI(params[index]);
+                            formData += `${index}=${param}&`;
+                        });
+                        mergeOption(init, 'POST', formData, options);
+                        break;
+                    default:
+                        mergeOption(init, 'POST', JSON.stringify(params), options);
+                }
+            } else {
+                mergeOption(init, 'POST', JSON.stringify(params), options);
+            }
         }
         return new Promise((resolve, reject) => {
             console.log({ ...init })
             fetch(url, { ...init })
                 .then(response => {
+                    console.log(response);
                     if (response.ok) {
+                        // if(init&&init.dataType){}
                         resolve(response.json());
+
+                    } else {
+                        reject({ status: response.status });
+                        throw new Error('Network response was not ok.');
                     }
+
+                })
+                .catch(function (error) {
+                    reject({ status: -1 });
+                    console.log('There has been a problem with your fetch operation: ', error.message);
                 })
         });
     }
+    static get(url, params, options) {
+        this.fetchRequest(url, 'GET', params, options);
+    }
+    static post(url, params, options) {
+        this.fetchRequest(url, 'POST', params, options);
+    }
 }
-
-
-export default HTTP; 

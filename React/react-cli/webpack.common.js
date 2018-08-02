@@ -6,7 +6,7 @@ const config = {
         filename: 'bundle.js',
         path: path.resolve(__dirname, './dist')
     },
-    
+
     resolve: {
         modules: [
             "node_modules",
@@ -21,11 +21,17 @@ const config = {
         rules: [
             {
                 test: /\.(js|jsx)$/,
-                use: ['babel-loader']
+                use: ['babel-loader'],
+                include: [
+                    path.resolve(__dirname, "src")
+                ]
             },
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+                use: ['style-loader', 'css-loader'],
+                include: [
+                    path.resolve(__dirname, "src")
+                ]
             },
             {
                 test: /\.scss$/,
@@ -39,7 +45,10 @@ const config = {
                 {
                     loader: 'sass-loader',
                     options: { sourceMap: true }
-                }]
+                }],
+                include: [
+                    path.resolve(__dirname, "src")
+                ]
             },
             {
                 test: /\.(jpg|png|jpeg|gif)$/,
@@ -48,7 +57,10 @@ const config = {
                     options: {
                         limit: 8192
                     }
-                }]
+                }],
+                include: [
+                    path.resolve(__dirname, "src")
+                ]
             },
             {
                 test: /\.svg$/,
@@ -57,7 +69,10 @@ const config = {
                     options: {
                         mimetype: 'image/svg+xml'
                     }
-                }]
+                }],
+                include: [
+                    path.resolve(__dirname, "src")
+                ]
             },
             {
                 test: /\.(eot|ttf|woff|woff2)$/,
@@ -66,7 +81,10 @@ const config = {
                     options: {
                         outputPath: './fonts'
                     }
-                }]
+                }],
+                include: [
+                    path.resolve(__dirname, "src")
+                ]
             }
 
 
