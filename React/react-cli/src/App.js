@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { httpFetch } from 'util/httpFetch'
+import Award from 'component/award/Award'
+
 
 
 export default class App extends Component {
@@ -13,12 +15,13 @@ export default class App extends Component {
         //     .then((response) => response.json())
         //     .then((json) => console.log(json))
 
-        httpFetch.fetchRequest('http://api.noods.me/getAuthor', 'POST')
-            .then((json) => console.log(json))
+        // httpFetch.fetchRequest('http://api.noods.me/getAuthor', 'POST')
+        //     .then((json) => console.log(json))
     }
     render() {
         return (
             <div>
+                <Award />
                 App
             </div>
         )
