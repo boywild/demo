@@ -17,8 +17,10 @@ module.exports = merge(common, {
     plugins: [
         new webpack.DefinePlugin({ "process.env.NODE_ENV": JSON.stringify("development") }),
         new HtmlWebpackPlugin({
-            title: 'Output Management',
-            template: './public/index.html'
+            title: '开发环境',
+            template: './public/index.ejs',
+            filename:'./index.html',
+            isMobile:true
         }),
         new webpack.ProvidePlugin({
             React: 'react',
@@ -29,3 +31,4 @@ module.exports = merge(common, {
         new webpack.HotModuleReplacementPlugin()
     ]
 })
+console.log("process.env.NODE_ENV 的值是(webpack.dev.js)："+ process.env.NODE_ENV)

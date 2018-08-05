@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { httpFetch } from 'util/httpFetch'
-import Award from 'component/award/Award'
+import Award from 'components/award/Award'
 
 
 
