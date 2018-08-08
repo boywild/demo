@@ -21,10 +21,10 @@ export default class App extends Component {
         // httpFetch.fetchRequest('http://api.noods.me/getAuthor', 'POST')
         //     .then((json) => console.log(json))
 
-        encryption.encrypt(this.plaintText).then((data)=>{
+        encryption.aesDecrypt(this.plaintText).then((data)=>{
             console.log(data);
         })
-        encryption.decryp('b121392dab9cf2e5160ba81c94e5f999').then((data)=>{
+        encryption.aesDecrypt('b121392dab9cf2e5160ba81c94e5f999').then((data)=>{
             console.log(data);
         })
 
