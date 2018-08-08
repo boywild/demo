@@ -12,6 +12,7 @@
 //支持多类型body form file json
 //提供全局调用api
 // 工作密钥 主密钥 初始化参数 检查用户id
+//loading 处理，特殊接口的处理
 //https://api.github.com/users
 
 export class httpFetch {
