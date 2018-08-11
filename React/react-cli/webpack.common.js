@@ -2,17 +2,17 @@ const path = require('path');
 /**
  * 全局匹配路径
  */
-const SRC = path.resolve(__dirname, "src");
-const UTIL = path.resolve(__dirname, "util");
-const ASSETS = path.resolve(__dirname, "assets");
-const COMPONENT = path.resolve(__dirname, "components");
+const DIST = path.resolve(__dirname, './dist');
+const SRC = path.resolve(__dirname, "./src");
 const APP = path.resolve(__dirname, './app');
-const HOCS = path.resolve(__dirname, './hocs');
-const I18N = path.resolve(__dirname, './i18n');
-const LAYOUTS = path.resolve(__dirname, './layouts');
-const VIEWS = path.resolve(__dirname, './views');
-const SCSS = path.resolve(__dirname, './scss');
-const DIST = path.resolve(__dirname, 'dist');
+const ASSETS = path.resolve(__dirname, "./src/assets");
+const COMPONENT = path.resolve(__dirname, "./src/components");
+const HOCS = path.resolve(__dirname, './src/hocs');
+const I18N = path.resolve(__dirname, './src/i18n');
+const LAYOUTS = path.resolve(__dirname, './src/layouts');
+const SCSS = path.resolve(__dirname, './src/scss');
+const UTIL = path.resolve(__dirname, "./src/util");
+const VIEWS = path.resolve(__dirname, './src/views');
 
 const ENV = process.env.NODE_ENV || 'development';
 const IS_PRO = ENV === 'production';

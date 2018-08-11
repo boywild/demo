@@ -6,11 +6,6 @@
  * @Last Modified: 2018-08-01 17:51:09 
  */
 
-//抽离一个公共的底层方法
-//支持多配置
-//支持多种请求头header
-//支持多类型body form file json
-//提供全局调用api
 // 工作密钥 主密钥 初始化参数 检查用户id
 //loading 处理，特殊接口的处理
 //https://api.github.com/users
