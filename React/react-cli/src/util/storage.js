@@ -1,8 +1,9 @@
 /**
- * 向localStorage中写入数据，返回promise，通过.then((data)=>{})得到写入的数据
+ * 向localStorage中写入数据，返回promise，通过.then((data)=>{})得到当前正在操作的的数据(写入/读取/删除)
  * @param {string} key 
  * @param {*} value 
  * @returns Promise
+ * 增加满足一写入多条/一次读取多条/一次删除多条
  */
 export const setLocal = (key, value) => {
     return new setFactory('local', key, value);
@@ -43,7 +44,11 @@ export const updateSessionRemove = (key, fieldName, fieldValue) => {
 
 const setFactory = (storageType, key, value) => {
     let result = {};
-    key = JSON.stringify(key);
+    try {
+        key = key.toString();
+    } catch (e) {
+        key = JSON.stringify(key);
+    }
     if (typeof value === 'object') {
         value = JSON.stringify(value);
     } else if (typeof value === 'string') {
@@ -56,6 +61,11 @@ const setFactory = (storageType, key, value) => {
     }
     storageType === 'local' ? localStorage.setItem(key, value) : '';
     storageType === 'session' ? sessionStorage.setItem(key, value) : '';
+    try {
+        value = JSON.parse(value);
+    } catch (e) {
+        value = value;
+    }
     result = {
         [key]: value
     }
@@ -67,7 +77,11 @@ const setFactory = (storageType, key, value) => {
 const getFactory = (storageType, key) => {
     let getData = {};
     let result = '';
-    key = JSON.stringify(key);
+    try {
+        key = key.toString();
+    } catch (e) {
+        key = JSON.stringify(key);
+    }
     if (storageType !== 'local' && storageType !== 'session') {
         throw new Error('storage type error');
     }
@@ -86,17 +100,27 @@ const getFactory = (storageType, key) => {
 const clearFactory = (storageType, key, range) => {
     let result = {};
     let storageObj = null;
-    key = JSON.stringify(key);
+    try {
+        key = key.toString();
+    } catch (e) {
+        key = JSON.stringify(key);
+    }
     storageType === 'local' ? storageObj = localStorage : '';
     storageType === 'session' ? storageObj = sessionStorage : '';
     if (!!range && range === 'all') {
-        Object.keys(storageType).map((storage) => {
-            storageType.removeItem(storage);
-            result[storage] = storageType.getItem(storage);
+        Object.keys(storageObj).forEach((storage) => {
+            result[storage] = storageObj.getItem(storage);
+            storageObj.removeItem(storage);
         });
     } else {
+        let getValue = storageObj.getItem(key);
+        try {
+            getValue = JSON.parse(storageObj.getItem(key));
+        } catch (e) {
+            getValue = getValue;
+        }
+        result[key] = getValue;
         storageObj.removeItem(key);
-        result[key] = storageObj.getItem(key);
     }
     return new Promise((resolve) => {
         resolve(result);

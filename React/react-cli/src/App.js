@@ -3,7 +3,7 @@ import { httpFetch } from 'util/httpFetch';
 import encryption from 'util/encryption';
 
 import Award from 'components/award/Award';
-import { setLocal, getLocal, setSession, getSession, clear, clearAll, saveField, removeField } from 'util/storage'
+import { setLocal, getLocal, setSession, getSession, clearLocal, clearSession, clearAllLocal, clearAllSession } from 'util/storage'
 import Logger from 'util/logger'
 
 
@@ -32,13 +32,31 @@ export default class App extends Component {
 
             console.log(data);
         })
-        setLocal('userinfo', ['1','2','3']).then((data) => {
+        setLocal('userinfo', { name: [1, 2, 3] }).then((data) => {
             console.log(data);
-        })
-        // getLocal('userinfo').then((data) => {
+        });
+        setSession('userinfo', { name: 'chentian' }).then((data) => {
+            console.log(data);
+        });
+        getLocal('userinfo').then((data) => {
+            console.log(data);
+        });
+        getSession('userinfo').then((data) => {
+            console.log(data);
+        });
+        // clearLocal('userinfo').then((data) => {
         //     console.log(data);
         // })
-        Logger.printLog('name',"chentian");
+        // clearSession('userinfo').then((data) => {
+        //     console.log(data);
+        // })
+        clearAllLocal().then((data) => {
+            console.log(data);
+        });
+        clearAllSession().then((data) => {
+            console.log(data);
+        })
+        // Logger.printLog('name',"chentian");
     }
     render() {
         return (
