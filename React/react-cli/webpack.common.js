@@ -11,7 +11,7 @@ const HOCS = path.resolve(__dirname, './src/hocs');
 const I18N = path.resolve(__dirname, './src/i18n');
 const LAYOUTS = path.resolve(__dirname, './src/layouts');
 const SCSS = path.resolve(__dirname, './src/scss');
-const UTIL = path.resolve(__dirname, "./src/util");
+const UTILS = path.resolve(__dirname, "./src/utils");
 const VIEWS = path.resolve(__dirname, './src/views');
 
 const ENV = process.env.NODE_ENV || 'development';
@@ -25,7 +25,7 @@ const config = {
     },
 
     resolve: {
-        modules: ["node_modules", SRC, UTIL, ASSETS, COMPONENT, APP, HOCS, I18N, LAYOUTS, VIEWS, SCSS],
+        modules: ["node_modules", SRC, UTILS, ASSETS, COMPONENT, APP, HOCS, I18N, LAYOUTS, VIEWS, SCSS],
         extensions: [".js", ".jsx", ".css", ".scss"]
     },
     module: {
