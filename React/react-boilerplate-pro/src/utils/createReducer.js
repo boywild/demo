@@ -19,8 +19,6 @@ function createReducer(defaultState, handlers) {
     return state;
   }
 
-  reducer.defaultState = defaultState;
-  reducer.handlers = handlers;
 
   return reducer;
 }

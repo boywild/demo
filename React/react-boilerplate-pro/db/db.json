@@ -133,21 +133,5 @@
       ]
     }
   ],
-  "notices": [
-    {
-      "id": 0,
-      "title": "Task A",
-      "message": "Task needs to be done before 2020.08.20"
-    },
-    {
-      "id": 1,
-      "title": "Task B",
-      "message": "Task needs to be done before 2020.08.20"
-    },
-    {
-      "id": 2,
-      "title": "Task C",
-      "message": "Task needs to be done before 2020.08.20"
-    }
-  ]
+  "notices": []
 }

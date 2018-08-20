@@ -16,7 +16,6 @@ const Router=({history,user})=>{
 
 const mapStateToProps=state=>({
     user.state.app.user
-})
-const mapDispatchToProps=(state)=>{}
+});
 Router.propTypes=propTypes;
-export default connect()(Router);
+export default connect(mapStateToProps)(Router);
