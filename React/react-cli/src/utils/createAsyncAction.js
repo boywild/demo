@@ -1,5 +1,4 @@
-
-function createAsyncAction(name,callback,meta = {}){
+function createAsyncAction(name,callback,meta={}){
     return (dispatch)=>{
         dispatch({
             type:`${name}_REQUEST`,
@@ -16,32 +15,24 @@ function createAsyncAction(name,callback,meta = {}){
                 return action;
             }).catch((err)=>{
                 const action={
-                    type:`${name}_ERROR`,
+                    type:`${name}_ERROE`,
                     meta,
                     payload:err,
-                    error: true
+                    error:true
                 };
                 dispatch(action);
                 return action;
             });
-        }catch(e){
+        }catch(err){
             const action={
-                type:`${name}_ERROR`,
+                type:`${name}_ERROE`,
                 meta,
                 payload:err,
-                error: true
-            }；
+                error:true
+            };
             dispatch(action);
-            return Promise.resolve(action);
+            return action;
         }
     }
 }
-
-// const createAsyncAction=(params)=>(dispatch)=>{
-//     dispatch();
-//     return new promise().then((data)=>{
-//         dispatch();
-//     });
-// }
-
 export default createAsyncAction;
