@@ -1,11 +1,11 @@
 import React from 'react';
 import {Provider} from 'redux';
-import Router from './router';
+import CustomRouter from './router';
 
 const createApp=(store,history)=>{
     return(
         <Provider store={store}>
-            <Router history={history}></Router>
+            <CustomRouter history={history}></CustomRouter>
         </Provider>
     );
 }

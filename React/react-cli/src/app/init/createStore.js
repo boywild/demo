@@ -1,6 +1,7 @@
 import {compose,createStore,applyMiddleware,combineReducers} from 'redux';
 import reduxThunk from 'redux-thunk';
-import {routerMiddleware,connectRouter} from 'connect-react-router';
+import {routerMiddleware,connectRouter} from 'connected-react-router';
+import rootReducers from './rootReducers';
 
 function createAppStore(history,preloadedState={}){
     let composeEnhancers = compose;
@@ -9,18 +10,18 @@ function createAppStore(history,preloadedState={}){
     }
     
     const middleWares=[
-        routerMiddleware(history)
+        routerMiddleware(history),
         reduxThunk
     ];
     const store=createStore(
-        connectRouter(history)(combineReducers(reducers)),
+        connectRouter(history)(combineReducers(rootReducers)),
         preloadedState,
-        composeEnhancers(applyMiddle(...middleWares))
+        composeEnhancers(applyMiddleware(...middleWares))
     )
     return{
         store,
         history
-    }
+    };
 }
 
 export default createAppStore;

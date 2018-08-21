@@ -22,7 +22,7 @@ const loginError=(state,action)=>({
 	user:action.payload
 });
 
-export default createReducer({
+export default createReducer(defaultState,{
     APP_LOGIN_SUCCESS:login,
     APP_LOGIN_ERROR:loginError
 });

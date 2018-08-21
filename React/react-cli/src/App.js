@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { httpFetch } from 'util/httpFetch';
-import encryption from 'util/encryption';
+import { httpFetch } from 'utils/httpFetch';
+import encryption from 'utils/encryption';
 
 import Award from 'components/award/Award';
-import { setLocal, getLocal, setSession, getSession, clearLocal, clearSession, clearAllLocal, clearAllSession } from 'util/storage'
-import Logger from 'util/logger'
+import { setLocal, getLocal, setSession, getSession, clearLocal, clearSession, clearAllLocal, clearAllSession } from 'utils/storage'
+import Logger from 'utils/logger'
 
 
 

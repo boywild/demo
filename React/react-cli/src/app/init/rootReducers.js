@@ -1,5 +1,5 @@
 import app from './initReducer';
 
-export {
+export default {
     app
 };
