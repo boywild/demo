@@ -37,8 +37,7 @@ const config = {
             },
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader'],
-                include: [SRC]
+                use: ['style-loader', 'css-loader']
             },
             {
                 test: /\.scss$/,
@@ -64,10 +63,24 @@ const config = {
                         },
                         {
                             loader: 'sass-loader',
-                            options: { sourceMap: true, includePaths: SRC }
+                            options: { sourceMap: true}
                         }
                     ],
                 include: [SRC]
+            },
+            {
+                test: /\.less$/,
+                use: [{
+                    loader: "style-loader"
+                }, {
+                    loader: "css-loader", options: {
+                        sourceMap: true
+                    }
+                }, {
+                    loader: "less-loader", options: {
+                        sourceMap: true
+                    }
+                }]
             },
             {
                 test: /\.(jpg|png|jpeg|gif)$/,
