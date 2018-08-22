@@ -9,7 +9,6 @@ export const logStyle = `
 // 生产/开发启动停用开关
 //状态手机
 
-
 export default class Logger {
     static openLog = true;
     static log(params) {
@@ -33,7 +32,6 @@ export default class Logger {
     static printLog(collect) {
         this.openLog && new formatLogs(collect);
     }
-
 }
 export class LogCollection {
     logs = [];
@@ -46,16 +44,16 @@ export class LogCollection {
             [key]: value
         });
     };
-};
+}
 const formatLogs = (collection) => {
     groupFormat(collection.methond, collection.request);
     iterateOutputLogs(collection.logs);
     groupFormatEnd();
-}
-function iterateOutputLogs(logs={}) {
-    Object.keys(logs).forEach(element => {
+};
+function iterateOutputLogs(logs = {}) {
+    Object.keys(logs).forEach((element) => {
         if (typeof logs[element] === 'object') {
-            console.dir(logs[element])
+            console.dir(logs[element]);
         } else {
             logFormat(logs[element]);
         }
@@ -80,4 +78,3 @@ function getTime() {
     const date = new Date();
     return date.toLocaleDateString() + ' ' + date.toTimeString().slice(0, 8);
 }
-

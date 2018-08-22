@@ -18,36 +18,44 @@ export class httpFetch {
         }
         /**
          * 合并配置项
-         * @param {object} initconfig 
-         * @param {string} method 
-         * @param {any} body 
-         * @param {object} opt 
+         * @param {object} initconfig
+         * @param {string} method
+         * @param {any} body
+         * @param {object} opt
          */
         const mergeOption = (initconfig, method, body, opt) => {
             if (!body) {
-                Object.assign(initconfig, {
-                    method: method
-                }, opt);
+                Object.assign(
+                    initconfig,
+                    {
+                        method: method
+                    },
+                    opt
+                );
             } else {
-                Object.assign(initconfig, {
-                    method: method,
-                    body: body
-                }, opt);
+                Object.assign(
+                    initconfig,
+                    {
+                        method: method,
+                        body: body
+                    },
+                    opt
+                );
             }
-        }
+        };
         //fetch原生init配置项
         let init = {};
         if (type === 'GET') {
             let paramsArray = [];
             if (params && typeof params === 'object') {
-                Object.keys(params).forEach(key => paramsArray.push(key + '=' + params[key]));
+                Object.keys(params).forEach((key) => paramsArray.push(key + '=' + params[key]));
                 url += '?' + paramsArray.join('&');
             }
             Object.assign(init, { method: 'GET' }, options);
         } else if (type === 'POST') {
             /**
              * body类型<form|file|json>
-             * 不同请求body类型对应response解析不一样 
+             * 不同请求body类型对应response解析不一样
              * response.json()/response.text()/response.blob()/response.formData()
              */
             if (options && options.bodyType) {
@@ -78,24 +86,22 @@ export class httpFetch {
             }
         }
         return new Promise((resolve, reject) => {
-            console.log({ ...init })
+            console.log({ ...init });
             fetch(url, { ...init })
-                .then(response => {
+                .then((response) => {
                     console.log(response);
                     if (response.ok) {
                         // if(init&&init.dataType){}
                         resolve(response.json());
-
                     } else {
                         reject({ status: response.status });
                         throw new Error('Network response was not ok.');
                     }
-
                 })
-                .catch(function (error) {
+                .catch(function(error) {
                     reject({ status: -1 });
                     console.log('There has been a problem with your fetch operation: ', error.message);
-                })
+                });
         });
     }
     static get(url, params, options) {

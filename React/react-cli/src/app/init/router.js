@@ -1,27 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
+// import { MultiIntlProvider } from 'react-intl-context';
+import { connect } from 'react-redux';
+// import AclRouter from 'react-acl-router';
+// import BasicLayout from 'layouts/BasicLayout';
+// import NormalLayout from 'layouts/NormalLayout';
+// import NotFound from 'views/notFound';
+// import { messages, buildConfig } from '../config/buildConfig';
+// import { authorizedRoutes, normalRoutes } from '../config/routes';
 
+// const { locale } = buildConfig;
 
 const propTypes = {
     history: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired
 };
-const CustomRouter = ({ history, user }) => (
+
+const Router = ({ history, user }) => (
     <ConnectedRouter history={history}>
-        <div>
-            <Switch>
-                <Route exact path="/" render={() => (<div>Match</div>)} />
-            </Switch>
-        </div>
+        <div>asd</div>
     </ConnectedRouter>
 );
 
-
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     user: state.app.user
 });
-CustomRouter.propTypes = propTypes;
-export default connect(mapStateToProps)(CustomRouter);
+
+Router.propTypes = propTypes;
+export default connect(mapStateToProps)(Router);

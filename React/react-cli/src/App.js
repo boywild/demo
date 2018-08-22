@@ -3,11 +3,17 @@ import { httpFetch } from 'utils/httpFetch';
 import encryption from 'utils/encryption';
 
 import Award from 'components/award/Award';
-import { setLocal, getLocal, setSession, getSession, clearLocal, clearSession, clearAllLocal, clearAllSession } from 'utils/storage'
-import Logger from 'utils/logger'
-
-
-
+import {
+    setLocal,
+    getLocal,
+    setSession,
+    getSession,
+    clearLocal,
+    clearSession,
+    clearAllLocal,
+    clearAllSession
+} from 'utils/storage';
+import Logger from 'utils/logger';
 
 export default class App extends Component {
     plaintText = 'chentian';
@@ -25,13 +31,11 @@ export default class App extends Component {
         //     .then((json) => console.log(json))
 
         encryption.aesDecrypt(this.plaintText).then((data) => {
-
             console.log(data);
-        })
+        });
         encryption.aesDecrypt('b121392dab9cf2e5160ba81c94e5f999').then((data) => {
-
             console.log(data);
-        })
+        });
         setLocal('userinfo', { name: [1, 2, 3] }).then((data) => {
             console.log(data);
         });
@@ -55,7 +59,7 @@ export default class App extends Component {
         });
         clearAllSession().then((data) => {
             console.log(data);
-        })
+        });
         // Logger.printLog('name',"chentian");
     }
     render() {
@@ -64,6 +68,6 @@ export default class App extends Component {
                 <Award />
                 App
             </div>
-        )
+        );
     }
 }

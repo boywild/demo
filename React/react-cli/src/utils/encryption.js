@@ -1,6 +1,6 @@
 import CryptoJS from 'crypto-js';
-export const key = '0000000000000000';//从服务器或者缓存获取
-export const iv = "1234567812345678";
+export const key = '0000000000000000'; //从服务器或者缓存获取
+export const iv = '1234567812345678';
 export default class encryption {
     //aes CBC模式加密
     static aesEncrypt(params) {
@@ -14,7 +14,7 @@ export default class encryption {
         const encryptResult = encryptedData.ciphertext.toString();
         return new Promise((resolve, reject) => {
             resolve(encryptResult);
-        })
+        });
     }
     //aes CBC模式解密
     static aesDecrypt(param) {
@@ -30,12 +30,12 @@ export default class encryption {
         const decryptedStr = CryptoJS.enc.Utf8.stringify(decryptedData).toString();
         return new Promise((resolve, reject) => {
             resolve(decryptedStr);
-        })
+        });
     }
     //hmacMd5
-    static hmacMd5() { }
-    static aesEnLocal() { }
-    static aesDeLocal() { }
-    static aesEnSession() { }
-    static aesDeSession() { }
+    static hmacMd5() {}
+    static aesEnLocal() {}
+    static aesDeLocal() {}
+    static aesEnSession() {}
+    static aesDeSession() {}
 }
