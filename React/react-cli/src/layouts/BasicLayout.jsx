@@ -1,18 +1,53 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Avatar, Layout, Menu, Icon } from 'antd';
+import { Avatar, Layout, Menu, Icon, Popover } from 'antd';
+
+import logo from 'assets/images/logo.svg';
 
 import './BasicLayout.scss';
 
 const { Header, Content, Footer, Sider } = Layout;
 export default class BasicLayout extends Component {
     static propTypes = {
-
+        prefixCls: PropTypes.string
     }
     renderHeader() {
+        const noticeMenu=()=>{
+            return '';
+        }
         return (
             <div>
-                <Layout  style={{ minHeight: '100vh' }}>
+                <div className="basicLayout">
+                    <div className="react-sider">
+                        <a href="/">
+                            <div className="react-sider-header">
+                                <img className="react-sider-logo" src={logo} />
+                                <div className="react-sider-appName">React App Pro</div>
+                            </div>
+                        </a>
+                        <div className="react-sider-content">
+                            <ul className=""></ul>
+                        </div>
+                    </div>
+                    <div className="basicLayout-content">
+                        <div className="basicLayout-header">
+                            <div className="basicLayout-notice">
+                                <Popover
+                                    placement="bottomRight"
+                                    trigger="click"
+                                    arrowPointAtCenter
+                                    content={noticeMenu}
+                                >
+                                    <Icon className="basicLayout-noticeIcon" type="bell"></Icon>
+                                </Popover>
+                            </div>
+                        </div>
+                        <div className="basicLayout-pagerHeader"></div>
+                        <div className="basicLayout-mainContent"></div>
+                        <div className="basicLayout-footer"></div>
+                    </div>
+                </div>
+                {/* <Layout style={{ minHeight: '100vh' }}>
                     <Sider
                         breakpoint="lg"
                         collapsedWidth="0"
@@ -40,7 +75,7 @@ export default class BasicLayout extends Component {
                         </Menu>
                     </Sider>
                     <Layout>
-                        
+
                         <Header className='test'>
                             <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>U</Avatar>
                         </Header>
@@ -51,7 +86,7 @@ export default class BasicLayout extends Component {
                             Ant Design ©2018 Created by Ant UED
                         </Footer>
                     </Layout>
-                </Layout>
+                </Layout> */}
             </div>
         );
     }
