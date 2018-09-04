@@ -10,7 +10,7 @@ const COMPONENT = path.resolve(__dirname, "./src/components");
 const HOCS = path.resolve(__dirname, './src/hocs');
 const I18N = path.resolve(__dirname, './src/i18n');
 const LAYOUTS = path.resolve(__dirname, './src/layouts');
-const SCSS = path.resolve(__dirname, './src/scss');
+const SCSS = path.resolve(__dirname, './src/styles');
 const UTILS = path.resolve(__dirname, "./src/utils");
 const VIEWS = path.resolve(__dirname, './src/views');
 

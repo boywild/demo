@@ -9,6 +9,46 @@ const menu = [
                 path: 'analysis'
             }
         ]
+    },
+    {
+        name: 'siderMenu_outlets',
+        icon: 'shop',
+        path: 'outlets',
+        children: [
+            {
+                name: 'siderMenu_analysis',
+                path: 'analysis',
+                children: [
+                    {
+                        name: 'siderMenu_realtime',
+                        path: 'realtime'
+                    },
+                    {
+                        name: 'siderMenu_offline',
+                        path: 'offline'
+                    }
+                ]
+            },
+            {
+                name: 'siderMenu_workplace',
+                path: 'workplace'
+            }
+        ]
+    },
+    {
+        name: 'siderMenu_exception',
+        icon: 'table',
+        path: 'exception',
+        children: [
+            {
+                name: 'siderMenu_403',
+                path: '403'
+            },
+            {
+                name: 'siderMenu_404',
+                path: '404'
+            }
+        ]
     }
 ];
 

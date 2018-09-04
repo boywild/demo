@@ -1,0 +1,14 @@
+/*
+ * @Author: kayak
+ * @Date: 2018-09-04 15:07:01
+ * -----
+ * @Modified By: kayak
+ * @Last Modified: 2018-09-04 15:07:02
+ */
+
+// mixins.scss
+@mixin text-ellipsis() {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
