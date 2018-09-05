@@ -8,18 +8,41 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link, Icon } from 'react-router-dom';
-import { Menu } from 'antd';
+import { Link } from 'react-router-dom';
+import { Menu, Icon } from 'antd';
 import memoize from 'memoize-one';
 import map from 'lodash/map';
+import reduce from 'lodash/reduce';
 
 import formatMenuPath from './utils/formatMenuPath';
+import './Sider.scss';
+
+const { SubMenu } = Menu;
 
 export default class Sider extends Component {
-    static propTypes = {};
-
+    static propTypes = {
+        appLogo: PropTypes.string,
+        appName: PropTypes.string,
+        menuData: PropTypes.array,
+        prefixCls: PropTypes.string,
+        className: PropTypes.string,
+        style: PropTypes.object,
+        width: PropTypes.number
+    };
+    static defaultProps = {
+        prefixCls: 'react-sider',
+        className: '',
+        style: {},
+        appName: '',
+        appLogo: '',
+        appBaseUrl: '/',
+        width: 256,
+        menuData: [],
+        pathname: '/'
+    };
     // 处理菜单配置数据
     constructor() {
+        super();
         this.fullPathMenuData = memoize((menuData) => formatMenuPath(menuData));
     }
 
@@ -41,22 +64,22 @@ export default class Sider extends Component {
         map(data, (item) => {
             if (item.children) {
                 return (
-                    <Menu.SubMenu
+                    <SubMenu
                         key={item.path}
                         title={
                             <span>
-                                <Icon type={item.icon} />
+                                {item.icon ? <Icon type={item.icon} /> : ''}
                                 <span>{item.name}</span>
                             </span>
                         }>
                         {this.renderMenu(item.children)}
-                    </Menu.SubMenu>
+                    </SubMenu>
                 );
             }
             return (
                 <Menu.Item key={item.path}>
                     <Link to={item.path} href={item.path}>
-                        <Icon type={item.icon} />
+                        {item.icon ? <Icon type={item.icon} /> : ''}
                         <span>{item.name}</span>
                     </Link>
                 </Menu.Item>
@@ -69,18 +92,31 @@ export default class Sider extends Component {
         return (
             <div className={`${prefixCls}-body`}>
                 <Menu theme="dark" mode="inline" style={{ padding: '16px 0', width: '100%' }}>
-                    {this.renderMenu(menuData)}
+                    {this.renderMenu(this.fullPathMenuData(menuData))}
                 </Menu>
             </div>
         );
     };
+    getFlatMenuKeys = (menuData) =>
+        reduce(
+            menuData,
+            (accumulator, value) => {
+                accumulator.push(value.path);
+                if (value.children) {
+                    return accumulator.concat(this.getFlatMenuKeys(value.children));
+                }
+                return accumulator;
+            },
+            []
+        );
     render() {
-        const { prefixCls, className, style, width } = this.props;
+        const { prefixCls, className, style, width, menuData } = this.props;
         const classes = `${prefixCls} ${className}`;
         const styles = {
             ...style,
             width
         };
+        console.log(this.getFlatMenuKeys(this.fullPathMenuData(menuData)));
         return (
             <div className={classes} style={styles}>
                 {this.renderSiderHeader()}

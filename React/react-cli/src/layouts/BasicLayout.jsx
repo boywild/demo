@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Avatar, Layout, Menu, Icon, Popover, Dropdown } from 'antd';
+import Sider from 'utils/react-sider/src';
+
+import menu from 'app/config/menu';
 
 import logo from 'assets/images/logo.svg';
 
 import './BasicLayout.scss';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Footer } = Layout;
+
 export default class BasicLayout extends Component {
     static propTypes = {
         prefixCls: PropTypes.string
@@ -37,34 +41,7 @@ export default class BasicLayout extends Component {
         return (
             <div>
                 <div className="basicLayout">
-                    <div className="react-sider">
-                        <a href="/">
-                            <div className="react-sider-header">
-                                <img className="react-sider-logo" src={logo} />
-                                <div className="react-sider-appName">React App Pro</div>
-                            </div>
-                        </a>
-                        <div className="react-sider-body">
-                            <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} style={{ padding: '16px 0', width: '100%' }}>
-                                <Menu.Item key="1">
-                                    <Icon type="user" />
-                                    <span className="nav-text">nav 1</span>
-                                </Menu.Item>
-                                <Menu.Item key="2">
-                                    <Icon type="video-camera" />
-                                    <span className="nav-text">nav 2</span>
-                                </Menu.Item>
-                                <Menu.Item key="3">
-                                    <Icon type="upload" />
-                                    <span className="nav-text">nav 3</span>
-                                </Menu.Item>
-                                <Menu.Item key="4">
-                                    <Icon type="user" />
-                                    <span className="nav-text">nav 4</span>
-                                </Menu.Item>
-                            </Menu>
-                        </div>
-                    </div>
+                    <Sider appName="test" appLogo={logo} menuData={menu} />
                     <div className="basicLayout-content">
                         <div className="basicLayout-header">
                             <div className="basicLayout-notice">

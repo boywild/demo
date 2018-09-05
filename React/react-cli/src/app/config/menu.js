@@ -1,19 +1,8 @@
-const menu = [
+export const menu = [
     {
         name: 'siderMenu_dashboard',
         icon: 'dashboard',
         path: 'dashboard',
-        children: [
-            {
-                name: 'siderMenu_analysis',
-                path: 'analysis'
-            }
-        ]
-    },
-    {
-        name: 'siderMenu_outlets',
-        icon: 'shop',
-        path: 'outlets',
         children: [
             {
                 name: 'siderMenu_analysis',
@@ -34,6 +23,11 @@ const menu = [
                 path: 'workplace'
             }
         ]
+    },
+    {
+        name: 'siderMenu_outlets',
+        icon: 'shop',
+        path: 'outlets'
     },
     {
         name: 'siderMenu_exception',
