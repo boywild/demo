@@ -9,7 +9,7 @@
 import reduce from 'lodash/reduce';
 
 /**
- * 使用菜单配置信息中的完整路径生成key的集合
+ * 使用菜单配置信息中的完整路径生成key的arr集合
  * @param {Array} fullPathMenuData 具有完整路径的菜单配置项
  * @returns {Array}
  */

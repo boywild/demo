@@ -15,6 +15,10 @@ import map from 'lodash/map';
 import reduce from 'lodash/reduce';
 
 import formatMenuPath from './utils/formatMenuPath';
+import getFlatMenuKeys from './utils/getFlatMenuKeys';
+import urlToList from './utils/urlToList';
+import getMeunMatchKeys from './utils/getMeunMatchKeys';
+
 import './Sider.scss';
 
 const { SubMenu } = Menu;
@@ -41,9 +45,16 @@ export default class Sider extends Component {
         pathname: '/'
     };
     // 处理菜单配置数据
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.fullPathMenuData = memoize((menuData) => formatMenuPath(menuData));
+        this.selectedKeys=memoize((pathname,fullPathMenu)=>{
+            getMeunMatchKeys(getFlatMenuKeys(fullPathMenu),urlToList(pathname));
+        })
+        const { pathname, menuData } = props;
+        this.state={
+            openKeys:this.selectedKeys(pathname,this.fullPathMenuData(menuData))
+        }
     }
 
     // 渲染侧边栏头部
@@ -86,12 +97,16 @@ export default class Sider extends Component {
             );
         });
 
+    // 处理submenu展开/关闭回调
+    handleOpenChange(openKeys){
+        console.log(openKeys);
+    }
     // 渲染侧边栏内容部分
     renderSiderBody = () => {
         const { prefixCls, menuData } = this.props;
         return (
             <div className={`${prefixCls}-body`}>
-                <Menu theme="dark" mode="inline" style={{ padding: '16px 0', width: '100%' }}>
+                <Menu theme="dark" mode="inline" openKeys={[]} selectedKeys={[]} onOpenChange={this.handleOpenChange}  style={{ padding: '16px 0', width: '100%' }}>
                     {this.renderMenu(this.fullPathMenuData(menuData))}
                 </Menu>
             </div>
