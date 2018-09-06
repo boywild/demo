@@ -15,6 +15,8 @@ export default class BasicLayout extends Component {
     static propTypes = {
         prefixCls: PropTypes.string
     };
+
+    // 渲染内容部分头部
     renderHeader = () => {
         const noticeMenu = () => {
             return '';
@@ -39,33 +41,22 @@ export default class BasicLayout extends Component {
             </Menu>
         );
         return (
-            <div>
-                <div className="basicLayout">
-                    <Sider appName="test" appLogo={logo} menuData={menu} />
-                    <div className="basicLayout-content">
-                        <div className="basicLayout-header">
-                            <div className="basicLayout-notice">
-                                <Popover
-                                    placement="bottomRight"
-                                    trigger="click"
-                                    arrowPointAtCenter
-                                    content={noticeMenu}>
-                                    <Icon className="basicLayout-noticeIcon" type="bell" />
-                                </Popover>
-                            </div>
-                            <Dropdown overlay={userMenu} placement="bottomRight">
-                                <div className="basicLayout-avatarContainer">
-                                    <Avatar className="basicLayout-avatar" icon="user" />
-                                </div>
-                            </Dropdown>
-                        </div>
-
-                        <div className="basicLayout-mainContent" />
-                    </div>
+            <div className="basicLayout-header">
+                <div className="basicLayout-notice">
+                    <Popover placement="bottomRight" trigger="click" arrowPointAtCenter content={noticeMenu}>
+                        <Icon className="basicLayout-noticeIcon" type="bell" />
+                    </Popover>
                 </div>
+                <Dropdown overlay={userMenu} placement="bottomRight">
+                    <div className="basicLayout-avatarContainer">
+                        <Avatar className="basicLayout-avatar" icon="user" />
+                    </div>
+                </Dropdown>
             </div>
         );
     };
+
+    // 渲染面包屑和面包屑标题
     renderPageHeader = () => {
         return (
             <div className="basicLayout-pageHeader">
@@ -74,9 +65,25 @@ export default class BasicLayout extends Component {
             </div>
         );
     };
+
+    // 渲染面包屑
     renderBreadcrumb = () => {};
+
+    // 渲染底部
     renderFooter = () => <div className="basicLayout-footer">Copyright © 2018</div>;
     render() {
-        return <div>{this.renderHeader()}</div>;
+        const {children}=this.props;
+        return (
+            <div className="basicLayout">
+                <Sider appName="test" appLogo={logo} menuData={menu} />
+                <div className="basicLayout-content">
+                    {this.renderHeader()}
+                    {this.renderPageHeader()}
+
+                    <div className="basicLayout-mainContent">{children}</div>
+                    {this.renderFooter()}
+                </div>
+            </div>
+        );
     }
 }

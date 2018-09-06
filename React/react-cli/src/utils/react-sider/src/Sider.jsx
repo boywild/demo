@@ -48,13 +48,13 @@ export default class Sider extends Component {
     constructor(props) {
         super(props);
         this.fullPathMenuData = memoize((menuData) => formatMenuPath(menuData));
-        this.selectedKeys=memoize((pathname,fullPathMenu)=>{
-            getMeunMatchKeys(getFlatMenuKeys(fullPathMenu),urlToList(pathname));
-        })
+        this.selectedKeys = memoize((pathname, fullPathMenu) => {
+            getMeunMatchKeys(getFlatMenuKeys(fullPathMenu), urlToList(pathname));
+        });
         const { pathname, menuData } = props;
-        this.state={
-            openKeys:this.selectedKeys(pathname,this.fullPathMenuData(menuData))
-        }
+        this.state = {
+            openKeys: this.selectedKeys(pathname, this.fullPathMenuData(menuData))
+        };
     }
 
     // 渲染侧边栏头部
@@ -98,32 +98,30 @@ export default class Sider extends Component {
         });
 
     // 处理submenu展开/关闭回调
-    handleOpenChange(openKeys){
+    handleOpenChange = (openKeys) => {
+        this.setState({
+            openKeys
+        });
         console.log(openKeys);
-    }
+    };
     // 渲染侧边栏内容部分
     renderSiderBody = () => {
-        const { prefixCls, menuData } = this.props;
+        const { prefixCls, menuData, pathname } = this.props;
+        const { openKeys } = this.state;
         return (
             <div className={`${prefixCls}-body`}>
-                <Menu theme="dark" mode="inline" openKeys={[]} selectedKeys={[]} onOpenChange={this.handleOpenChange}  style={{ padding: '16px 0', width: '100%' }}>
+                <Menu
+                    theme="dark"
+                    mode="inline"
+                    openKeys={openKeys}
+                    selectedKeys={this.selectedKeys(pathname, this.fullPathMenuData(menuData))}
+                    onOpenChange={this.handleOpenChange}
+                    style={{ padding: '16px 0', width: '100%' }}>
                     {this.renderMenu(this.fullPathMenuData(menuData))}
                 </Menu>
             </div>
         );
     };
-    getFlatMenuKeys = (menuData) =>
-        reduce(
-            menuData,
-            (accumulator, value) => {
-                accumulator.push(value.path);
-                if (value.children) {
-                    return accumulator.concat(this.getFlatMenuKeys(value.children));
-                }
-                return accumulator;
-            },
-            []
-        );
     render() {
         const { prefixCls, className, style, width, menuData } = this.props;
         const classes = `${prefixCls} ${className}`;
@@ -131,7 +129,6 @@ export default class Sider extends Component {
             ...style,
             width
         };
-        console.log(this.getFlatMenuKeys(this.fullPathMenuData(menuData)));
         return (
             <div className={classes} style={styles}>
                 {this.renderSiderHeader()}
