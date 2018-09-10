@@ -97,9 +97,9 @@ export class SearchBoxComponent implements OnInit {
 
 	constructor(private youtube: YouTubeService, private el: ElementRef) {}
 	ngOnInit(): void {
-		const aaa = fromEvent(this.el.nativeElement, "keyup");
+		const formevent = fromEvent(this.el.nativeElement, "keyup");
 
-		aaa.pipe(
+		formevent.pipe(
 			map((e: any) => e.target.value),
 			filter((text: string) => text.length > 1),
 			debounceTime(250),
@@ -107,8 +107,9 @@ export class SearchBoxComponent implements OnInit {
 			map((query: string) => this.youtube.search(query))
 		).subscribe({
 			next(results) {
-				this.loading.next(false);
-				this.results.next(results);
+				console.log(results);
+				// this.loading.next(false);
+				// this.results.next(results);
 			},
 			error(err) {
 				console.log(err);
@@ -132,8 +133,8 @@ export class SearchBoxComponent implements OnInit {
         <div class="thumbnail">
             <img src="{{result.thumbnailUrl}}">
             <div class="caption">
-                <h3>{result.title}</h3>
-                <p>{result.description}</p>
+                <h3>{{result.title}}</h3>
+                <p>{{result.description}}</p>
                 <p>
                     <a href="{{result.videoUrl}}" class="btn btn-default" role="button">Watch</a>
                 </p>

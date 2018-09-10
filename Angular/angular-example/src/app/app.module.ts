@@ -43,10 +43,10 @@ import {
 		ProductDepartmentComponent,
 		ProductImageComponent,
 		ProductRowComponent,
-		FormSkuComponent
-		// YoutubeSearchComponent,
-		// SearchBoxComponent,
-		// SearchResultComponent
+		FormSkuComponent,
+		YoutubeSearchComponent,
+		SearchBoxComponent,
+		SearchResultComponent
 	],
 	imports: [
 		BrowserModule,
