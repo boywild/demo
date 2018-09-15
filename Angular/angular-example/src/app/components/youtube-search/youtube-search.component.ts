@@ -99,26 +99,28 @@ export class SearchBoxComponent implements OnInit {
 	ngOnInit(): void {
 		const formevent = fromEvent(this.el.nativeElement, "keyup");
 
-		formevent.pipe(
-			map((e: any) => e.target.value),
-			filter((text: string) => text.length > 1),
-			debounceTime(250),
-			tap(() => this.loading.next(true)),
-			map((query: string) => this.youtube.search(query))
-		).subscribe({
-			next(results) {
-				console.log(results);
-				// this.loading.next(false);
-				// this.results.next(results);
-			},
-			error(err) {
-				console.log(err);
-				this.loading.next(false);
-			},
-			complete() {
-				this.loading.next(false);
-			}
-		});
+		formevent
+			.pipe(
+				map((e: any) => e.target.value),
+				filter((text: string) => text.length > 1),
+				debounceTime(250),
+				tap(e => console.log('对每次操作都执行'+e)),
+				map((query: string) => "输出搜索结果")
+			)
+			.subscribe({
+				next(results) {
+					console.log(results);
+					// this.loading.next(false);
+					// this.results.next(results);
+				},
+				error(err) {
+					console.log(err);
+					this.loading.next(false);
+				},
+				complete() {
+					this.loading.next(false);
+				}
+			});
 	}
 }
 
@@ -150,7 +152,7 @@ export class SearchResultComponent implements OnInit {
 
 @Component({
 	selector: "youtube-search",
-    template: `
+	template: `
     <div class="container">
         <div class="page-header">
             <h1>
