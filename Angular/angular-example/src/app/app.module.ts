@@ -2,6 +2,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
+import { HttpClientModule } from '@angular/common/http';
 
 import { RoutersModules } from "./routers/routers.module";
 
@@ -53,7 +54,8 @@ import {
 		RoutersModules,
 		FormsModule,
 		ReactiveFormsModule,
-		HttpModule
+		// HttpModule,
+		HttpClientModule
 	],
 	providers: [youTubeServiceInjectables],
 	bootstrap: [AppComponent]

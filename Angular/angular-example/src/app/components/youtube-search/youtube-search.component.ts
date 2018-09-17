@@ -6,7 +6,7 @@ import {
 	EventEmitter,
 	ElementRef
 } from "@angular/core";
-import { Http, Response } from "@angular/http";
+import { HttpClient } from "@angular/common/http";
 import { Observable, fromEvent } from "rxjs";
 // import { fromEvent } from 'rxjs/internal/observable/fromEvent';
 import { map, filter, debounceTime, tap } from "rxjs/operators";
@@ -41,15 +41,15 @@ class SearchResult {
 /**
  * 自定义服务用于发送请求
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class YouTubeService {
 	constructor(
-		private http: Http,
+		private http: HttpClient,
 		@Inject(YOUTUBE_API_KEY) private apiKey: string,
 		@Inject(YOUTUBE_API_URL) private apiUrl: string
 	) {}
 
-	search(query: string): Observable<SearchResult[]> {
+	search(query: string): Observable<SearchResult> {
 		let params: string = [
 			`q=${query}`,
 			`key=${this.apiKey}`,
@@ -59,15 +59,16 @@ export class YouTubeService {
 		].join("&");
 
 		let queryUrl: string = `${this.apiUrl}?${params}`;
-
+		console.log(this.http.get(queryUrl));
 		return this.http.get(queryUrl).pipe(
-			map((response: Response) => {
-				return (<any>response.json()).items.map(item => {
+			map((response) => {
+				console.warn(response);
+				return (<any>response).items.map(item => {
 					return new SearchResult({
 						id: item.id.videoId,
 						title: item.snippet.title,
 						description: item.snippet.description,
-						thumbnailUrl: item.snippet.thumbnails.hight.url
+						thumbnailUrl: item.snippet.thumbnails.high.url
 					});
 				});
 			})
@@ -105,7 +106,7 @@ export class SearchBoxComponent implements OnInit {
 				filter((text: string) => text.length > 1),
 				debounceTime(250),
 				tap(e => console.log('对每次操作都执行'+e)),
-				map((query: string) => "输出搜索结果")
+				map((query: string) => this.youtube.search(query))
 			)
 			.subscribe({
 				next(results) {
@@ -173,7 +174,7 @@ export class SearchResultComponent implements OnInit {
 export class YoutubeSearchComponent implements OnInit {
 	HeaderTitle: string;
 	results: SearchResult[];
-	constructor(public http: Http) {
+	constructor() {
 		this.HeaderTitle = "aaa";
 	}
 	ngOnInit() {}
