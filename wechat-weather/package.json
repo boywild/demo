@@ -1,0 +1,14 @@
+{
+  "name": "wechat-weather",
+  "version": "1.0.0",
+  "description": "天气小程序",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "小程序"
+  ],
+  "author": "chentian",
+  "license": "ISC"
+}
