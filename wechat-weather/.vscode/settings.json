@@ -1,0 +1,39 @@
+{
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/bower_components": true
+    },
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true
+    },
+    "javascript.implicitProjectConfig.experimentalDecorators": true,
+    "prettier.printWidth": 120,
+    "prettier.tabWidth": 4,
+    "prettier.singleQuote": true,
+    "prettier.jsxBracketSameLine": true,
+    "prettier.arrowParens": "always",
+    "psi-header.templates": [
+        {
+            "language": "*",
+            "template": [
+                "@Author: chentian",
+                "@Date: <<filecreated('YYYY-MM-DD HH:mm:ss')>>",
+                "-----",
+                "@Modified By: chentian",
+                "@Last Modified: <<dateformat('YYYY-MM-DD HH:mm:ss')>>"
+            ]
+        }
+    ],
+    "psi-header.changes-tracking": {
+        "autoHeader": "manualSave"
+    },
+    "eslint.options": {
+        "configFile": ".eslintrc"
+    },
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+}
