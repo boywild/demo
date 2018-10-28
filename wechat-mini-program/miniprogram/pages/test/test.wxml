@@ -1,6 +1,0 @@
-<!--miniprogram/pages/test/test.wxml-->
-
-<view>
-    <text>miniprogram/pages/test/test.wxml</text>
-    <button size="mini" type="default" bindtap="onTest">测试云函数</button>
-</view>

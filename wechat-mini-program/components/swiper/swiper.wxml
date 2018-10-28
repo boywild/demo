@@ -1,0 +1,5 @@
+<swiper class='swiperWrapper' indicator-dots='{{true}}' indicator-color='rgba(238,0,0,1)' previous-margin='50px' next-margin='50px' circular="{{true}}" bindchange="swiperChange">
+    <swiper-item class="swiper-slide" wx:for='{{img}}' wx:key="{{index}}">
+        <image src="{{item}}" class="slide-image  {{current===index?'active':''}}" />
+    </swiper-item>
+</swiper>

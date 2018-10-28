@@ -1,0 +1,18 @@
+{
+    "pages": [
+        "pages/movie/moive",
+        "pages/swiper/swiper"
+    ],
+    "tabBar": {
+        "list": [
+            {
+                "pagePath": "pages/movie/moive",
+                "text": "movie"
+            },
+            {
+                "pagePath": "pages/swiper/swiper",
+                "text": "swiper"
+            }
+        ]
+    }
+}

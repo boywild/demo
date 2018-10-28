@@ -1,0 +1,6 @@
+{
+    "navigationBarTitleText": "豆瓣电影",
+    "usingComponents": {
+        "my-swiper": "/components/swiper/swiper"
+    }
+}
