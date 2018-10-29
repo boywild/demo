@@ -1,17 +1,28 @@
 {
     "pages": [
-        "pages/movie/moive",
-        "pages/swiper/swiper"
+        "pages/index/index",
+        "pages/classify/classify",
+        "pages/user/user"
     ],
     "tabBar": {
         "list": [
             {
-                "pagePath": "pages/movie/moive",
-                "text": "movie"
+                "pagePath": "pages/index/index",
+                "text": "首页",
+                "iconPath": "/assets/image/index.png",
+                "selectedIconPath": "/assets/image/index-active.png"
             },
             {
-                "pagePath": "pages/swiper/swiper",
-                "text": "swiper"
+                "pagePath": "pages/classify/classify",
+                "text": "分类",
+                "iconPath": "/assets/image/subject.png",
+                "selectedIconPath": "/assets/image/subject-active.png"
+            },
+            {
+                "pagePath": "pages/user/user",
+                "text": "用户",
+                "iconPath": "/assets/image/user.png",
+                "selectedIconPath": "/assets/image/user-active.png"
             }
         ]
     }

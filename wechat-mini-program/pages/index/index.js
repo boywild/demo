@@ -5,23 +5,16 @@ Page({
      * 页面的初始数据
      */
     data: {
-        movie: []
+        movie: [],
+        page: 0,
+        isLoading: false
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        wx.request({
-            url: `https://www.koocv.com/h5-view/v/movie/list/?page_start=1`,
-            success: (res) => {
-                this.setData({
-                    movie: res.data.subjects
-                });
-                console.log(res);
-            }
-        })
-
+        this.loadmore();
     },
 
     /**
@@ -73,6 +66,36 @@ Page({
 
     },
     loadmore: function() {
+        if (!this.data.isLoading) {
+            this.loadData();
+        }
+
+    },
+    loadData: function() {
+        let {
+            page,
+            movie
+        } = this.data;
         console.log('加载更多')
+        this.setData({
+            isLoading: true
+        });
+        wx.showLoading({
+            title: '正在加载中',
+            mask: true
+        });
+        wx.request({
+            url: `https://www.koocv.com/h5-view/v/movie/list/?page_start=${page}`,
+            success: (res) => {
+                page += 10;
+                this.setData({
+                    movie: [...movie, ...res.data.subjects],
+                    page,
+                    isLoading: false
+                });
+                wx.hideLoading();
+                console.log(res);
+            }
+        })
     }
 })

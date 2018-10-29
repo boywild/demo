@@ -1,17 +1,29 @@
 /* pages/movie/moive.wxss */
-page,.movie-scroll{
+
+page, .movie-scroll {
     height: 100%;
 }
+
 .movie-box {
     display: inline-block;
     width: 335rpx;
     margin: 10px;
 }
-.movie-box>image{
+
+.movie-box>image {
     max-width: 100%;
 }
-.movie-title{
+
+.movie-title {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+}
+
+.loading {
+    text-align: center;
+}
+
+.loading>image {
+    width: 100rpx;
 }

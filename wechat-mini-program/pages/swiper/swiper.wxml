@@ -1,5 +1,0 @@
-
-<my-swiper img='{{url}}' bind:swiperChange="changeCallback"></my-swiper>
-<view>
-    当前显示的是第{{n}}张图片
-</view>
