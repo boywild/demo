@@ -1,6 +1,6 @@
 <!--pages/movie/moive.wxml-->
 <scroll-view class='movie-scroll' scroll-y lower-threshold='200' bindscrolltolower="loadmore">
-    <view wx:for="{{movie}}" wx:key="id" class='movie-box'>
+    <view wx:for="{{movie}}" wx:key="id" class='movie-box' bind:tap="movieDetail" data-id="{{item.id}}">
         <image src="{{item.cover}}"></image>
         <text class='movie-title'>{{item.title}}/{{item.rate}}</text>
     </view>

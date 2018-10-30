@@ -1,12 +1,11 @@
-// pages/movie/moive.js
+// pages/detail/detail.js
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-        movie: [],
-        page: 0,
+        detailDb: {},
         isLoading: false
     },
 
@@ -14,7 +13,11 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        this.loadmore();
+        const {
+            id
+        } = options;
+        console.log(id);
+        this.getDetail(id);
     },
 
     /**
@@ -65,43 +68,19 @@ Page({
     onShareAppMessage: function() {
 
     },
-    loadmore: function() {
-        if (!this.data.isLoading) {
-            this.loadData();
-        }
-
-    },
-    movieDetail(e) {
-        console.log(e);
-        const id = e.currentTarget.dataset.id;
-        wx.navigateTo({
-            url: `/pages/detail/detail?id=${id}`,
-        })
-    },
-    loadData: function() {
-        let {
-            page,
-            movie
-        } = this.data;
-        console.log('加载更多');
-        this.setData({
-            isLoading: true
-        });
+    getDetail(id) {
         wx.showLoading({
-            title: '正在加载中',
-            mask: true
-        });
+            title: '正在加载',
+        })
         wx.request({
-            url: `https://www.koocv.com/h5-view/v/movie/list/?page_start=${page}`,
+            url: `https://www.koocv.com/h5-view/v/movie/detail/?id=${id}`,
             success: (res) => {
-                page += 10;
+                console.log(res);
                 this.setData({
-                    movie: [...movie, ...res.data.subjects],
-                    page,
-                    isLoading: false
+                    detailDb: res.data,
+                    isLoading: true
                 });
                 wx.hideLoading();
-                console.log(res);
             }
         })
     }
