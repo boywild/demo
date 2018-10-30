@@ -5,19 +5,25 @@ const eventproxy = require('eventproxy');
 const async = require('async');
 const url = require('url');
 
-var fibonacci = function(n) {
-    if (n === 0) {
-        return 0;
-    }
-    if (n === 1) {
-        return 1;
-    }
-    return fibonacci(n - 1) + fibonacci(n - 2);
-};
+const app = express();
 
-if (require.main === module) {
-    // 如果是直接执行 main.js，则进入此处
-    // 如果 main.js 被其他文件 require，则此处不会执行。
-    var n = Number(process.argv[2]);
-    console.log('fibonacci(' + n + ') is', fibonacci(n));
-}
+app.get('/', (req, res, next) => {
+    superagent.get('https://cnodejs.org/').end(function(err, res) {
+        if (err) {
+            return next(err);
+        }
+        const $ = cheerio.load(res.text);
+        var item = [];
+        $('#topic_list .topic_title').each((index, ele) => {
+            const element = $(ele);
+            items.push({
+                title: $element.attr('title'),
+                href: $element.attr('href')
+            });
+        });
+    });
+});
+
+app.listen(3008, () => {
+    console.log('监听3008成功');
+});

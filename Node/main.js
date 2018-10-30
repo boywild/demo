@@ -6,6 +6,15 @@ const async = require('async');
 const url = require('url');
 
 var fibonacci = function(n) {
+    if (typeof n !== 'number') {
+        throw new Error('n should be a Number');
+    }
+    if (n < 0) {
+        throw new Error('n should >=0');
+    }
+    if (n > 10) {
+        throw new Error('n should <=10');
+    }
     if (n === 0) {
         return 0;
     }

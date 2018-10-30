@@ -1,20 +1,26 @@
 {
-  "name": "node",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "dev": "nodemon ./app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "async": "^2.6.1",
-    "cheerio": "^1.0.0-rc.2",
-    "eventproxy": "^1.0.0",
-    "express": "^4.16.4",
-    "nodemon": "^1.18.5",
-    "superagent": "^4.0.0-beta.5"
-  }
+    "name": "node",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "nodemon ./app.js",
+        "test": "istanbul cover _mocha test/test.main.js",
+        "test2": "mocha-phantomjs --path ./node_modules/phantomjs-prebuilt/bin/phantomjs index.html --ssl-protocol=any --ignore-ssl-errors=true"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "async": "^2.6.1",
+        "cheerio": "^1.0.0-rc.2",
+        "eventproxy": "^1.0.0",
+        "express": "^4.16.4",
+        "istanbul": "^0.4.5",
+        "mocha": "^5.2.0",
+        "mocha-phantomjs": "^4.1.0",
+        "nodemon": "^1.18.5",
+        "phantomjs-prebuilt": "^2.1.16",
+        "should": "^13.2.3",
+        "superagent": "^4.0.0-beta.5"
+    }
 }
