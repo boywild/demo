@@ -1,1 +1,21 @@
 /* pages/classify/classify.wxss */
+
+.classify {
+    position: relative;
+    border-radius: 20rpx;
+    overflow: hidden;
+    margin-bottom: 20rpx;
+}
+
+.classify .view {
+    width: 100%;
+    height: 215rpx;
+    display: block;
+}
+
+.classify .txt {
+    color: #fff;
+    position: absolute;
+    left: 10rpx;
+    bottom: 10rpx;
+}

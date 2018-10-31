@@ -1,2 +1,5 @@
 <!--pages/classify/classify.wxml-->
-<text>pages/classify/classify.wxml</text>
+<view class='classify' wx:for="{{classify}}" wx:key="{{index}}">
+    <image class='view' src="{{item.url}}"></image>
+    <text class='txt'>{{item.type}}</text>
+</view>
