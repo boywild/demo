@@ -1,8 +1,10 @@
 <!--pages/detail/detail.wxml-->
-<view wx:if="{{isLoading}}">
+<view wx:if="{{isLoading}}" class='movie-detail'>
     <video wx:if="{{detailDb.is_play}}" style='width:100%' src="{{'https://www.koocv.com/h5-view/v/movie/play?url='+detailDb.play_url}}"></video>
-    <view>{{detailDb.title}}</view>
-    <view>又名：{{detailDb.aka}}</view>
-    <view>{{detailDb.genres}}/{{detailDb.countries[0]}}/{{detailDb.rating.average}}</view>
-    <view>{{detailDb.summary}}</view>
+    <view class='detail-box'>
+        <view class='title'>{{detailDb.title}}</view>
+        <view class='name'>又名：{{detailDb.aka}}</view>
+        <view class='tag'>{{detailDb.rating.average}}/{{detailDb.countries[0]}}/{{detailDb.genres}}</view>
+        <view class='description'>{{detailDb.summary}}</view>
+    </view>
 </view>

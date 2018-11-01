@@ -1,5 +1,7 @@
 /* pages/classify/classify.wxss */
-
+page{
+    height: 100%;
+}
 .classify {
     position: relative;
     border-radius: 20rpx;

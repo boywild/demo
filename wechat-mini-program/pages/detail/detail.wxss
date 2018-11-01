@@ -1,1 +1,17 @@
 /* pages/detail/detail.wxss */
+.movie-detail{
+
+}
+.detail-box{
+    padding: 10rpx 30rpx;
+}
+.movie-detail .title{
+    font-weight: bold;
+}
+.movie-detail .name,.movie-detail .tag{
+    font-size: 14px;
+    color: #c4c2c2;
+}
+.movie-detail .description{
+    font-size: 16px;
+}
