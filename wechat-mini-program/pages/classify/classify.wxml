@@ -1,5 +1,5 @@
 <!--pages/classify/classify.wxml-->
-<view class='classify' wx:for="{{classify}}" wx:key="{{index}}">
+<view class='classify' wx:for="{{classify}}" wx:key="{{index}}" data-type="{{item.type}}" bind:tap="movieTag">
     <image class='view' src="{{item.url}}"></image>
     <text class='txt'>{{item.type}}</text>
 </view>

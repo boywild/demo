@@ -1,0 +1,2 @@
+/* pages/classify-list/classify-list.wxss */
+@import '/common/css/list.wxss';

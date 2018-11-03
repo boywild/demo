@@ -1,2 +1,12 @@
 <!--pages/user/user.wxml-->
-<text>pages/user/user.wxml</text>
+<view class='user-info'>
+    <image src="{{userInfo.avatarUrl}}" class='avatar'></image>
+    <view class='nickname'>{{userInfo.nickName}}</view>
+</view>
+<view class='line'></view>
+<view>历史纪录</view>
+<view class='no-record' wx:if="{{record.length<=0}}">暂无历史记录</view>
+<view wx:for="{{record}}" wx:key="id" class='movie-box' bind:tap="movieDetail" data-record="{{item}}" data-id="{{item.id}}">
+    <image src="{{item.cover}}"></image>
+    <text class='movie-title'>{{item.title}}/{{item.rate}}</text>
+</view>

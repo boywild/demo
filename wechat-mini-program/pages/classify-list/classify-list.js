@@ -1,4 +1,4 @@
-// pages/movie/moive.js
+// pages/classify-list/classify-list.js
 Page({
 
     /**
@@ -7,14 +7,25 @@ Page({
     data: {
         movie: [],
         page: 0,
-        isLoading: false
+        isLoading: false,
+        type: ''
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        this.loadmore();
+        let {
+            type
+        } = options;
+        wx.setNavigationBarTitle({
+            title: type,
+        })
+        this.setData({
+            type
+        });
+        this.loadmore(type);
+
     },
 
     /**
@@ -65,13 +76,17 @@ Page({
     onShareAppMessage: function() {
 
     },
-    loadmore: function() {
+    loadmore: function(type) {
         if (!this.data.isLoading) {
-            this.loadData();
+            this.loadData(this.data.type);
         }
 
     },
     movieDetail(e) {
+        console.log(e);
+        let {
+            type
+        } = this.data;
         const {
             id,
             record
@@ -83,14 +98,14 @@ Page({
         })
         wx.navigateTo({
             url: `/pages/detail/detail?id=${id}`,
-        });
+        })
     },
-    loadData: function() {
+    loadData: function(type) {
         let {
             page,
             movie
         } = this.data;
-        console.log('加载更多');
+        console.log(type);
         this.setData({
             isLoading: true
         });
@@ -99,7 +114,7 @@ Page({
             mask: true
         });
         wx.request({
-            url: `https://www.koocv.com/h5-view/v/movie/list/?page_start=${page}`,
+            url: `https://www.koocv.com/h5-view/v/movie/list?tag=${type}&page_start=${page}`,
             success: (res) => {
                 page += 10;
                 this.setData({

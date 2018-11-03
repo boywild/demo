@@ -82,5 +82,10 @@ Page({
      */
     onShareAppMessage: function() {
 
+    },
+    movieTag(e) {
+        wx.navigateTo({
+            url: `/pages/classify-list/classify-list?type=${e.currentTarget.dataset.type}`,
+        })
     }
 })

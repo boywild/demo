@@ -1,0 +1,11 @@
+<template name="movie-list">
+    <scroll-view class='movie-scroll' scroll-y lower-threshold='200' bindscrolltolower="loadmore">
+        <view wx:for="{{movie}}" wx:key="id" class='movie-box' bind:tap="movieDetail" data-record="{{item}}" data-id="{{item.id}}">
+            <image src="{{item.cover}}"></image>
+            <text class='movie-title'>{{item.title}}/{{item.rate}}</text>
+        </view>
+        <view class='loading' wx:if="{{isLoading}}">
+            <image mode='widthFix' src='/assets/loading/loading-bars.svg'></image>
+        </view>
+    </scroll-view>
+</template>

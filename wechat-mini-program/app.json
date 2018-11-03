@@ -3,7 +3,8 @@
         "pages/index/index",
         "pages/classify/classify",
         "pages/user/user",
-        "pages/detail/detail"
+        "pages/detail/detail",
+        "pages/classify-list/classify-list"
     ],
     "window": {
         "backgroundTextStyle": "light",

@@ -7,10 +7,12 @@
 }
 .movie-detail .title{
     font-weight: bold;
+    margin-bottom: 10rpx;
 }
 .movie-detail .name,.movie-detail .tag{
     font-size: 14px;
     color: #c4c2c2;
+    margin-bottom: 5rpx;
 }
 .movie-detail .description{
     font-size: 16px;

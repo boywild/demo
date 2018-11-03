@@ -80,6 +80,9 @@ Page({
                     detailDb: res.data,
                     isLoading: true
                 });
+                wx.setNavigationBarTitle({
+                    title: res.data.title,
+                })
                 wx.hideLoading();
             }
         })
