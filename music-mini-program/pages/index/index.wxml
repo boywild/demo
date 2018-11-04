@@ -1,0 +1,5 @@
+<!--index.wxml-->
+<view wx:for="{{list}}" wx:key="index" class='music-classify' bind:tap="viewMore" data-type="{{index}}" data-name="{{item[index]}}">
+    <text class='classify-number'>{{index+1}}.</text>
+    <text class='classify-name'>{{item[index]}}</text>
+</view>

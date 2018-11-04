@@ -1,0 +1,22 @@
+<!--pages/play/play.wxml-->
+<wxs module="formate">
+    module.exports = {
+        getTime: function(n) {
+            n = Math.floor(n);
+            return n < 10 ? '0' + n : '' + n;
+        }
+    }
+</wxs>
+
+
+<view class='song'>
+    <image class='song-thumbnail' src="{{song.al.picUrl}}" bind:tap="tap"></image>
+    <slider max="{{duration}}" value="{{currentTime}}" step="1" block-size="18" bind:changing="changing" bind:change="change"></slider>
+    <view class='song-time'>
+        <text class='start'>{{formate.getTime(currentTime/60)}}:{{formate.getTime(currentTime%60)}}</text>
+        <text class='end'>{{formate.getTime(duration/60)}}:{{formate.getTime(duration%60)}}</text>
+    </view>
+    <scroll-view class='lyric-box' scroll-y scroll-with-animation scroll-into-view="{{currentLrc}}">
+        <view id="ele-{{index}}" class='txt' wx:for="{{lyric}}" wx:key="index">{{lyric[index]}}</view>
+    </scroll-view>
+</view>

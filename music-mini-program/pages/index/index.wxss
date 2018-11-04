@@ -1,0 +1,17 @@
+/**index.wxss**/
+page{
+    background: #cdcbcd;
+}
+.music-classify{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 130rpx;
+    background: #fff;
+    padding: 0 20rpx;
+    margin: 15rpx 0;
+}
+.classify-number{
+    font-size: 32px;
+    color: green;
+}

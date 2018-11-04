@@ -1,0 +1,10 @@
+<!--pages/music/music.wxml-->
+<view class='music-box'>
+    <view wx:for="{{music}}" wx:key="index" class='music' bind:tap="listenmusic" data-current="{{item}}">
+        <image class='music-thumbnail' src="{{item.al.picUrl}}"></image>
+        <view class='music-info'>
+            <text class='music-name'>{{item.al.name}}</text>
+            <text class='music-author'>{{item.ar[0].name}}</text>
+        </view>
+    </view>
+</view>
