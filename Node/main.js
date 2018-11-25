@@ -1,11 +1,11 @@
-const http = require("http");
-const querystring = require("querystring");
-const fs = require("fs");
-const request = require("request");
-const Readable = require("stream").Readable;
-const Writable = require("stream").Writable;
-const stream = require("stream");
-const util = require("util");
+// const http = require("http");
+// const querystring = require("querystring");
+// const fs = require("fs");
+// const request = require("request");
+// const Readable = require("stream").Readable;
+// const Writable = require("stream").Writable;
+// const stream = require("stream");
+// const util = require("util");
 
 // const postData = querystring.stringify({
 //   content: `期望跟老师学到更多的东西`,
