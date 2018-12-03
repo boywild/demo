@@ -27,7 +27,7 @@ exports.listen = function(server) {
         handleMessageBroadcasting(socket, nickNames);
         handleRoomJoining(socket);
         socket.on('rooms', function() {
-            socket.emit('rooms', io.socket.manager.rooms);
+            socket.emit('rooms', io.of('/').adapter.rooms);
         });
         handleClientDisconnection(socket, nickNames, namesUsed);
     });
@@ -57,8 +57,7 @@ function joinRoom(socket, room) {
     socket.broadcast.to(room).emit('message', {
         text: nickNames[socket.id] + 'has join in romm'
     });
-    console.log(io);
-    const usersInRoom = io.Namespace.sockets.clients(room);
+    const usersInRoom = io.of('/').in(room).clients;
     if (usersInRoom.length > 1) {
         let usersInRoomSummary = 'users currently in ' + room + ':';
         for (let index in usersInRoom) {
