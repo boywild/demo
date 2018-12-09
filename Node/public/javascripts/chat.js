@@ -14,11 +14,11 @@ Chat.prototype.changeRoom = function(room) {
         newRoom: room
     });
 };
-Chat.prototype.processCommand = function(command) {
-    let words = command.split(' ');
-    let command = words[0].substring(1, words[0].length).toLowercase();
+Chat.prototype.processCommand = function(cmd) {
+    let words = cmd.split(' ');
+    let cm = words[0].substring(1, words[0].length).toLowerCase();
     let message = false;
-    switch (command) {
+    switch (cm) {
         case 'join':
             words.shift();
             let room = words.join(' ');
@@ -33,4 +33,5 @@ Chat.prototype.processCommand = function(command) {
             message = '无效命令';
             break;
     }
+    return message;
 };

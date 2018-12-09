@@ -50,7 +50,7 @@ $(document).ready(function() {
         $('#room-list').empty();
 
         for (var room in rooms) {
-            room = room.substring(1, room.length);
+            room = room.substring(0, room.length);
             if (room != '') {
                 $('#room-list').append(divEscapedContentElement(room));
             }
@@ -68,7 +68,7 @@ $(document).ready(function() {
 
     $('#send-message').focus();
 
-    $('#send-form').submit(function() {
+    $('#send-form').click(function() {
         processUserInput(chatApp, socket);
         return false;
     });
