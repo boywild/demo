@@ -13,5 +13,17 @@
         "**/CVS": true,
         "**/.DS_Store": true
     },
-    "prettier.eslintIntegration": true
+    "prettier.eslintIntegration": true,
+    "psi-header.templates": [
+        {
+            "language": "*",
+            "template": [
+                "@Author: chentian",
+                "@Date: <<filecreated('YYYY-MM-DD HH:mm:ss')>>",
+                "-----",
+                "@Modified By: chentian",
+                "@Last Modified: <<dateformat('YYYY-MM-DD HH:mm:ss')>>"
+            ]
+        }
+    ]
 }
