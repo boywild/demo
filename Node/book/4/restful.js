@@ -20,6 +20,18 @@ const server = http.createServer(function(req, res) {
 
         case 'DELETE':
             item = '';
+            const path = url.parse(req.url).pathname;
+            const i = parseInt(path.slice(1), 10);
+            if (isNaN(i)) {
+                res.statusCode = 400;
+                res.end('Invalid item id');
+            } else if (!item[i]) {
+                res.statusCode = 404;
+                res.end('Item not found');
+            } else {
+                items.splice(i, 1);
+                res.end('ok\n');
+            }
             break;
     }
     req.on('data', function(chunk) {

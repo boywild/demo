@@ -20,7 +20,9 @@ function countWordsInText(text) {
         .toLowerCase()
         .split(/\W+/)
         .sort();
+    console.log(words);
     for (let index in words) {
+        console.log(index);
         let word = words[index];
         if (word) {
             wordCounts[word] = wordCounts[word] ? wordCounts[word] + 1 : 1;
