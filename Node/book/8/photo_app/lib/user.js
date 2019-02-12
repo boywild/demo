@@ -48,14 +48,40 @@ User.prototype.hashPassword = function(fn) {
         });
     });
 };
+User.getByName = function(name, fn) {
+    User.getId(name, function(err, id) {
+        if (err) return fn(err);
+        User.get(id, fn);
+    });
+};
+User.getId = function(name, fn) {
+    db.get('user:id:' + name, fn);
+};
+User.get = function(id, fn) {
+    db.hgetall(id, function(err, user) {
+        if (err) return fn(err);
+        fn(null, new User(user));
+    });
+};
+User.authenticate = function(name, pass, fn) {
+    User.getByName(name, function(err, user) {
+        if (err) return fn(err);
+        if (!user.id) return fn();
+        bcrypt.hash(pass, user.salt, function(err, hash) {
+            if (err) return fn(err);
+            if (hash === user.pass) return fn(null, user);
+            fn();
+        });
+    });
+};
 
-const test = new User({
-    name: 'chentian',
-    pass: 'im a ferret',
-    age: '28'
-});
+// const test = new User({
+//     name: 'chentian',
+//     pass: 'im a ferret',
+//     age: '28'
+// });
 
-test.save(function(err) {
-    if (err) throw err;
-    console.log('user id %d', test.id);
-});
+// test.save(function(err) {
+//     if (err) throw err;
+//     console.log('user id %d', test.id);
+// });

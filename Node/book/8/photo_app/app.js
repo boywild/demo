@@ -11,6 +11,9 @@ var session = require('express-session');
 var upload = multer({ dest: 'uploads/' });
 
 var Photo = require('./models/Photo');
+var user = require('./lib/middleware/user');
+var messages = require('./lib/messages');
+var User = require('./lib/user');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -33,8 +36,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(session());
+app.use(
+    session({
+        secret: 'keyboard cat'
+    })
+);
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(user);
+app.use(messages);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -42,6 +51,46 @@ app.use('/photos', photosRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
 app.use('/article', articleRouter);
+app.post('/register', function(req, res, next) {
+    const data = req.body.user;
+    User.getByName(data.name, function(err, user) {
+        if (err) return next(err);
+        if (user.id) {
+            res.error('username already taken!');
+            res.redirect('back');
+        } else {
+            user = new User({
+                name: data.name,
+                pass: data.pass
+            });
+            user.save(function(err) {
+                if (err) return next(err);
+                req.session.uid = user.id;
+                console.log(user.id);
+                res.redirect('/login');
+            });
+        }
+    });
+});
+app.post('/login', function(req, res, next) {
+    const data = req.body.user;
+    User.authenticate(data.name, data.pass, function(err, user) {
+        if (err) return next(err);
+        if (user) {
+            req.session.uid = user.id;
+            res.redirect('/');
+        } else {
+            res.error('sorry invalid credentials');
+            res.redirect('back');
+        }
+    });
+});
+app.get('/logout', function(req, res, next) {
+    req.session.destroy(function(err) {
+        if (err) throw err;
+        res.redirect('/');
+    });
+});
 app.post('/test', upload.array('avatar', 2), function(req, res, next) {
     // console.log(req);
     const dir = req.app.get('photos');
