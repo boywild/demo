@@ -12,8 +12,10 @@ var upload = multer({ dest: 'uploads/' });
 
 var Photo = require('./models/Photo');
 var user = require('./lib/middleware/user');
+var validate = require('./lib/middleware/validate');
 var messages = require('./lib/messages');
 var User = require('./lib/user');
+var Entry = require('./lib/entry');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -21,6 +23,7 @@ var photosRouter = require('./routes/photos');
 var loginRouter = require('./routes/login');
 var registerRouter = require('./routes/register');
 var articleRouter = require('./routes/article');
+
 
 var app = express();
 
@@ -46,6 +49,16 @@ app.use(user);
 app.use(messages);
 
 app.use('/', indexRouter);
+// app.use('/', function(req, res, next) {
+//     Entry.getRange(0, -1, function(err, entries) {
+//         if (err) return next(err);
+//         res.render('entries', {
+//             title: 'Entries',
+//             entries: entries
+//         });
+//     });
+// });
+
 app.use('/users', usersRouter);
 app.use('/photos', photosRouter);
 app.use('/login', loginRouter);
@@ -111,6 +124,28 @@ app.post('/test', upload.array('avatar', 2), function(req, res, next) {
         );
     });
 });
+app.get('/post', function(req, res, next) {
+    res.render('post', {
+        title: 'Post'
+    });
+});
+app.post('/post', validate.required, validate.requiredAbove, function(
+    req,
+    res,
+    next
+) {
+    const data = req.body.entry;
+    const entry = new Entry({
+        username: res.locals.user.name,
+        title: data.title,
+        body: data.body
+    });
+    entry.save(function(err) {
+        if (err) return next(err);
+        res.redirect('/');
+    });
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     next(createError(404));
