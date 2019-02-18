@@ -16,7 +16,9 @@ Entry.getRange = function(from, to, fn) {
         fn(null, entries);
     });
 };
-
+Entry.count = function(fn) {
+    db.llen('entries', fn);
+};
 Entry.prototype.save = function(fn) {
     const entryJSON = JSON.stringify(this);
     db.lpush('entries', entryJSON, function(err) {
@@ -24,4 +26,5 @@ Entry.prototype.save = function(fn) {
         fn();
     });
 };
+
 module.exports = Entry;

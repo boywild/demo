@@ -24,7 +24,6 @@ var loginRouter = require('./routes/login');
 var registerRouter = require('./routes/register');
 var articleRouter = require('./routes/article');
 
-
 var app = express();
 
 // view engine setup
@@ -143,6 +142,15 @@ app.post('/post', validate.required, validate.requiredAbove, function(
     entry.save(function(err) {
         if (err) return next(err);
         res.redirect('/');
+    });
+});
+app.get('/:page?', page(Entry.count, 5), function(req, res, next) {
+    Entry.getRange(0, -1, function(err, entries) {
+        if (err) return next(err);
+        res.render('entries', {
+            title: 'Entries',
+            entries: entries
+        });
     });
 });
 
