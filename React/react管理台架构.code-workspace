@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "react-sider"
+		},
+		{
+			"path": "react-intl-context"
 		}
 	],
 	"settings": {}

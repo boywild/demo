@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <title><%= settings %></title>
+        <link rel="stylesheet" href="/stylesheets/style.css" />
+    </head>
+    <body>
+        <h1><%= title %></h1>
+        <p>Welcome to <%= title %><%= photos %></p>
+        <div id="photos">
+            <%photos.forEach(function(photo){%>
+            <div class="photo">
+                <h2><%=photo.name%></h2>
+                <a href="/photos/<%=photo.paths%>/download">
+                    <img src="/photos/<%=photo.paths%>" alt="" />
+                </a>
+            </div>
+            <%})%>
+        </div>
+        <%for(var key in settings){%>
+        <p><span><%=key%></span>:<%=settings[key]%></p>
+        <%}%>
+    </body>
+</html>

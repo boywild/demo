@@ -1,0 +1,10 @@
+{
+  "name": "6",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@ztree/ztree_v3": "^3.5.39",
+    "connect": "^3.6.6"
+  }
+}
