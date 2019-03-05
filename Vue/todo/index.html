@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="box">
+      <input type="text" v-model="list" /><button @click="add">提交</button>
+
+      <ul>
+        <todo-item
+          v-for="(item,index) of todo"
+          :content="item"
+          :index="index"
+          :key="index"
+          @delete="handleDelete"
+        ></todo-item>
+      </ul>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script>
+    Vue.component("todo-item", {
+      props: ["content", "index"],
+      template: "<li @click='deleteItem'>{{content}}</li>",
+      methods: {
+        deleteItem: function() {
+          this.$emit("delete", this.index);
+        }
+      }
+    });
+    const vm = new Vue({
+      el: "#box",
+      data: {
+        todo: [],
+        list: ""
+      },
+      computed: {},
+      methods: {
+        add: function() {
+          this.todo.push(this.list);
+          this.list = "";
+        },
+        handleDelete: function(index) {
+          this.todo.splice(index, 1);
+          console.log(index);
+        }
+      }
+    });
+  </script>
+</html>
