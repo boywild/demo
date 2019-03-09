@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --progress --colors",
     "mock:server": "cross-env json-server --watch db/db.json --middlewares middleware/loginMiddleware.js",
-    "build": "npm run clean && cross-env NODE_ENV=production webpack -p --progress --colors",
+    "build": "cross-env NODE_ENV=production webpack -p --progress --colors",
     "clean": "rm -rf build/",
     "lint": "eslint src",
     "test": "jest --coverage",
