@@ -2,12 +2,14 @@
   <heartbeat id='heartbeat' wx:if='{{showHeartbeat}}'></heartbeat>
   <view class='bcg' wx:if='{{!bcgImg}}' style='background: {{bcgColor}}'></view>
   <image class='bcg' wx:if='{{bcgImg}}' src='{{bcgImg}}' mode='aspectFill'></image>
+  <!-- 搜索 -->
   <view class='search' wx:if='{{!setting.hiddenSearch && !bcgImgAreaShow}}' style='background:rgba(255, 255, 255, 0)'>
     <view class='wrapper'>
       <image src='/img/search.png'></image>
       <input placeholder-class='placeholderClass' confirm-type='search' placeholder='请输入城市名，快速查询天气信息' maxlength='20' bindconfirm='commitSearch' value='{{searchText}}' disabled='{{!enableSearch}}'></input>
     </view>
   </view>
+  <!-- 更换背景 -->
   <view class='chooseBcg' wx:if='{{bcgImgAreaShow}}'>
     <view class='top'>
       <view class='title'>更换背景</view>
@@ -21,12 +23,15 @@
       <image src='/img/up-arrow.png'></image>
     </view>
   </view>
+  <!-- 内容 -->
   <view class='content' wx:if='{{!bcgImgAreaShow}}' style='margin-top: {{setting.hiddenSearch ? 20 : 60}}px'>
+    <!-- 用户信息 -->
     <view class='avatarInfo' catchtap='showBcgImgArea'>
       <open-data class='avatar' type='userAvatarUrl'></open-data>
       <open-data class='name' type='userNickName'></open-data>
       <image class='downArrow' src='/img/down.png'></image>
     </view>
+    <!-- 当天天气情况 -->
     <view class='info'>
       <view class='city'>
         <view class='name' bindtap='toCitychoose'>
@@ -34,15 +39,21 @@
           <view class='val'>{{cityDatas.basic.location || '定位中'}}</view>
           <image class='down' src='/img/down.png'></image>
         </view>
-        <text class='time' wx:if='{{cityDatas.updateTimeFormat}}'>{{cityDatas.updateTimeFormat}} 更新</text>
+        <text class='time' wx:if='{{cityDatas.updateTimeFormat}}'>
+          {{cityDatas.updateTimeFormat}} 更新
+        </text>
       </view>
       <view class='message'>{{message}}</view>
-      <view class='temp num' decode='true'>{{cityDatas.now.tmp || '-'}}<text style='font-size:50rpx;position:relative;top:-20px;'>℃</text></view>
+      <view class='temp num' decode='true'>
+        {{cityDatas.now.tmp || '-'}}
+        <text style='font-size:50rpx;position:relative;top:-20px;'>℃</text>
+      </view>
       <view class='weather'>{{cityDatas.now.cond_txt || '--'}}</view>
       <view class='pm'>
         <text>能见度 {{cityDatas.now.vis}}</text>
       </view>
     </view>
+    <!-- 7天天气预报 -->
     <view class='guide' wx:if='{{cityDatas.daily_forecast}}'>
       <view class='title'>7 天预报</view>
       <view class='guides'>
@@ -57,12 +68,14 @@
         </view>
       </view>
     </view>
+    <!-- 当天天气更多信息 -->
     <view class='details'>
       <view class='detail' wx:for='{{detailsDic.key}}' wx:key='{{index}}'>
         <view>{{detailsDic.val[item]}}</view>
         <view>{{cityDatas.now[item]}}</view>
       </view>
     </view>
+    <!-- 3小时天气预报 -->
     <view class='hourly' wx:if='{{hourlyDatas.length}}'>
       <view class='title'>24 小时逐 3 小时预报</view>
       <view class='hours'>
@@ -124,6 +137,7 @@
         </swiper>
       </view>
     </view>
+    <!-- 当天天气相关指数 -->
     <!-- <ad unit-id="adunit-785cc3f710cc3d4c"></ad> -->
     <view class='livingIndex' wx:if='{{!setting.hiddenIndex}}'>
       <view class='item' wx:for='{{cityDatas.lifestyle}}' wx:key='{{index}}'>
