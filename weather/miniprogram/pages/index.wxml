@@ -1,0 +1,40 @@
+<view class="container">
+    <image mode="aspectFill" class="bg" src="/images/clouds-forest-idyllic-417102.jpg"></image>
+    <view class="search">
+        <view class="search-inner">
+            <image class="icon" src="/images/search.png"></image>
+            <input placeholder-class="placeholder-class" class="search-txt" maxlength="20" placeholder="请输入城市名，快速查询天气信息"></input>
+        </view>
+    </view>
+    <view class="content">
+        <!-- user -->
+        <view class="user pdlr50">
+            <open-data class="avatar" type="userAvatarUrl"></open-data>
+            <open-data class="name" type="userNickName"></open-data>
+            <image class="downArrow" src="/images/down.png"></image>
+        </view>
+        <!-- 当日天气 -->
+        <view class="weather-today">
+            <view class="location pdlr50">
+                <view class="place">
+                    <image class="icon" src="/images/location_s_w.png"></image>
+                    <text class="gps">红衫</text>
+                    <image class="downArrow" src="/images/down.png"></image>
+                </view>
+                <text class="update">07-28 14:24 更新</text>
+            </view>
+            <view class="temp">
+                36
+                <text class="celsius">℃</text>
+            </view>
+            <view class="weather">晴</view>
+            <view class="pm">
+                <text>能见度 16</text>
+            </view>
+        </view>
+        <view class="weather-guide"></view>
+        <view class="weather-today-detail"></view>
+        <view class="living"></view>
+    </view>
+    <view class="menu">menu</view>
+</view>
