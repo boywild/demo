@@ -1,4 +1,0 @@
-/* pages/api/api.wxss */
-.btn{
-    margin-bottom: 20rpx;
-}

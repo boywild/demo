@@ -13,11 +13,13 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.3.2",
 	"appid": "wx6fbe5633d89cd6ef",
-	"projectname": "music-mini-program",
+	"projectname": "wechat-mini-program",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
 	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,

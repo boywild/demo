@@ -154,7 +154,8 @@ Page({
         this.reloadInitSetting()
         this.reloadWeather()
         this.reloadGetBroadcast()
-    },
+	},
+	// 请求天气信息成功后更新数据并向storage写入信息
     success(data, location) {
         this.setData({
             openSettingButtonShow: false,
@@ -172,7 +173,8 @@ Page({
         this.setData({
             cityDatas: data
         })
-    },
+	},
+	// 请求天气信息失败
     fail(res) {
         wx.stopPullDownRefresh()
         let errMsg = res.errMsg || ''
@@ -201,11 +203,13 @@ Page({
                 icon: 'none'
             })
         }
-    },
+	},
+	// 搜索输入地址天气
     commitSearch(res) {
         let val = ((res.detail || {}).value || '').replace(/\s+/g, '')
         this.search(val)
-    },
+	},
+	// 520/521撒花
     dance() {
         this.setData({
             enableSearch: false
@@ -305,7 +309,7 @@ Page({
             }
         })
 	},
-	// 请求时间信息
+	// 逐小时预报
     getHourly(location) {
         wx.request({
             url: `${globalData.requestUrl.hourly}`,
@@ -406,6 +410,7 @@ Page({
 	},
 	// 调用云函数
     getBroadcast(callback) {
+		console.log(new Date().getHours())
         wx.cloud
             .callFunction({
                 name: 'getBroadcast',
@@ -499,7 +504,8 @@ Page({
                 hasPopped: false
             })
         }
-    },
+	},
+	// 悬浮系统设置按钮
     menuMain() {
         if (!this.data.hasPopped) {
             this.popp()
@@ -512,25 +518,29 @@ Page({
                 hasPopped: false
             })
         }
-    },
+	},
+	// 修改定位
     menuToCitychoose() {
         this.menuMain()
         wx.navigateTo({
             url: '/pages/citychoose/citychoose'
         })
-    },
+	},
+	// 修改系统设置
     menuToSetting() {
         this.menuMain()
         wx.navigateTo({
             url: '/pages/setting/setting'
         })
-    },
+	},
+	// 关于我们
     menuToAbout() {
         this.menuMain()
         wx.navigateTo({
             url: '/pages/about/about'
         })
-    },
+	},
+	// 菜单动画
     popp() {
         let animationMain = wx.createAnimation({
             duration: 200,
