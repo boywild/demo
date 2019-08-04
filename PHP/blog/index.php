@@ -1,4 +1,7 @@
 <?php
+    define('IN_TG',true);
+    define('STYLE','index');
+    include './includes/common.inc.php';
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -6,31 +9,15 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>多用户留言系统--首页</title>
-    <link rel="shortcut icon" href="favicon.ico" />
-    <link rel="stylesheet" type="text/css" href="./styles/1/basic.css" />
-    <link rel="stylesheet" type="text/css" href="./styles/1/index.css" />
+    <?php
+        include './includes/title.inc.php';
+    ?>
 </head>
 <body>
 
-<div id="header">
-    <h1><a href="index.php">瓢城Web俱乐部多用户留言系统</a></h1>
-    <ul>
-        <li><a href="index.php">首页</a></li>
-        <li><a href="register.php">注册</a></li>
-        <li><a href="login.php">登录</a></li>
-        <li><a href="blog.php">博友</a></li>
-        <li><a href="photo.php">相册</a></li>
-        <li class="skin" onmouseover='inskin()' onmouseout='outskin()'>
-            <a href="javascript:;">风格</a>
-            <dl id="skin">
-                <dd><a href="skin.php?id=1">1.一号皮肤</a></dd>
-                <dd><a href="skin.php?id=2">2.二号皮肤</a></dd>
-                <dd><a href="skin.php?id=3">3.三号皮肤</a></dd>
-            </dl>
-        </li>
-
-    </ul>
-</div>
+<?php
+    include './includes/header.inc.php';
+?>
 <div id="list">
     <h2>帖子列表</h2>
     <a href="post.php" class="post">发表帖子</a>
@@ -57,11 +44,9 @@
     <a href="photo_detail.php?id=98"><img src="./photo/1286182218/1562292817.jpg" alt="go" /></a>
 </div>
 
-<div id="footer">
-    <p>本程序执行耗时为: 0.0081秒</p>
-    <p>版权所有 翻版必究</p>
-    <p>本程序由<span>瓢城Web俱乐部</span>提供 源代码可以任意修改或发布 (c) yc60.com</p>
-</div>
+<?php
+    include './includes/footer.inc.php';
+?>
 
 </body>
 </html>
