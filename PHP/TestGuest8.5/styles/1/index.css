@@ -1,9 +1,6 @@
 @CHARSET "UTF-8";
 #list {
-	width:600px;
-	height:514px;
-	border:2px solid #ccc;
-	float:right;
+
 }
 #list a.post {
 	display:block;
@@ -14,12 +11,12 @@
 	margin:10px 10px 0 auto;
 }
 #list ul.article {
-	padding:10px 50px;
+	padding:10px 0px;
 }
 #list ul.article li {
-	height:30px;
-	line-height:30px;
-	border-bottom:1px dashed #333;
+	height:40px;
+	line-height:40px;
+	border-bottom:1px dashed rgba(0,0,0,.125);
 }
 #list ul.article li em {
 	float:right;
@@ -83,10 +80,6 @@
 	background:url(../../images/icon16.gif) no-repeat left center;
 }
 #user {
-	width:340px;
-	height:250px;
-	border:2px solid #ccc;
-	float:left;
 	margin:0 0 10px 0;
 	font-size:12px;
 }
@@ -138,10 +131,7 @@
 	background:url(../../images/x4.gif) no-repeat left 35%;
 }
 #pics {
-	width:340px;
-	height:250px;
-	border:2px solid #ccc;
-	float:left;
+
 }
 #pics img {
 	display:block;

@@ -56,7 +56,7 @@ function _set_names() {
 
 function _query($_sql) {
 	if (!$_result = mysqli_query($GLOBALS['$_conn'],$_sql)) {
-		exit('SQL执行失败'.mysqli_error());
+		exit('SQL执行失败'.mysqli_error($GLOBALS['$_conn']));
 	}
 	return $_result;
 }
@@ -89,7 +89,7 @@ function _num_rows($_result) {
  */
 
 function _affected_rows() {
-	return mysqli_affected_rows();
+	return mysqli_affected_rows($GLOBALS['$_conn']);
 }
 
 /**

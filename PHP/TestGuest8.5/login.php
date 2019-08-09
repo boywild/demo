@@ -19,7 +19,7 @@ require dirname(__FILE__).'/includes/common.inc.php';
 _login_state();
 global $_system;
 //开始处理登录状态
-if ($_GET['action'] == 'login') {
+if (isset($_GET['action'] )&&$_GET['action'] == 'login') {
 	if (!empty($_system['code'])) {
 		//为了防止恶意注册，跨站攻击
 		_check_code($_POST['code'],$_SESSION['code']);
@@ -66,29 +66,44 @@ if ($_GET['action'] == 'login') {
 <script type="text/javascript" src="js/login.js"></script>
 </head>
 <body>
-<?php 
-	require ROOT_PATH.'includes/header.inc.php';
-?>
 
-<div id="login">
-	<h2>登录</h2>
-	<form method="post" name="login" action="login.php?action=login">
-		<dl>
-			<dt></dt>
-			<dd>用 户 名：<input type="text" name="username" class="text" /></dd>
-			<dd>密　　码：<input type="password" name="password" class="text" /></dd>
-			<dd>保　　留：<input type="radio" name="time" value="0" checked="checked" /> 不保留 <input type="radio" name="time" value="1" /> 一天 <input type="radio" name="time" value="2" /> 一周 <input type="radio" name="time" value="3" /> 一月</dd>
-			<?php if (!empty($_system['code'])) {?>
-			<dd>验 证 码：<input type="text" name="code" class="text code"  /> <img src="code.php" id="code" onclick="javascript:this.src='code.php?tm='+Math.random();" /></dd>
-			<?php }?>
-			<dd><input type="submit" value="登录" class="button" /> <input type="button" value="注册" id="location" class="button location" /></dd>
-		</dl>
-	</form>
-</div>
 
-<?php 
-	require ROOT_PATH.'includes/footer.inc.php';
-?>
+<form class="form-signin align-center" method="post" name="login" action="login.php?action=login">
+    <h1 class="h3 mb-3 font-weight-normal">登录</h1>
+    <label for="username" class="sr-only">用户名</label>
+    <input type="text" name="username" id="username" class="form-control" placeholder="用户名" required autofocus>
+    <label for="password" class="sr-only">密码</label>
+    <input type="password" name="password" id="password" class="form-control" placeholder="密码" required>
+    <label for="code" class="sr-only">验证码</label>
+    <input type="text" name="code" id="code" class="form-control" placeholder="验证码" required>
+    <img src="code.php" alt="验证码">
+    <div class="checkbox mb-3">
+        <label>
+            保留
+        </label>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="time" id="inlineRadio1" value="0">
+            <label class="form-check-label" for="inlineRadio1">不保留</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="time" id="inlineRadio2" value="1">
+            <label class="form-check-label" for="inlineRadio2">一天</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="time" id="inlineRadio2" value="2">
+            <label class="form-check-label" for="inlineRadio2">一周</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="time" id="inlineRadio2" value="3">
+            <label class="form-check-label" for="inlineRadio2">一月</label>
+        </div>
+    </div>
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+    <button class="btn btn-lg btn-success btn-block" type="submit"><a href="register.php">注册</a></button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2019-2020</p>
+</form>
+
 </body>
 </html>
 

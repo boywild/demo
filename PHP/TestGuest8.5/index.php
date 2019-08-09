@@ -60,47 +60,114 @@ $_photo = _fetch_array("SELECT
 <?php 
 	require ROOT_PATH.'includes/header.inc.php';
 ?>
-
-<div id="list">
-	<h2>帖子列表</h2>
-	<a href="post.php" class="post">发表帖子</a>
-	<ul class="article">
-		<?php
-			$_htmllist = array();
-			while (!!$_rows = _fetch_array_list($_result)) {
-				$_htmllist['id'] = $_rows['tg_id'];
-				$_htmllist['type'] = $_rows['tg_type'];
-				$_htmllist['readcount'] = $_rows['tg_readcount'];
-				$_htmllist['commendcount'] = $_rows['tg_commendcount'];
-				$_htmllist['title'] = $_rows['tg_title'];
-				$_htmllist = _html($_htmllist);
-				echo '<li class="icon'.$_htmllist['type'].'"><em>阅读数(<strong>'.$_htmllist['readcount'].'</strong>) 评论数(<strong>'.$_htmllist['commendcount'].'</strong>)</em> <a href="article.php?id='.$_htmllist['id'].'">'._title($_htmllist['title'],20).'</a></li>';
-			}
-			_free_result($_result);
-		?>
-	</ul>
-	<?php _paging(2);?>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mgb20">
+            <div class="card-header">
+                新进会员
+            </div>
+            <div class="card-body">
+                <div id="user">
+                    <dl>
+                        <dd class="user"><?php echo $_html['username']?>(<?php echo $_html['sex']?>)</dd>
+                        <dt><img src="<?php echo $_html['face']?>" alt="<?php echo $_html['username']?>" /></dt>
+                        <dd class="message"><a href="javascript:;" name="message" title="<?php echo $_html['id']?>">发消息</a></dd>
+                        <dd class="friend"><a href="javascript:;" name="friend" title="<?php echo $_html['id']?>">加为好友</a></dd>
+                        <dd class="guest">写留言</dd>
+                        <dd class="flower"><a href="javascript:;" name="flower" title="<?php echo $_html['id']?>">给他送花</a></dd>
+                        <dd class="email">邮件：<a href="mailto:<?php echo $_html['email']?>"><?php echo $_html['email']?></a></dd>
+                        <dd class="url">网址：<a href="<?php echo $_html['url']?>" target="_blank"><?php echo $_html['url']?></a></dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                最新图片 --  <?php echo $_photo['name']?>
+            </div>
+            <div class="card-body">
+                <div id="pics">
+                    <a href="photo_detail.php?id=<?php echo $_photo['id']?>"><img src="thumb.php?filename=<?php echo $_photo['url']?>&percent=0.4" alt="<?php echo $_photo['name']?>" /></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                帖子列表
+            </div>
+            <div class="card-body">
+                <div id="list">
+                    <a href="post.php" class="post">发表帖子</a>
+                    <ul class="article">
+                        <?php
+                            $_htmllist = array();
+                            while (!!$_rows = _fetch_array_list($_result)) {
+                                $_htmllist['id'] = $_rows['tg_id'];
+                                $_htmllist['type'] = $_rows['tg_type'];
+                                $_htmllist['readcount'] = $_rows['tg_readcount'];
+                                $_htmllist['commendcount'] = $_rows['tg_commendcount'];
+                                $_htmllist['title'] = $_rows['tg_title'];
+                                $_htmllist = _html($_htmllist);
+                                echo '<li class="icon'.$_htmllist['type'].'"><em>阅读数(<strong>'.$_htmllist['readcount'].'</strong>) 评论数(<strong>'.$_htmllist['commendcount'].'</strong>)</em> <a href="article.php?id='.$_htmllist['id'].'">'._title($_htmllist['title'],20).'</a></li>';
+                            }
+                            _free_result($_result);
+                        ?>
+                    </ul>
+                    <?php _paging(2);?>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    Launch demo modal
+</button>
 
-<div id="user">
-	<h2>新进会员</h2>
-	<dl>
-		<dd class="user"><?php echo $_html['username']?>(<?php echo $_html['sex']?>)</dd>
-		<dt><img src="<?php echo $_html['face']?>" alt="<?php echo $_html['username']?>" /></dt>
-		<dd class="message"><a href="javascript:;" name="message" title="<?php echo $_html['id']?>">发消息</a></dd>
-		<dd class="friend"><a href="javascript:;" name="friend" title="<?php echo $_html['id']?>">加为好友</a></dd>
-		<dd class="guest">写留言</dd>
-		<dd class="flower"><a href="javascript:;" name="flower" title="<?php echo $_html['id']?>">给他送花</a></dd>
-		<dd class="email">邮件：<a href="mailto:<?php echo $_html['email']?>"><?php echo $_html['email']?></a></dd>
-		<dd class="url">网址：<a href="<?php echo $_html['url']?>" target="_blank"><?php echo $_html['url']?></a></dd>
-	</dl>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">发送消息</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">To:</label>
+                        <input type="text" class="form-control" id="recipient-name" readonly="readonly" value="TO:<?php echo $_html['touser']?>">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">消息:</label>
+                        <textarea class="form-control" id="message-text" name="content"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">验证码:</label>
+                        <input type="text" name="code" class="form-control" />
+                        <img src="code.php" id="code" onclick="javascript:this.src='code.php?tm='+Math.random();" />
+                    </div>
+                </form>
+                <form method="post" action="?action=write">
+                    <input type="hidden" name="touser" value="<?php echo $_html['touser']?>" />
+                    <dl>
+                        <dd><input type="text" readonly="readonly" value="TO:<?php echo $_html['touser']?>" class="text" /></dd>
+                        <dd><textarea name="content"></textarea></dd>
+                        <dd>验 证 码：<input type="text" name="code" class="text yzm"  /> <img src="code.php" id="code" onclick="javascript:this.src='code.php?tm='+Math.random();" /> <input type="submit" class="submit" value="发送短信" /></dd>
+                    </dl>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary">发送</button>
+            </div>
+        </div>
+    </div>
 </div>
-
-<div id="pics">
-	<h2>最新图片 -- <?php echo $_photo['name']?></h2>
-	<a href="photo_detail.php?id=<?php echo $_photo['id']?>"><img src="thumb.php?filename=<?php echo $_photo['url']?>&percent=0.4" alt="<?php echo $_photo['name']?>" /></a>
-</div>
-
 <?php 
 	require ROOT_PATH.'includes/footer.inc.php';
 ?>

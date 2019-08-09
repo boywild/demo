@@ -13,6 +13,7 @@ if (!defined('IN_TG')) {
 	exit('Access Defined!');
 }
 
+
 //设置字符集编码
 header('Content-Type: text/html; charset=utf-8');
 
@@ -47,21 +48,17 @@ _select_db();   //选择指定的数据库
 _set_names();   //设置字符集
 
 //短信提醒COUNT(tg_id)是取得字段的总和
-$_message = _fetch_array("SELECT 
-																COUNT(tg_id) 
-														AS 
-																count 
-													FROM 
-																tg_message 
-												 WHERE 
-												 				tg_state=0
-												 	   AND
-												 	   			tg_touser='{$_COOKIE['username']}'
-");
+    $query='';
+    if(isset($_COOKIE['username'])){
+        $query="SELECT COUNT(tg_id) AS count FROM tg_message WHERE tg_state=0 AND tg_touser='{$_COOKIE['username']}'";
+    }else{
+        $query="SELECT COUNT(tg_id) AS count FROM tg_message WHERE tg_state=0";
+    }
+$_message = _fetch_array($query);
 if (empty($_message['count'])) {
-	$GLOBALS['message'] = '<strong class="noread"><a href="member_message.php">(0)</a></strong>';
+	$GLOBALS['message'] = '<strong class="noread">(0)</strong>';
 } else {
-	$GLOBALS['message'] = '<strong class="read"><a href="member_message.php">('.$_message['count'].')</a></strong>';
+	$GLOBALS['message'] = '<strong class="read">('.$_message['count'].')</strong>';
 }
 
 
@@ -96,9 +93,9 @@ if (!!$_rows = _fetch_array("SELECT
 	$_system['register'] = $_rows['tg_register'];
 	$_system['string'] = $_rows['tg_string'];
 	$_system = _html($_system);
-	
+
 	//如果有skin的cookie那么就替代系统数据库的皮肤
-	if ($_COOKIE['skin']) {
+	if (isset($_system['skin'])) {
 		$_system['skin'] = $_COOKIE['skin'];
 	}
 } else {

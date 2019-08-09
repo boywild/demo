@@ -13,7 +13,8 @@ define('IN_TG',true);
 //定义个常量，用来指定本页的内容
 define('SCRIPT','thumb');
 //引入公共文件
-require dirname(__FILE__).'/includes/common.inc.php';
+//require dirname(__FILE__).'/includes/common.inc.php';
+require dirname(__FILE__).'/includes/global.func.php';
 //缩略图
 if (isset($_GET['filename']) && isset($_GET['percent'])) {
 	_thumb($_GET['filename'],$_GET['percent']);

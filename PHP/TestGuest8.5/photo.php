@@ -86,43 +86,49 @@ $_result = _query("SELECT
 <?php 
 	require ROOT_PATH.'includes/header.inc.php';
 ?>
+<div class="card">
+    <div class="card-header">
+        相册列表
+    </div>
+    <div class="card-body">
+        <div id="photo">
+            <?php
+                $_html = array();
+                while (!!$_rows = _fetch_array_list($_result)) {
+                    $_html['id'] = $_rows['tg_id'];
+                    $_html['name'] = $_rows['tg_name'];
+                    $_html['type'] = $_rows['tg_type'];
+                    $_html['face'] = $_rows['tg_face'];
+                    $_html = _html($_html);
+                    if (empty($_html['type'])) {
+                        $_html['type_html'] = '(公开)';
+                    } else {
+                        $_html['type_html'] = '(私密)';
+                    }
+                    if (empty($_html['face'])) {
+                        $_html['face_html'] = '';
+                    } else {
+                        $_html['face_html'] = '<img src="'.$_html['face'].'" alt="'.$_html['name'].'" />';
+                    }
+                    //统计相册里的照片数量
+                    $_html['photo'] = _fetch_array("SELECT COUNT(*) AS count FROM tg_photo WHERE tg_sid={$_html['id']}");
+                    ?>
+                    <dl>
+                        <dt><a href="photo_show.php?id=<?php echo $_html['id']?>"><?php echo $_html['face_html'];?></a></dt>
+                        <dd><a href="photo_show.php?id=<?php echo $_html['id']?>"><?php echo $_html['name']?> <?php echo '['.$_html['photo']['count'].']'.$_html['type_html'] ?></a></dd>
+                        <?php if (isset($_SESSION['admin']) && isset($_COOKIE['username'])) {?>
+                            <dd>[<a href="photo_modify_dir.php?id=<?php echo $_html['id']?>">修改</a>] [<a href="photo.php?action=delete&id=<?php echo $_html['id']?>">删除</a>]</dd>
+                        <?php }?>
+                    </dl>
+                <?php }?>
 
-<div id="photo">
-	<h2>相册列表</h2>
-	<?php 
-		$_html = array();
-		while (!!$_rows = _fetch_array_list($_result)) {
-			$_html['id'] = $_rows['tg_id'];
-			$_html['name'] = $_rows['tg_name'];
-			$_html['type'] = $_rows['tg_type'];
-			$_html['face'] = $_rows['tg_face'];
-			$_html = _html($_html);
-			if (empty($_html['type'])) {
-				$_html['type_html'] = '(公开)';
-			} else {
-				$_html['type_html'] = '(私密)';
-			}
-			if (empty($_html['face'])) {
-				$_html['face_html'] = '';
-			} else {
-				$_html['face_html'] = '<img src="'.$_html['face'].'" alt="'.$_html['tg_name'].'" />';
-			}
-			//统计相册里的照片数量
-			$_html['photo'] = _fetch_array("SELECT COUNT(*) AS count FROM tg_photo WHERE tg_sid={$_html['id']}");
-		?>
-	<dl>
-		<dt><a href="photo_show.php?id=<?php echo $_html['id']?>"><?php echo $_html['face_html'];?></a></dt>
-		<dd><a href="photo_show.php?id=<?php echo $_html['id']?>"><?php echo $_html['name']?> <?php echo '['.$_html['photo']['count'].']'.$_html['type_html'] ?></a></dd>
-		<?php if (isset($_SESSION['admin']) && isset($_COOKIE['username'])) {?>
-		<dd>[<a href="photo_modify_dir.php?id=<?php echo $_html['id']?>">修改</a>] [<a href="photo.php?action=delete&id=<?php echo $_html['id']?>">删除</a>]</dd>
-		<?php }?>
-	</dl>
-	<?php }?>
-	
-	<?php if (isset($_SESSION['admin']) && isset($_COOKIE['username'])) {?>
-	<p><a href="photo_add_dir.php">添加目录</a></p>
-	<?php }?>
+            <?php if (isset($_SESSION['admin']) && isset($_COOKIE['username'])) {?>
+                <p><a href="photo_add_dir.php">添加目录</a></p>
+            <?php }?>
+        </div>
+    </div>
 </div>
+
 
 <?php 
 	require ROOT_PATH.'includes/footer.inc.php';

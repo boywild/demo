@@ -45,32 +45,38 @@ $_result = _query("SELECT
 	require ROOT_PATH.'includes/header.inc.php';
 ?>
 
-<div id="blog">
-	<h2>博友列表</h2>
-	<?php 
-		$_html = array();
-		while (!!$_rows = _fetch_array_list($_result)) {
-			$_html['id'] = $_rows['tg_id'];
-			$_html['username'] = $_rows['tg_username'];
-			$_html['face'] = $_rows['tg_face'];
-			$_html['sex'] = $_rows['tg_sex'];
-			$_html = _html($_html);
-	?>
-	<dl>
-		<dd class="user"><?php echo $_html['username']?>(<?php echo $_html['sex']?>)</dd>
-		<dt><img src="<?php echo $_html['face']?>" alt="炎日" /></dt>
-		<dd class="message"><a href="javascript:;" name="message" title="<?php echo $_html['id']?>">发消息</a></dd>
-		<dd class="friend"><a href="javascript:;" name="friend" title="<?php echo $_html['id']?>">加为好友</a></dd>
-		<dd class="guest">写留言</dd>
-		<dd class="flower"><a href="javascript:;" name="flower" title="<?php echo $_html['id']?>">给他送花</a></dd>
-	</dl>
-	<?php }
-		_free_result($_result);
-		//_pageing函数调用分页，1|2，1表示数字分页，2表示文本分页
-		_paging(1);
-	?>
+<div class="card">
+    <div class="card-header">
+        图片详情
+    </div>
+    <div class="card-body">
+        <div id="blog">
+            <?php
+                $_html = array();
+                while (!!$_rows = _fetch_array_list($_result)) {
+                    $_html['id'] = $_rows['tg_id'];
+                    $_html['username'] = $_rows['tg_username'];
+                    $_html['face'] = $_rows['tg_face'];
+                    $_html['sex'] = $_rows['tg_sex'];
+                    $_html = _html($_html);
+                    ?>
+                    <dl>
+                        <dd class="user"><?php echo $_html['username']?>(<?php echo $_html['sex']?>)</dd>
+                        <dt><img src="<?php echo $_html['face']?>" alt="炎日" /></dt>
+                        <dd class="message"><a href="javascript:;" name="message" title="<?php echo $_html['id']?>">发消息</a></dd>
+                        <dd class="friend"><a href="javascript:;" name="friend" title="<?php echo $_html['id']?>">加为好友</a></dd>
+                        <dd class="guest">写留言</dd>
+                        <dd class="flower"><a href="javascript:;" name="flower" title="<?php echo $_html['id']?>">给他送花</a></dd>
+                    </dl>
+                <?php }
+                _free_result($_result);
+                //_pageing函数调用分页，1|2，1表示数字分页，2表示文本分页
+                _paging(1);
+            ?>
 
 
+        </div>
+    </div>
 </div>
 
 <?php 

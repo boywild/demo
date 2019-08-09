@@ -165,7 +165,7 @@ $_result = _query("SELECT
 		<dd><a href="photo_detail.php?id=<?php echo $_html['id']?>"><?php echo $_html['name']?></a></dd>
 		<dd>阅(<strong><?php echo $_html['readcount']?></strong>) 评(<strong><?php echo $_html['commendcount']?></strong>) 上传者：<?php echo $_html['username']?></dd>
 		<?php 
-			if ($_html['username'] == $_COOKIE['username'] || isset($_SESSION['admin'])) {
+			if (isset($_SESSION['username'])&&($_html['username'] == $_COOKIE['username']) || isset($_SESSION['admin'])) {
 		?>
 		<dd>[<a href="photo_show.php?action=delete&id=<?php echo $_html['id']?>">删除</a>]</dd>
 		<?php }?>

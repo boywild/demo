@@ -1,8 +1,5 @@
 @CHARSET "UTF-8";
 #blog {
-	width:auto;
-	height:800px;
-	border:2px solid #ccc;
 	font-size:12px;
 }
 #blog h2 {

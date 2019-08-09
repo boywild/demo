@@ -51,13 +51,15 @@ if ($_GET['action'] == 'post') {
 																tg_title,
 																tg_type,
 																tg_content,
-																tg_date
+																tg_date,
+																tg_last_modify_date
 															) 
 											VALUES (
 																'{$_clean['username']}',
 																'{$_clean['title']}',
 																'{$_clean['type']}',
 																'{$_clean['content']}',
+																NOW(),
 																NOW()
 															)
 		");

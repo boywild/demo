@@ -170,7 +170,9 @@ if (isset($_GET['id'])) {
 			//主题帖子修改
 			if ($_html['username_subject'] == $_COOKIE['username'] || isset($_SESSION['admin'])) {
 				$_html['subject_modify'] = '[<a href="article_modify.php?id='.$_html['reid'].'">修改</a>]';
-			}
+			}else{
+                $_html['subject_modify']='';
+            }
 			
 			//读取最后修改信息
 			if ($_html['last_modify_date'] != '0000-00-00 00:00:00') {
@@ -231,179 +233,203 @@ if (isset($_GET['id'])) {
 	require ROOT_PATH.'includes/header.inc.php';
 ?>
 
-<div id="article">
-	<h2>帖子详情</h2>
-	<?php 
-		if (!empty($_html['nice'])) {
-	?>
-	<img src="images/nice.gif" alt="精华帖" class="nice" />
-	
-	<?php 
-		}
-		//浏览量达到400，并且评论量达到20即可为热帖
-		if ($_html['readcount'] >= 400 && $_html['commendcount'] >=20) {
-	?>
-	<img src="images/hot.gif" alt="热帖" class="hot" />
-	
-	<?php 
-		}
-		if ($_page == 1) {
-	?>
-	<div id="subject">
-		<dl>
-			<dd class="user"><?php echo $_html['username_subject']?>(<?php echo $_html['sex']?>)[楼主]</dd>
-			<dt><img src="<?php echo $_html['face']?>" alt="<?php echo $_html['username_subject']?>" /></dt>
-			<dd class="message"><a href="javascript:;" name="message" title="<?php echo $_html['userid']?>">发消息</a></dd>
-			<dd class="friend"><a href="javascript:;" name="friend" title="<?php echo $_html['userid']?>">加为好友</a></dd>
-			<dd class="guest">写留言</dd>
-			<dd class="flower"><a href="javascript:;" name="flower" title="<?php echo $_html['userid']?>">给他送花</a></dd>
-			<dd class="email">邮件：<a href="mailto:<?php echo $_html['email']?>"><?php echo $_html['email']?></a></dd>
-			<dd class="url">网址：<a href="<?php echo $_html['url']?>" target="_blank"><?php echo $_html['url']?></a></dd>
-		</dl>
-		<div class="content">
-			<div class="user">
-				<span>
-					<?php 
-					if ($_SESSION['admin']) {
-						if (empty($_html['nice'])) {
-					?>
-					[<a href="article.php?action=nice&on=1&id=<?php echo $_html['reid']?>">设置精华</a>]
-					<?php } else {?>
-					[<a href="article.php?action=nice&on=0&id=<?php echo $_html['reid']?>">取消精华</a>]
-					<?php 
-						}
-					}
-					?>
-					<?php echo $_html['subject_modify']?> 1#
-				</span><?php echo $_html['username_subject']?> | 发表于：<?php echo $_html['date']?>
-			</div>
-			<h3>主题：<?php echo $_html['title']?> <img src="images/icon<?php echo $_html['type']?>.gif" alt="icon" /> <?php echo $_html['re']?></h3>
-			<div class="detail">
-				<?php echo _ubb($_html['content'])?>
-				<?php echo $_html['autograph_html']?>
-			</div>
-			<div class="read">
-				<p><?php echo $_html['last_modify_date_string']?></p>
-				阅读量：(<?php echo $_html['readcount']?>) 评论量：(<?php echo $_html['commendcount']?>)
-			</div>
-		</div>
-	</div>
-	<?php }?>
-	
-	
-	<p class="line"></p>
-	
-	<?php 
-		$_i = 2;
-		while (!!$_rows = _fetch_array_list($_result)) {
-			$_html['username'] = $_rows['tg_username'];
-			$_html['type'] = $_rows['tg_type'];
-			$_html['retitle'] = $_rows['tg_title'];
-			$_html['content'] = $_rows['tg_content'];
-			$_html['date'] = $_rows['tg_date'];
-			$_html = _html($_html);
-			
+<div class="card">
+    <div class="card-header">
+        帖子详情
+    </div>
+    <div class="card-body">
+        <div id="article">
+            <?php
+                if (!empty($_html['nice'])) {
+                    ?>
+                    <img src="images/nice.gif" alt="精华帖" class="nice" />
 
-			
-			if (!!$_rows = _fetch_array("SELECT 
-																			tg_id,
-																			tg_sex,
-																			tg_face,
-																			tg_email,
-																			tg_url,
-																			tg_switch,
-																			tg_autograph
-															  FROM 
-															  				tg_user 
-															WHERE 
-																			tg_username='{$_html['username']}'")) {
-				//提取用户信息
-				$_html['userid'] = $_rows['tg_id'];
-				$_html['sex'] = $_rows['tg_sex'];
-				$_html['face'] = $_rows['tg_face'];
-				$_html['email'] = $_rows['tg_email'];
-				$_html['url'] = $_rows['tg_url'];
-				$_html['switch'] = $_rows['tg_switch'];
-				$_html['autograph'] = $_rows['tg_autograph'];
-				$_html = _html($_html);
-				
-				//楼层
-				if ($_page == 1 && $_i == 2) {
-					if ($_html['username'] == $_html['username_subject']) {
-						$_html['username_html'] = $_html['username'].'(楼主)';
-					} else {
-						$_html['username_html'] = $_html['username'].'(沙发)';
-					}
-				} else {
-					$_html['username_html'] = $_html['username'];
-				}
-				
-			} else {
-				//这个用户可能已经被删除了
-			}
-			
-			//跟帖回复
-			if ($_COOKIE['username']) {
-				$_html['re'] = '<span>[<a href="#ree" name="re" title="回复'.($_i + (($_page-1) * $_pagesize)).'楼的'.$_html['username'].'">回复</a>]</span>';
-			}
-	?>
-	<div class="re">
-		<dl>
-			<dd class="user"><?php echo $_html['username_html']?>(<?php echo $_html['sex']?>)</dd>
-			<dt><img src="<?php echo $_html['face']?>" alt="<?php echo $_html['username']?>" /></dt>
-			<dd class="message"><a href="javascript:;" name="message" title="<?php echo $_html['userid']?>">发消息</a></dd>
-			<dd class="friend"><a href="javascript:;" name="friend" title="<?php echo $_html['userid']?>">加为好友</a></dd>
-			<dd class="guest">写留言</dd>
-			<dd class="flower"><a href="javascript:;" name="flower" title="<?php echo $_html['userid']?>">给他送花</a></dd>
-			<dd class="email">邮件：<a href="mailto:<?php echo $_html['email']?>"><?php echo $_html['email']?></a></dd>
-			<dd class="url">网址：<a href="<?php echo $_html['url']?>" target="_blank"><?php echo $_html['url']?></a></dd>
-		</dl>
-		<div class="content">
-			<div class="user">
-				<span><?php echo $_i + (($_page-1) * $_pagesize);?>#</span><?php echo $_html['username']?> | 发表于：<?php echo $_html['date']?>
-			</div>
-			<h3>主题：<?php echo $_html['retitle']?> <img src="images/icon<?php echo $_html['type']?>.gif" alt="icon" /> <?php echo $_html['re']?></h3>
-			<div class="detail">
-				<?php echo _ubb($_html['content'])?>
-				<?php 
-					if ($_html['switch'] == 1) {
-					echo '<p class="autograph">'._ubb($_html['autograph']).'</p>';
-					}
-				?>
-			</div>
-		</div>
-	</div>
-	<p class="line"></p>
-	<?php 
-			$_i ++;		
-		}
-		_free_result($_result);
-		_paging(1);
-	?>
-	
-	<?php if (isset($_COOKIE['username'])) {?>
-	<a name="ree"></a>
-	<form method="post" action="?action=rearticle">
-		<input type="hidden" name="reid" value="<?php echo $_html['reid']?>" />
-		<input type="hidden" name="type" value="<?php echo $_html['type']?>" />
-		<dl>
-			<dd>标　　题：<input type="text" name="title" class="text" value="RE:<?php echo $_html['title']?>" /> (*必填，2-40位)</dd>
-			<dd id="q">贴　　图：　<a href="javascript:;">Q图系列[1]</a>　 <a href="javascript:;">Q图系列[2]</a>　 <a href="javascript:;">Q图系列[3]</a></dd>
-			<dd>
-				<?php include ROOT_PATH.'includes/ubb.inc.php'?>
-				<textarea name="content" rows="9"></textarea>
-			</dd>
-			
-			<dd>
-			<?php if (!empty($_system['code'])) {?>
-			验 证 码：
-			<input type="text" name="code" class="text yzm"  /> <img src="code.php" id="code" onclick="javascript:this.src='code.php?tm='+Math.random();" /> 
-			<?php }?>
-			<input type="submit" class="submit" value="发表帖子" /></dd>
-		</dl>
-	</form>
-	<?php }?>
+                    <?php
+                }
+                //浏览量达到400，并且评论量达到20即可为热帖
+                if ($_html['readcount'] >= 400 && $_html['commendcount'] >=20) {
+                    ?>
+                    <img src="images/hot.gif" alt="热帖" class="hot" />
+
+                    <?php
+                }
+                if ($_page == 1) {
+                    ?>
+                    <div id="subject">
+                        <div class="row">
+                            <div class="col-4">
+                                <dl>
+                                    <dd class="user"><?php echo $_html['username_subject']?>(<?php echo $_html['sex']?>)[楼主]</dd>
+                                    <dt><img src="<?php echo $_html['face']?>" alt="<?php echo $_html['username_subject']?>" /></dt>
+                                    <dd class="message"><a href="javascript:;" name="message" title="<?php echo $_html['userid']?>">发消息</a></dd>
+                                    <dd class="friend"><a href="javascript:;" name="friend" title="<?php echo $_html['userid']?>">加为好友</a></dd>
+                                    <dd class="guest">写留言</dd>
+                                    <dd class="flower"><a href="javascript:;" name="flower" title="<?php echo $_html['userid']?>">给他送花</a></dd>
+                                    <dd class="email">邮件：<a href="mailto:<?php echo $_html['email']?>"><?php echo $_html['email']?></a></dd>
+                                    <dd class="url">网址：<a href="<?php echo $_html['url']?>" target="_blank"><?php echo $_html['url']?></a></dd>
+                                </dl>
+
+                            </div>
+                            <div class="col-8">
+                                <div class="content">
+                                    <div class="user">
+                                        <span>
+                                            <?php
+                                                if (isset($_SESSION['admin'])) {
+                                                    if (empty($_html['nice'])) {
+                                                        ?>
+                                                        [<a href="article.php?action=nice&on=1&id=<?php echo $_html['reid']?>">设置精华</a>]
+                                                    <?php } else {?>
+                                                        [<a href="article.php?action=nice&on=0&id=<?php echo $_html['reid']?>">取消精华</a>]
+                                                        <?php
+                                                    }
+                                                }
+                                            ?>
+                                            <?php echo $_html['subject_modify']?> 1#
+                                        </span><?php echo $_html['username_subject']?> | 发表于：<?php echo $_html['date']?>
+                                                            </div>
+                                                            <h3>主题：<?php echo $_html['title']?> <img src="images/icon<?php echo $_html['type']?>.gif" alt="icon" /> <?php echo $_html['re']?></h3>
+                                                            <div class="detail">
+                                                                <?php echo _ubb($_html['content'])?>
+                                                                <?php echo $_html['autograph_html']?>
+                                                            </div>
+                                                            <div class="read">
+                                                                <p><?php echo $_html['last_modify_date_string']?></p>
+                                                                阅读量：(<?php echo $_html['readcount']?>) 评论量：(<?php echo $_html['commendcount']?>)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        <?php }?>
+                                    <p class="line"></p>
+
+                                    <?php
+                                        $_i = 2;
+                                        while (!!$_rows = _fetch_array_list($_result)) {
+                                            $_html['username'] = $_rows['tg_username'];
+                                            $_html['type'] = $_rows['tg_type'];
+                                            $_html['retitle'] = $_rows['tg_title'];
+                                            $_html['content'] = $_rows['tg_content'];
+                                            $_html['date'] = $_rows['tg_date'];
+                                            $_html = _html($_html);
+
+
+
+                                            if (!!$_rows = _fetch_array("SELECT 
+                                                                                                    tg_id,
+                                                                                                    tg_sex,
+                                                                                                    tg_face,
+                                                                                                    tg_email,
+                                                                                                    tg_url,
+                                                                                                    tg_switch,
+                                                                                                    tg_autograph
+                                                                                      FROM 
+                                                                                                    tg_user 
+                                                                                    WHERE 
+                                                                                                    tg_username='{$_html['username']}'")) {
+                                                //提取用户信息
+                                                $_html['userid'] = $_rows['tg_id'];
+                                                $_html['sex'] = $_rows['tg_sex'];
+                                                $_html['face'] = $_rows['tg_face'];
+                                                $_html['email'] = $_rows['tg_email'];
+                                                $_html['url'] = $_rows['tg_url'];
+                                                $_html['switch'] = $_rows['tg_switch'];
+                                                $_html['autograph'] = $_rows['tg_autograph'];
+                                                $_html = _html($_html);
+
+                                                //楼层
+                                                if ($_page == 1 && $_i == 2) {
+                                                    if ($_html['username'] == $_html['username_subject']) {
+                                                        $_html['username_html'] = $_html['username'].'(楼主)';
+                                                    } else {
+                                                        $_html['username_html'] = $_html['username'].'(沙发)';
+                                                    }
+                                                } else {
+                                                    $_html['username_html'] = $_html['username'];
+                                                }
+
+                                            } else {
+                                                //这个用户可能已经被删除了
+                                            }
+
+                                            //跟帖回复
+                                            if (isset($_COOKIE['username'])) {
+                                                $_html['re'] = '<span>[<a href="#ree" name="re" title="回复'.($_i + (($_page-1) * $_pagesize)).'楼的'.$_html['username'].'">回复</a>]</span>';
+                                            } else {
+                                                $_html['re'] ='';
+                                            }
+
+                                            ?>
+                    <div class="re">
+                        <div class="row">
+                            <div class="col-4">
+                                <dl>
+                                    <dd class="user"><?php echo $_html['username_html']?>(<?php echo $_html['sex']?>)</dd>
+                                    <dt><img src="<?php echo $_html['face']?>" alt="<?php echo $_html['username']?>" /></dt>
+                                    <dd class="message"><a href="javascript:;" name="message" title="<?php echo $_html['userid']?>">发消息</a></dd>
+                                    <dd class="friend"><a href="javascript:;" name="friend" title="<?php echo $_html['userid']?>">加为好友</a></dd>
+                                    <dd class="guest">写留言</dd>
+                                    <dd class="flower"><a href="javascript:;" name="flower" title="<?php echo $_html['userid']?>">给他送花</a></dd>
+                                    <dd class="email">邮件：<a href="mailto:<?php echo $_html['email']?>"><?php echo $_html['email']?></a></dd>
+                                    <dd class="url">网址：<a href="<?php echo $_html['url']?>" target="_blank"><?php echo $_html['url']?></a></dd>
+                                </dl>
+                            </div>
+                            <div class="col-8">
+                                <div class="content">
+                                    <div class="user">
+                                        <span><?php echo $_i + (($_page-1) * $_pagesize);?>#</span><?php echo $_html['username']?> | 发表于：<?php echo $_html['date']?>
+                                    </div>
+                                    <h3>主题：<?php echo $_html['retitle']?> <img src="images/icon<?php echo $_html['type']?>.gif" alt="icon" /> <?php echo $_html['re']?></h3>
+                                    <div class="detail">
+                                        <?php echo _ubb($_html['content'])?>
+                                        <?php
+                                            if ($_html['switch'] == 1) {
+                                                echo '<p class="autograph">'._ubb($_html['autograph']).'</p>';
+                                            }
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="line"></p>
+                    <?php
+                    $_i ++;
+                }
+                _free_result($_result);
+                _paging(1);
+            ?>
+
+            <?php if (isset($_COOKIE['username'])) {?>
+                <a name="ree"></a>
+                <form method="post" action="?action=rearticle">
+                    <input type="hidden" name="reid" value="<?php echo $_html['reid']?>" />
+                    <input type="hidden" name="type" value="<?php echo $_html['type']?>" />
+                    <dl>
+                        <dd>标　　题：<input type="text" name="title" class="text" value="RE:<?php echo $_html['title']?>" /> (*必填，2-40位)</dd>
+                        <dd id="q">贴　　图：　<a href="javascript:;">Q图系列[1]</a>　 <a href="javascript:;">Q图系列[2]</a>　 <a href="javascript:;">Q图系列[3]</a></dd>
+                        <dd>
+                            <?php include ROOT_PATH.'includes/ubb.inc.php'?>
+                            <textarea name="content" rows="9"></textarea>
+                        </dd>
+
+                        <dd>
+                            <?php if (!empty($_system['code'])) {?>
+                                验 证 码：
+                                <input type="text" name="code" class="text yzm"  /> <img src="code.php" id="code" onclick="javascript:this.src='code.php?tm='+Math.random();" />
+                            <?php }?>
+                            <input type="submit" class="submit" value="发表帖子" /></dd>
+                    </dl>
+                </form>
+            <?php }?>
+        </div>
+    </div>
 </div>
+
+
 <?php 
 	require ROOT_PATH.'includes/footer.inc.php';
 ?>
