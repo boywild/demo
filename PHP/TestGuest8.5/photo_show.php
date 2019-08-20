@@ -144,48 +144,55 @@ $_result = _query("SELECT
 	require ROOT_PATH.'includes/header.inc.php';
 ?>
 
-<div id="photo">
-	<h2><?php echo $_dirhtml['name'];?></h2>	
-	<?php 
-	
-	if (empty($_dirhtml['type']) || $_COOKIE['photo'.$_dirhtml['id']] == $_dirhtml['name'] || isset($_SESSION['admin'])) {
-	
-		$_html = array();
-		while (!!$_rows = _fetch_array_list($_result)) {
-			$_html['id'] = $_rows['tg_id'];
-			$_html['username'] = $_rows['tg_username'];
-			$_html['name'] = $_rows['tg_name'];
-			$_html['url'] = $_rows['tg_url'];
-			$_html['readcount'] = $_rows['tg_readcount'];
-			$_html['commendcount'] = $_rows['tg_commendcount'];
-			$_html = _html($_html);
-	?>
-	<dl>
-		<dt><a href="photo_detail.php?id=<?php echo $_html['id']?>"><img src="thumb.php?filename=<?php echo $_html['url']?>&percent=<?php echo $_percent?>" /></a></dt>
-		<dd><a href="photo_detail.php?id=<?php echo $_html['id']?>"><?php echo $_html['name']?></a></dd>
-		<dd>阅(<strong><?php echo $_html['readcount']?></strong>) 评(<strong><?php echo $_html['commendcount']?></strong>) 上传者：<?php echo $_html['username']?></dd>
-		<?php 
-			if (isset($_SESSION['username'])&&($_html['username'] == $_COOKIE['username']) || isset($_SESSION['admin'])) {
-		?>
-		<dd>[<a href="photo_show.php?action=delete&id=<?php echo $_html['id']?>">删除</a>]</dd>
-		<?php }?>
-	</dl>
-	<?php }
-		_free_result($_result);
-		_paging(1);
-	?>
+<div class="card">
+    <div class="card-header">
+        <?php echo $_dirhtml['name'];?>
+    </div>
+    <div class="card-body">
+        <div id="pics">
+            <div id="photo">
+                <?php
+                    if (empty($_dirhtml['type']) || $_COOKIE['photo'.$_dirhtml['id']] == $_dirhtml['name'] || isset($_SESSION['admin'])) {
 
-	<p><a href="photo_add_img.php?id=<?php echo $_dirhtml['id']?>">上传图片</a></p>
+                        $_html = array();
+                        while (!!$_rows = _fetch_array_list($_result)) {
+                            $_html['id'] = $_rows['tg_id'];
+                            $_html['username'] = $_rows['tg_username'];
+                            $_html['name'] = $_rows['tg_name'];
+                            $_html['url'] = $_rows['tg_url'];
+                            $_html['readcount'] = $_rows['tg_readcount'];
+                            $_html['commendcount'] = $_rows['tg_commendcount'];
+                            $_html = _html($_html);
+                            ?>
+                            <dl>
+                                <dt><a href="photo_detail.php?id=<?php echo $_html['id']?>"><img src="thumb.php?filename=<?php echo $_html['url']?>&percent=<?php echo $_percent?>" /></a></dt>
+                                <dd><a href="photo_detail.php?id=<?php echo $_html['id']?>"><?php echo $_html['name']?></a></dd>
+                                <dd>阅(<strong><?php echo $_html['readcount']?></strong>) 评(<strong><?php echo $_html['commendcount']?></strong>) 上传者：<?php echo $_html['username']?></dd>
+                                <?php
+                                    if (isset($_SESSION['username'])&&($_html['username'] == $_COOKIE['username']) || isset($_SESSION['admin'])) {
+                                        ?>
+                                        <dd>[<a href="photo_show.php?action=delete&id=<?php echo $_html['id']?>">删除</a>]</dd>
+                                    <?php }?>
+                            </dl>
+                        <?php }
+                        _free_result($_result);
+                        _paging(1);
+                        ?>
 
-	<?php 
-	} else {
-		echo '<form method="post" action="photo_show.php?id='.$_dirhtml['id'].'">';
-		echo '<p>请输入密码：<input type="password" name="password" /> <input type="submit" value="确认" /></p>';
-		echo '</form>';
-	}
-	?>
+                        <p><a href="photo_add_img.php?id=<?php echo $_dirhtml['id']?>">上传图片</a></p>
 
+                        <?php
+                    } else {
+                        echo '<form method="post" action="photo_show.php?id='.$_dirhtml['id'].'">';
+                        echo '<p>请输入密码：<input type="password" name="password" /> <input type="submit" value="确认" /></p>';
+                        echo '</form>';
+                    }
+                ?>
+            </div>
+        </div>
+    </div>
 </div>
+
 
 <?php 
 	require ROOT_PATH.'includes/footer.inc.php';

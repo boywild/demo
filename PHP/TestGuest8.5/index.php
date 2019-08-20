@@ -69,14 +69,30 @@ $_photo = _fetch_array("SELECT
             <div class="card-body">
                 <div id="user">
                     <dl>
-                        <dd class="user"><?php echo $_html['username']?>(<?php echo $_html['sex']?>)</dd>
-                        <dt><img src="<?php echo $_html['face']?>" alt="<?php echo $_html['username']?>" /></dt>
-                        <dd class="message"><a href="javascript:;" name="message" title="<?php echo $_html['id']?>">发消息</a></dd>
-                        <dd class="friend"><a href="javascript:;" name="friend" title="<?php echo $_html['id']?>">加为好友</a></dd>
+                        <dd class="user">
+                            <?php echo $_html['username']?>(<?php echo $_html['sex']?>)
+                        </dd>
+                        <dt>
+                            <img src="<?php echo $_html['face']?>" alt="<?php echo $_html['username']?>" />
+                        </dt>
+                        <dd class="message">
+                            <a href="javascript:;" name="message" title="<?php echo $_html['id']?>" id="sendMsg">发消息</a>
+                        </dd>
+                        <dd class="friend">
+                            <a href="javascript:;" name="friend" title="<?php echo $_html['id']?>">加为好友</a>
+                        </dd>
                         <dd class="guest">写留言</dd>
-                        <dd class="flower"><a href="javascript:;" name="flower" title="<?php echo $_html['id']?>">给他送花</a></dd>
-                        <dd class="email">邮件：<a href="mailto:<?php echo $_html['email']?>"><?php echo $_html['email']?></a></dd>
-                        <dd class="url">网址：<a href="<?php echo $_html['url']?>" target="_blank"><?php echo $_html['url']?></a></dd>
+                        <dd class="flower">
+                            <a href="javascript:;" name="flower" title="<?php echo $_html['id']?>">给他送花</a>
+                        </dd>
+                        <dd class="email">
+                            邮件：
+                            <a href="mailto:<?php echo $_html['email']?>"><?php echo $_html['email']?></a>
+                        </dd>
+                        <dd class="url">
+                            网址：
+                            <a href="<?php echo $_html['url']?>" target="_blank"><?php echo $_html['url']?></a>
+                        </dd>
                     </dl>
                 </div>
             </div>
@@ -121,10 +137,6 @@ $_photo = _fetch_array("SELECT
         </div>
     </div>
 </div>
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-    Launch demo modal
-</button>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -137,7 +149,8 @@ $_photo = _fetch_array("SELECT
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form id="msg" method="post" action="?action=write">
+                    <input type="hidden" name="touser" value="<?php echo $_html['touser']?>" />
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">To:</label>
                         <input type="text" class="form-control" id="recipient-name" readonly="readonly" value="TO:<?php echo $_html['touser']?>">
@@ -152,18 +165,29 @@ $_photo = _fetch_array("SELECT
                         <img src="code.php" id="code" onclick="javascript:this.src='code.php?tm='+Math.random();" />
                     </div>
                 </form>
-                <form method="post" action="?action=write">
-                    <input type="hidden" name="touser" value="<?php echo $_html['touser']?>" />
-                    <dl>
-                        <dd><input type="text" readonly="readonly" value="TO:<?php echo $_html['touser']?>" class="text" /></dd>
-                        <dd><textarea name="content"></textarea></dd>
-                        <dd>验 证 码：<input type="text" name="code" class="text yzm"  /> <img src="code.php" id="code" onclick="javascript:this.src='code.php?tm='+Math.random();" /> <input type="submit" class="submit" value="发送短信" /></dd>
-                    </dl>
-                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary">发送</button>
+                <button type="button" class="btn btn-primary" onclick="formSubmit()">发送</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--未登录-->
+<div class="modal fade" id="unsigned" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">未登录</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>请先登录</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">知道了</button>
             </div>
         </div>
     </div>
@@ -173,4 +197,34 @@ $_photo = _fetch_array("SELECT
 ?>
 
 </body>
+<?php if (isset($_COOKIE['username'])){ ?>
+    <script>
+        function formSubmit() {
+            document.getElementById("msg").submit()
+        }
+        $(function () {
+            $('#sendMsg').click(function () {
+                $('#exampleModalCenter').modal('show')
+                // $('#unsigned').modal('show')
+            });
+        });
+
+
+    </script>
+<?php }?>
+<?php if (!isset($_COOKIE['username'])){ ?>
+    <script>
+        function formSubmit() {
+            document.getElementById("msg").submit()
+        }
+        $(function () {
+            $('#sendMsg').click(function () {
+                // $('#exampleModalCenter').modal('show')
+                $('#unsigned').modal('show')
+            });
+        });
+
+
+    </script>
+<?php }?>
 </html>

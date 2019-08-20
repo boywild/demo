@@ -2,9 +2,6 @@
 #photo {
 	width:auto;
 	height:auto;
-	border:2px solid #ccc;
-	font-size:12px;
-	background:#fff;
 }
 #photo h2 {
 	text-indent:0;
