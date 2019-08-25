@@ -2,3 +2,5 @@ node_modules
 .idea
 Node/yarn.lock
 *.lock
+fruits
+drupal-7.67
