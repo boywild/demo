@@ -218,9 +218,8 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 报错这个不要紧
 ```
 httpd: Could not reliably determine the server's fully qualified domain name, using localhost.localdomain for ServerName
-
 ```
-五、测试Apache服务是否启动成功
+五、测试`Apache`服务是否启动成功
 
 * 从本机访问虚拟机`http://192.168.2.114/`
 * 如果访问不通请检查防火墙是否开启，若开启，关闭防火墙
