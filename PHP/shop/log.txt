@@ -1572,3 +1572,43 @@
 [2019-08-05 07:18:51] set names utf8
 [2019-08-05 07:18:51] DESC cz_goods_type
 [2019-08-05 07:18:51] SELECT * FROM cz_goods_type
+[2019-09-01 12:28:19] set names utf8
+[2019-09-01 12:28:19] DESC cz_admin
+[2019-09-01 12:28:19] SELECT * FROM cz_admin WHERE 
+		       admin_name = 'admin' AND password = 'e10adc3949ba59abbe56e057f20f883e'
+		       LIMIT 1
+[2019-09-01 12:28:49] set names utf8
+[2019-09-01 12:28:49] DESC cz_admin
+[2019-09-01 12:28:49] SELECT * FROM cz_admin WHERE 
+		       admin_name = 'admin' AND password = 'e10adc3949ba59abbe56e057f20f883e'
+		       LIMIT 1
+[2019-09-01 12:29:30] set names utf8
+[2019-09-01 12:29:30] DESC cz_admin
+[2019-09-01 12:29:30] SELECT * FROM cz_admin WHERE 
+		       admin_name = '' AND password = 'd41d8cd98f00b204e9800998ecf8427e'
+		       LIMIT 1
+[2019-09-01 12:29:30] set names utf8
+[2019-09-01 12:29:30] DESC cz_admin
+[2019-09-01 12:29:30] SELECT * FROM cz_admin WHERE 
+		       admin_name = '' AND password = 'd41d8cd98f00b204e9800998ecf8427e'
+		       LIMIT 1
+[2019-09-01 12:29:31] set names utf8
+[2019-09-01 12:29:31] DESC cz_admin
+[2019-09-01 12:29:31] SELECT * FROM cz_admin WHERE 
+		       admin_name = '' AND password = 'd41d8cd98f00b204e9800998ecf8427e'
+		       LIMIT 1
+[2019-09-01 12:29:31] set names utf8
+[2019-09-01 12:29:31] DESC cz_admin
+[2019-09-01 12:29:31] SELECT * FROM cz_admin WHERE 
+		       admin_name = '' AND password = 'd41d8cd98f00b204e9800998ecf8427e'
+		       LIMIT 1
+[2019-09-01 12:29:32] set names utf8
+[2019-09-01 12:29:32] DESC cz_admin
+[2019-09-01 12:29:32] SELECT * FROM cz_admin WHERE 
+		       admin_name = '' AND password = 'd41d8cd98f00b204e9800998ecf8427e'
+		       LIMIT 1
+[2019-09-01 12:29:32] set names utf8
+[2019-09-01 12:29:32] DESC cz_admin
+[2019-09-01 12:29:32] SELECT * FROM cz_admin WHERE 
+		       admin_name = '' AND password = 'd41d8cd98f00b204e9800998ecf8427e'
+		       LIMIT 1
