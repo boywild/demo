@@ -1,7 +1,17 @@
 <?php
     require_once 'dir.func.php';
+    require_once 'file.func.php';
     $path = "file";
     $info = readDirectory('file');
+    $act = $_POST['act'] || '';
+    $filename = $_POST['filename'] || '';
+    if ($act === 'createFolder') {
+        echo 'createFolder';
+    } elseif ($act === 'createFile') {
+        //createFile($path . '/' . $filename);
+        echo 'createFile';
+    } elseif ($act === 'uploadFile') {
+    }
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -132,16 +142,16 @@
         <label>请输入文件夹名称</label>
         <div>
             <input type="text" name="dirname"/>
-            <input type="hidden" name="path" value="xxx"/>
-            <input type="submit" name="act" value="创建文件夹"/>
+            <input type="hidden" name="path" value="<?php echo $path; ?>"/>
+            <input type="submit" name="act" value="createFolder"/>
         </div>
     </div>
     <div id="createFile" style="display:none;">
         <label>请输入文件名称</label>
         <div>
             <input type="text" name="filename"/>
-            <input type="hidden" name="path" value="xxx"/>
-            <input type="submit" name="act" value="创建文件"/>
+            <input type="hidden" name="path" value="<?php echo $path; ?>"/>
+            <input type="submit" name="act" value="createFile"/>
         </div>
     </div>
     <div id="uploadFile" style="display:none;">
@@ -180,16 +190,17 @@
                     <td><?php echo $i ?></td>
                     <td><?php echo $value ?></td>
                     <td><?php echo '<img class="small" src="./images/folder_ico.png">' ?></td>
-                    <td></td>
+                    <td><?php echo 'aa'; ?></td>
                     <td><?php $src = is_readable($resource) ? 'correct.png' : 'error.png' ?><img class="small"
-                                                                                                 src="./images/<?php echo $src ?>"
+                                                                                                 src="./images/<?php echo $src; ?>"
                                                                                                  alt=""></td>
-                    <td><?php $src = is_writable($resource) ? 'correct.png' : 'error.png' ?><img class="small"
-                                                                                                 src="./images/<?php echo $src ?>"
-                                                                                                 alt=""></td>
-                    <td><?php $src = is_executable($resource) ? 'correct.png' : 'error.png' ?><img class="small"
-                                                                                                   src="./images/<?php echo $src ?>"
-                                                                                                   alt=""></td>
+                    <td><?php $is_writable = is_writable($resource) ? 'correct.png' : 'error.png' ?><img class="small"
+                                                                                                         src="./images/<?php echo $is_writable; ?>"
+                                                                                                         alt=""></td>
+                    <td><?php $is_executable = is_executable($resource) ? 'correct.png' : 'error.png' ?><img
+                                class="small"
+                                src="./images/<?php echo $is_executable; ?>"
+                                alt=""></td>
                     <td><?php echo date('Y-m-d h:m:s', filectime($resource)) ?></td>
                     <td><?php echo date('Y-m-d h:m:s', filemtime($resource)) ?></td>
                     <td><?php echo date('Y-m-d h:m:s', fileatime($resource)) ?></td>
@@ -211,25 +222,26 @@
         } ?>
     <?php
         if ($info['file']) {
-            $i = 0;
+
             foreach ($info['file'] as $value) {
                 $i++;
-
+                $resource = $path . "/" . $value;
                 ?>
                 <tr>
                     <td><?php echo $i ?></td>
                     <td><?php echo $value ?></td>
                     <td><?php echo '<img class="small" src="./images/file_ico.png">' ?></td>
-                    <td><?php echo filesize('file' . '/' . $value) ?></td>
+                    <td><?php echo transByte(filesize('file' . '/' . $value)) ?></td>
                     <td><?php $src = is_readable($resource) ? 'correct.png' : 'error.png' ?><img class="small"
-                                                                                                 src="./images/<?php echo $src ?>"
+                                                                                                 src="./images/<?php echo $src; ?>"
                                                                                                  alt=""></td>
-                    <td><?php $src = is_writable($resource) ? 'correct.png' : 'error.png' ?><img class="small"
-                                                                                                 src="./images/<?php echo $src ?>"
-                                                                                                 alt=""></td>
-                    <td><?php $src = is_executable($resource) ? 'correct.png' : 'error.png' ?><img class="small"
-                                                                                                   src="./images/<?php echo $src ?>"
-                                                                                                   alt=""></td>
+                    <td><?php $is_writable = is_writable($resource) ? 'correct.png' : 'error.png' ?><img class="small"
+                                                                                                         src="./images/<?php echo $is_writable; ?>"
+                                                                                                         alt=""></td>
+                    <td><?php $is_executable = is_executable($resource) ? 'correct.png' : 'error.png' ?><img
+                                class="small"
+                                src="./images/<?php echo $is_executable; ?>"
+                                alt=""></td>
                     <td><?php echo date('Y-m-d h:m:s', filectime($resource)) ?></td>
                     <td><?php echo date('Y-m-d h:m:s', filemtime($resource)) ?></td>
                     <td><?php echo date('Y-m-d h:m:s', fileatime($resource)) ?></td>
