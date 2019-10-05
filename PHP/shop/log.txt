@@ -1612,3 +1612,13 @@
 [2019-09-01 12:29:32] SELECT * FROM cz_admin WHERE 
 		       admin_name = '' AND password = 'd41d8cd98f00b204e9800998ecf8427e'
 		       LIMIT 1
+[2019-10-05 14:03:53] set names utf8
+[2019-10-05 14:03:53] DESC cz_admin
+[2019-10-05 14:03:53] SELECT * FROM cz_admin WHERE 
+		       admin_name = 'admin' AND password = 'e10adc3949ba59abbe56e057f20f883e'
+		       LIMIT 1
+[2019-10-05 14:03:54] set names utf8
+[2019-10-05 14:03:54] DESC cz_admin
+[2019-10-05 14:03:54] SELECT * FROM cz_admin WHERE 
+		       admin_name = '' AND password = 'd41d8cd98f00b204e9800998ecf8427e'
+		       LIMIT 1

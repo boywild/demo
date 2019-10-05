@@ -13,7 +13,7 @@ class Model{
 		$dbconfig['port'] = $GLOBALS['config']['port'];
 		$dbconfig['charset'] = $GLOBALS['config']['charset'];
 		
-		$this->db = new Mysql($dbconfig);
+		$this->db = new mysql($dbconfig);
 		$this->table = $GLOBALS['config']['prefix'] . $table;
 
 		//调用getFields字段
